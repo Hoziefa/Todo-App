@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import ScrollToTop from "./global/ScrollToTop";
-import PageLoader from "./global/PageLoader";
 import NotFound from "./global/NotFound";
 import NavBar from "./global/NavBar";
 
 import Home from "./home";
+import Todos from "./todos";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 
@@ -16,8 +16,6 @@ const App = ({ currentUser, history }) => {
     return (
         <BrowserRouter>
             <ScrollToTop />
-
-            <PageLoader />
 
             <NavBar currentUser={currentUser} />
 
@@ -43,7 +41,7 @@ const App = ({ currentUser, history }) => {
                 <Route
                     exact
                     path="/todos"
-                    component={props => (currentUser ? <Home {...props} /> : <Redirect to="/login" />)}
+                    component={props => (currentUser ? <Todos {...props} /> : <Redirect to="/login" />)}
                 />
 
                 <Route exact path="/notfound" component={NotFound} />

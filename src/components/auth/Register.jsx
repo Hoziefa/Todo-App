@@ -61,9 +61,11 @@ class Register extends Form {
 
         const currentUser = await userService.registerUser(data);
 
-        if (currentUser.error)
+        if (currentUser.error) {
             Swal.fire({ title: "Error!", text: currentUser.error, icon: "error", confirmButtonText: "Okay" });
-        else {
+
+            this.setState({ loading: false });
+        } else {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -107,7 +109,7 @@ class Register extends Form {
                                 )}
 
                                 <button className="submit-btn" type="submit">
-                                    {this.state.loading ? <i class="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
+                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
                                 </button>
                             </form>
                         </div>

@@ -2,14 +2,16 @@ import firebase, { firebaseLooper } from "../services/firebase";
 import userService from "./userService";
 
 class TodosService {
-    todosRef = firebase.database().ref("users");
+    todosRef = firebase.database().ref("todos");
 
     async createTodo(todo) {
-        await this.todosRef.child(userService.currentUser.uid).push(todo);
+        const newTodo = await this.todosRef.child(userService.currentUser.uid).push(todo);
+
+        return newTodo.get().then(snap => ({ id: snap.key, ...snap.val() }));
     }
 
-    async updateTodo(newTodo) {
-        await this.todosRef.child(userService.currentUser.uid).update(newTodo);
+    async updateTodo({ id, ...newTodo }) {
+        await this.todosRef.child(userService.currentUser.uid).child(id).update(newTodo);
     }
 
     async deleteTodo(todoId) {

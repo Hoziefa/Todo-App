@@ -40,9 +40,11 @@ class Login extends Form {
 
         const currentUser = await userService.loginUser(formValues);
 
-        if (currentUser.error)
+        if (currentUser.error) {
             Swal.fire({ title: "Error!", text: currentUser.error, icon: "error", confirmButtonText: "Okay" });
-        else {
+
+            this.setState({ loading: false });
+        } else {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -79,7 +81,7 @@ class Login extends Form {
                                 {this.renderInput(this.state.data.password, this.state.errors.password)}
 
                                 <button className="submit-btn" type="submit">
-                                    {this.state.loading ? <i class="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
+                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
                                 </button>
                             </form>
                         </div>

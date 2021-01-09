@@ -24,7 +24,7 @@ class NavBar extends Component {
     renderLogging = currentUser =>
         currentUser ? (
             <li onClick={this.logoutUser}>
-                <a href="#">log out</a>
+                <button>log out</button>
             </li>
         ) : (
             <li>

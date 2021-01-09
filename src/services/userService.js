@@ -13,8 +13,8 @@ class UserService {
             await user.updateProfile({ displayName: username });
 
             return user;
-        } catch ({ messages }) {
-            return { error: messages };
+        } catch ({ message }) {
+            return { error: message };
         }
     }
 

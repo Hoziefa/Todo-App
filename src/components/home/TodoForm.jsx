@@ -1,4 +1,6 @@
 import React from "react";
+import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
 
 import AppContext from "../../contexts/appContext";
 
@@ -6,52 +8,108 @@ import todosService from "../../services/todosService";
 import { generateInput } from "../../utils/misc";
 
 import Form from "../reusableComponents/Form";
+import Modal from "../reusableComponents/Modal";
 
 class TodoForm extends Form {
     static contextType = AppContext;
 
     state = {
-        data: { content: generateInput({ name: "content", label: "what do you want to do?", noValidate: true }) },
+        data: {
+            task: generateInput({ name: "task", label: "what do you want to do?", validationlabel: "new to-do", min: 3 }),
+        },
         errors: {},
+
+        date: Date.now(),
     };
 
-    onFormSubmit = async ({ content }) => {
-        const todo = { content, timestamp: todosService.getTimestamp, done: false, editing: false };
+    closeModal = () => {
+        this.context.updateAppContext({ modal: false });
 
-        await todosService.createTodo(todo);
+        this.setState({
+            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+            errors: { ...this.state.errors, task: "" },
+            date: Date.now(),
+        });
+    };
 
-        this.context.updateAppContext({ key: "todos", value: [this.context.todos, todo] });
+    createNewTask = async (task, date) => {
+        const todo = { task, date, timestamp: todosService.getTimestamp, completed: false };
 
-        this.setState({ data: { ...this.state.data, content: { ...this.state.data.content, value: "" } } });
+        const newTodo = await todosService.createTodo(todo);
+
+        this.context.updateAppContext({ todos: [...this.context.todos, newTodo], modal: false });
+
+        this.setState({ data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } } });
+    };
+
+    onFormSubmit = ({ task }) => {
+        if (!this.state.date) return;
+
+        if (this.context.todos.some(({ task: todoTask }) => todoTask === task)) {
+            Swal.fire({
+                title: "You already have to-do with this value. Do you want to save it anyway?",
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: `Save`,
+                denyButtonText: `Don't save`,
+            }).then(result => {
+                if (result.isConfirmed) {
+                    Swal.fire("Saved!", "", "success");
+
+                    this.createNewTask(task, this.state.date);
+                } else if (result.isDenied) {
+                    Swal.fire("To-do not saved", "", "info");
+
+                    this.setState({
+                        data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+                    });
+                }
+            });
+        } else {
+            this.createNewTask(task, this.state.date);
+        }
     };
 
     render() {
+        const { data, errors, date } = this.state;
+
         return (
             <div className="add-todo--form">
-                <div className="section-heading">
-                    <div className="section-icon">
-                        <svg
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                            role="presentation"
-                            style={{ width: "42px", height: "38px" }}>
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path>
-                        </svg>
+                <Modal active={this.context.modal} onClose={this.closeModal}>
+                    <div className="form-container">
+                        <div className="form-wrapper">
+                            <div className="title">
+                                <h2>create new to-do</h2>
+                            </div>
+
+                            <form onSubmit={this.onsubmit} className=".form">
+                                <div className="inputs-container">
+                                    {this.renderInput(data.task, errors.task)}
+
+                                    <DatePicker
+                                        selected={date}
+                                        dateFormat="Pp"
+                                        showTimeSelect
+                                        onChange={(date, e) => this.setState({ date: date.getTime() })}
+                                    />
+                                </div>
+
+                                <div className="actions">
+                                    <button
+                                        type="submit"
+                                        className="submit-btn"
+                                        disabled={!data.task.value.trim() || !date}>
+                                        create <i className="fas fa-plus"></i>
+                                    </button>
+
+                                    <button className="cancel-btn" type="button" onClick={this.closeModal}>
+                                        cancel <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <h5 className="section-title">add item</h5>
-                </div>
-
-                <div className="section-content">
-                    <form onSubmit={this.onsubmit}>
-                        {this.renderInput(this.state.data.content, this.state.errors.content)}
-
-                        <button type="submit" className="submit-btn" disabled={!this.state.data.content.value.trim()}>
-                            <i className="fas fa-plus"></i>
-                        </button>
-                    </form>
-                </div>
+                </Modal>
             </div>
         );
     }

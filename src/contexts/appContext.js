@@ -3,9 +3,15 @@ import React, { Component } from "react";
 const AppContext = React.createContext({});
 
 export class AppContextProvider extends Component {
-    state = { currentUser: this.props.currentUser, todos: [] };
+    state = {
+        currentUser: this.props.currentUser,
+        todos: [],
+        filterDescription: window.localStorage.getItem("filterDescription") || "",
+        filterDate: +window.localStorage.getItem("filterDate") || Date.now(),
+        modal: false,
+    };
 
-    updateAppContext = prop => this.setState({ [prop.key]: prop.value });
+    updateAppContext = props => this.setState(props);
 
     render() {
         return (

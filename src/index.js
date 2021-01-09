@@ -6,6 +6,7 @@ import firebase from "./services/firebase";
 
 import { AppContextProvider } from "./contexts/appContext";
 
+import "react-datepicker/dist/react-datepicker.css";
 import "./assets/css/style.scss";
 
 firebase.auth().onAuthStateChanged(currentUser => {
