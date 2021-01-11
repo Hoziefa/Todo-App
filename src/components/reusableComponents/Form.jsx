@@ -5,14 +5,6 @@ class Form extends Component {
     state = { data: {}, errors: {} };
 
     validate() {
-        // const data = Object.entries(this.state.data).reduce((acc, [key, { value }]) => ({ ...acc, [key]: value }), {});
-        // const { error } = joi.validate(data, this.schema, { abortEarly: false });
-        // if (!error) return;
-        // return error.details.reduce(
-        //     (acc, { context, message }) => (!acc[context.key] ? { ...acc, [context.key]: message } : acc),
-        //     {},
-        // );
-
         return validate(this.state.data);
     }
 

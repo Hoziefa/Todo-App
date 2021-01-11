@@ -261,14 +261,11 @@ button:disabled {
     text-transform: capitalize;
     background-color: $primary-color;
     color: ghostwhite;
+    border-radius: 0.5rem;
 
     @media (max-width: 400px) {
         width: 100% !important;
     }
-}
-
-%mainGradientBgc {
-    background: linear-gradient(45deg, $primary-color, $secondary-color) !important;
 }
 
 //*=====  End of GLOBAL-STYLES  ======*//
@@ -300,6 +297,7 @@ button:disabled {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        color: white;
 
         h1 {
             text-transform: uppercase;
@@ -312,8 +310,9 @@ button:disabled {
                 border-radius: 5px;
                 min-width: 20%;
                 text-align: center;
-                font: 600 1.5rem $righteous-font;
+                font: 600 1.5rem $arimo-font;
                 text-transform: capitalize;
+                color: inherit;
             }
         }
 
@@ -535,14 +534,14 @@ button:disabled {
 //%-<*       REGISTER FORM       *>-%//
 /*===================================*/
 .register-form {
-    padding: 2rem 1rem;
+    padding: 1rem;
 
     .form-container {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        min-height: calc(var(--nav-height) - 4rem);
+        min-height: calc(100vh var(--nav-height) - 2rem);
 
         .form-title {
             text-align: center;
@@ -550,18 +549,20 @@ button:disabled {
             color: $primary-color;
 
             i {
-                font-size: 7rem;
-                margin-bottom: 0.5rem;
+                font-size: 5.5rem;
+                margin-bottom: 0.35rem;
             }
 
             h2 {
                 font-size: inherit;
                 font-family: $monoton-font;
+                line-height: 100%;
             }
         }
 
         .form-wrapper {
             width: 600px;
+            padding: 1rem;
             padding-bottom: 0;
 
             .form {
@@ -626,6 +627,7 @@ button:disabled {
                         &:not(.error):focus-within {
                             i {
                                 color: $primary-color !important;
+                                opacity: 1;
                             }
                         }
 
@@ -650,12 +652,13 @@ button:disabled {
                     .submit-btn {
                         @extend %submit-btn;
                         width: 60%;
+                        margin-top: 1rem;
                     }
                 }
             }
 
             .login-link-wrapper {
-                margin-top: 2rem;
+                margin-top: 1rem;
                 padding: 1rem 0;
                 text-align: center;
                 text-transform: capitalize;
@@ -700,7 +703,7 @@ button:disabled {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        min-height: calc(var(--nav-height) - 3rem);
+        min-height: calc(100vh - var(--nav-height) - 3rem);
 
         .form-title {
             text-align: center;
@@ -708,19 +711,22 @@ button:disabled {
             color: $primary-color;
 
             i {
-                font-size: 7rem;
-                margin-bottom: 0.5rem;
+                font-size: 5.5rem;
+                margin-bottom: 0.75rem;
             }
 
             h2 {
                 font-size: inherit;
                 font-family: $monoton-font;
                 word-spacing: 0.25rem;
+                line-height: 100%;
             }
         }
 
         .form-wrapper {
             width: 600px;
+            padding-bottom: 0;
+            padding: 1rem;
             padding-bottom: 0;
 
             .form {
@@ -782,6 +788,7 @@ button:disabled {
                         &:not(.error):focus-within {
                             i {
                                 color: $primary-color !important;
+                                opacity: 1;
                             }
                         }
 
@@ -811,7 +818,7 @@ button:disabled {
             }
 
             .register-link-wrapper {
-                margin-top: 2rem;
+                margin-top: 1rem;
                 padding: 1rem 0;
                 text-align: center;
                 text-transform: capitalize;
@@ -1109,9 +1116,11 @@ nav.main-nav {
                 line-height: 100%;
                 padding: 0.75rem 1rem;
                 text-transform: capitalize;
+                width: 100%;
+                color: inherit;
 
                 &.active {
-                    background-color: $primary-color;
+                    background-color: $secondary-color;
                     color: ghostwhite;
 
                     button {
@@ -1134,22 +1143,69 @@ nav.main-nav {
         .links-container {
             position: absolute;
             top: var(--nav-height);
-            right: 0;
+            left: 0;
             z-index: 1;
-            transform: translateX(120%);
             overflow: hidden;
             display: block;
 
-            background-color: $secondary-color;
-            color: ghostwhite;
-            width: 50%;
-            height: calc(100vh - var(--nav-height));
-            transition: 0.5s linear;
+            background-image: linear-gradient(
+                    135deg,
+                    rgba(49, 49, 49, 0.07) 0%,
+                    rgba(49, 49, 49, 0.07) 12.5%,
+                    rgba(76, 76, 76, 0.07) 12.5%,
+                    rgba(76, 76, 76, 0.07) 25%,
+                    rgba(102, 102, 102, 0.07) 25%,
+                    rgba(102, 102, 102, 0.07) 37.5%,
+                    rgba(129, 129, 129, 0.07) 37.5%,
+                    rgba(129, 129, 129, 0.07) 50%,
+                    rgba(155, 155, 155, 0.07) 50%,
+                    rgba(155, 155, 155, 0.07) 62.5%,
+                    rgba(182, 182, 182, 0.07) 62.5%,
+                    rgba(182, 182, 182, 0.07) 75%,
+                    rgba(208, 208, 208, 0.07) 75%,
+                    rgba(208, 208, 208, 0.07) 87.5%,
+                    rgba(235, 235, 235, 0.07) 87.5%,
+                    rgba(235, 235, 235, 0.07) 100%
+                ),
+                linear-gradient(
+                    45deg,
+                    rgba(5, 5, 5, 0.07) 0%,
+                    rgba(5, 5, 5, 0.07) 12.5%,
+                    rgba(39, 39, 39, 0.07) 12.5%,
+                    rgba(39, 39, 39, 0.07) 25%,
+                    rgba(73, 73, 73, 0.07) 25%,
+                    rgba(73, 73, 73, 0.07) 37.5%,
+                    rgba(107, 107, 107, 0.07) 37.5%,
+                    rgba(107, 107, 107, 0.07) 50%,
+                    rgba(141, 141, 141, 0.07) 50%,
+                    rgba(141, 141, 141, 0.07) 62.5%,
+                    rgba(175, 175, 175, 0.07) 62.5%,
+                    rgba(175, 175, 175, 0.07) 75%,
+                    rgba(209, 209, 209, 0.07) 75%,
+                    rgba(209, 209, 209, 0.07) 87.5%,
+                    rgba(243, 243, 243, 0.07) 87.5%,
+                    rgba(243, 243, 243, 0.07) 100%
+                ),
+                linear-gradient(90deg, #ffffff, #ffffff);
+            color: $primary-color;
+            width: 100%;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s;
+
+            li {
+                a,
+                button {
+                    &.active {
+                        background-color: $secondary-color;
+                    }
+                }
+            }
         }
 
         &.open {
             .links-container {
-                transform: translateX(0);
+                transform: scaleY(1);
             }
         }
     }
@@ -1164,8 +1220,8 @@ nav.main-nav {
     @extend %windowRestHeight;
     position: relative;
 
-    .user-welcome {
-        margin-bottom: 5rem;
+    .user-profile {
+        margin-bottom: 7rem;
     }
 
     .todos-app {
@@ -1189,8 +1245,9 @@ nav.main-nav {
                     border-radius: 0.5rem;
                     box-shadow: 0 12px 20px -10px #29b6f647, 0 4px 20px 0px #0000001f, 0 7px 8px -5px #29b6f633;
 
-                    svg {
-                        fill: white;
+                    i {
+                        color: white;
+                        font-size: 2rem;
                     }
                 }
 
@@ -1199,70 +1256,13 @@ nav.main-nav {
                     font-size: 1.25rem;
                     font-family: $righteous-font;
                 }
-
-                .field {
-                    flex: 0.7;
-                    position: relative;
-                    margin-left: auto;
-                    margin-right: 1rem;
-
-                    input {
-                        border: 1px solid #22242634;
-                        border-radius: 0.5rem;
-                        padding: 0.75rem 1rem 0.75rem;
-                        transition: color 0.1s ease, border-color 0.1s ease;
-
-                        &::-webkit-input-placeholder {
-                            color: #c7c7c7;
-                            font-size: medium;
-                        }
-
-                        &:focus {
-                            background: #fff;
-                            border-color: $primary-color;
-                            box-shadow: 0 0 0 0 #22242659 inset;
-                        }
-                    }
-
-                    i {
-                        position: absolute;
-                        top: 50%;
-                        right: 1rem;
-                        transform: translateY(-50%);
-                        color: #000000de;
-                        pointer-events: none;
-                        opacity: 0.5;
-                    }
-                }
-
-                .add-todo-btn {
-                    color: white;
-                    background-color: $secondary-color;
-                    border-radius: 50%;
-                    width: 58px;
-                    height: 58px;
-                    box-shadow: 0px 3px 5px -1px #00000033, 0px 6px 10px 0px #00000024, 0px 1px 18px 0px #0000001f;
-
-                    i {
-                        font-size: 1rem;
-                    }
-                }
-
-                .react-datepicker-wrapper {
-                    margin-left: auto;
-
-                    input {
-                        border-bottom: 2px solid currentColor;
-                        text-align: center;
-                    }
-                }
             }
         }
 
         .todos {
             .section-heading {
                 .section-icon {
-                    background: linear-gradient(60deg, #ba7511, #ffaa2e);
+                    background: linear-gradient(60deg, $primary-color, $secondary-color);
                 }
             }
 
@@ -1407,7 +1407,7 @@ nav.main-nav {
                                 }
 
                                 &.confirm-todo--btn {
-                                    color: #4fc3f7;
+                                    color: #6abe6d;
                                 }
 
                                 &.cancel-todo--btn {
@@ -1440,6 +1440,142 @@ nav.main-nav {
 
         @media (min-width: 991px) {
             width: 60% !important;
+        }
+    }
+}
+
+.home {
+    .todos-app {
+        .section {
+            .section-heading {
+                .field {
+                    flex: 0.7;
+                    position: relative;
+                    margin-left: auto;
+
+                    input {
+                        border: 1px solid #22242634;
+                        border-radius: 0.5rem;
+                        padding: 0.75rem 1rem 0.75rem;
+                        transition: color 0.1s ease, border-color 0.1s ease;
+
+                        &::-webkit-input-placeholder {
+                            color: #c7c7c7;
+                            font-size: medium;
+                        }
+
+                        &:focus {
+                            background: #fff;
+                            border-color: $primary-color;
+                            box-shadow: 0 0 0 0 #22242659 inset;
+                        }
+                    }
+
+                    i {
+                        position: absolute;
+                        top: 50%;
+                        right: 1rem;
+                        transform: translateY(-50%);
+                        color: #000000de;
+                        pointer-events: none;
+                        opacity: 0.5;
+                    }
+                }
+
+                .add-todo-btn {
+                    height: 58px;
+                    flex-basis: 58px;
+                    border-radius: 50%;
+                    align-self: center;
+                    color: white;
+                    background-color: $secondary-color;
+                    box-shadow: 0px 3px 5px -1px #00000033, 0px 6px 10px 0px #00000024, 0px 1px 18px 0px #0000001f;
+                    transition: background-color 0.3s;
+
+                    i {
+                        font-size: 1rem;
+                    }
+
+                    &:hover {
+                        background-color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        .todos-app {
+            .todos {
+                .section-heading {
+                    flex-wrap: wrap;
+
+                    .field {
+                        margin: 0;
+                        flex: 1 0 calc(100% - 100px);
+                    }
+
+                    .add-todo-btn {
+                        flex-basis: 45px;
+                        height: 45px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.todos-page {
+    .todos-app {
+        .section {
+            .section-heading {
+                display: block;
+
+                .section-icon {
+                    width: fit-content;
+                }
+
+                .section-title {
+                    margin-bottom: 2rem;
+                }
+
+                .calendar-container {
+                    position: relative;
+                    margin: 0 auto;
+                    width: fit-content;
+
+                    .clear-calendar {
+                        color: #f44336;
+                        position: absolute;
+                        top: -13px;
+                        right: -10px;
+                        width: 30px;
+                        height: 30px;
+                        background-color: #333;
+                        border: 3px solid #999;
+                        border-radius: 50%;
+                    }
+
+                    .react-calendar {
+                        width: 100%;
+
+                        input {
+                            border-bottom: 2px solid currentColor;
+                            text-align: center;
+                        }
+
+                        @media (max-width: 500px) {
+                            .react-calendar__viewContainer {
+                                display: block !important;
+
+                                > .react-calendar__month-view {
+                                    width: 100% !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

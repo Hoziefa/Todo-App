@@ -10,7 +10,7 @@ class Todo extends Component {
 
     state = { activeTask: this.props.todo.task, activeDate: this.props.todo.date, editing: false };
 
-    //> >> HANDLE CHANGES:
+    //#region INPUTS CHANGES
     onEditTodoChange = ({ currentTarget: { value } }) => this.setState({ activeTask: value });
 
     onCompleteTodoChange = ({ currentTarget: { checked } }, updateTodo) => {
@@ -20,8 +20,9 @@ class Todo extends Component {
 
         todosService.updateTodo({ ...updateTodo, completed: checked });
     };
+    //#endregion INPUTS CHANGES
 
-    //> >> ACTIONS:
+    //#region ACTIONS
     onEditTodoMode = () => this.setState({ editing: true });
 
     onDeleteTodo = todoId => {
@@ -46,6 +47,7 @@ class Todo extends Component {
 
     onCancelEditTodo = () =>
         this.setState({ editing: false, activeTask: this.props.todo.task, activeDate: this.props.todo.date });
+    //#endregion ACTIONS
 
     render() {
         const { activeTask, activeDate, editing } = this.state;
@@ -76,7 +78,7 @@ class Todo extends Component {
 
                         <div className="actions">
                             <button className="confirm-todo--btn" onClick={() => this.onConfirmEditTodo(todo)}>
-                                <i className="fas fa-download"></i>
+                                <i className="fas fa-check"></i>
                             </button>
 
                             <button className="cancel-todo--btn" onClick={this.onCancelEditTodo}>
@@ -108,7 +110,7 @@ class Todo extends Component {
                             <p>{todo.task}</p>
 
                             <span className="todo-estimate--date">
-                                {moment(todo.date).format("MMMM Do YYYY, h:mm:ss a")}
+                                {moment(todo.date).format("MMMM Do YYYY, h:mm:ss a")} - {moment(todo.date).fromNow()}
                             </span>
                         </div>
 

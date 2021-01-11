@@ -7,7 +7,7 @@ export class AppContextProvider extends Component {
         currentUser: this.props.currentUser,
         todos: [],
         filterDescription: window.localStorage.getItem("filterDescription") || "",
-        filterDate: +window.localStorage.getItem("filterDate") || Date.now(),
+        filterDate: new Date(window.localStorage.getItem("filterDate") || Date.now()),
         modal: false,
     };
 

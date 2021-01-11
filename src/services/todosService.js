@@ -1,4 +1,4 @@
-import firebase, { firebaseLooper } from "../services/firebase";
+import firebase, { firebaseLooper } from "../services/firebaseService";
 import userService from "./userService";
 
 class TodosService {

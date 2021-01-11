@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
-import { generateInput } from "../../utils/misc";
+import { inputGenerator } from "../../utils/misc";
 
 import userService from "../../services/userService";
 
@@ -12,7 +12,7 @@ import Form from "../reusableComponents/Form";
 class Login extends Form {
     state = {
         data: {
-            email: generateInput({
+            email: inputGenerator({
                 name: "email",
                 type: "email",
                 autoComplete: "on",
@@ -20,7 +20,7 @@ class Login extends Form {
                 icon: "fas fa-envelope",
             }),
 
-            password: generateInput({
+            password: inputGenerator({
                 name: "password",
                 type: "password",
                 min: 6,
@@ -40,11 +40,7 @@ class Login extends Form {
 
         const currentUser = await userService.loginUser(formValues);
 
-        if (currentUser.error) {
-            Swal.fire({ title: "Error!", text: currentUser.error, icon: "error", confirmButtonText: "Okay" });
-
-            this.setState({ loading: false });
-        } else {
+        if (currentUser.success) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -61,6 +57,10 @@ class Login extends Form {
                 icon: "success",
                 title: "Signed in successfully",
             });
+        } else {
+            Swal.fire({ title: "Error!", text: currentUser.message, icon: "error", confirmButtonText: "Okay" });
+
+            this.setState({ loading: false });
         }
     };
 

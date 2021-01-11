@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import AppContext from "../../contexts/appContext";
 
 import todosService from "../../services/todosService";
-import { generateInput } from "../../utils/misc";
+import { inputGenerator } from "../../utils/misc";
 
 import Form from "../reusableComponents/Form";
 import Modal from "../reusableComponents/Modal";
@@ -15,11 +15,17 @@ class TodoForm extends Form {
 
     state = {
         data: {
-            task: generateInput({ name: "task", label: "what do you want to do?", validationlabel: "new to-do", min: 3 }),
+            task: inputGenerator({
+                name: "task",
+                min: 3,
+                label: "what do you want to do?",
+                validationlabel: "new to-do",
+                validationErrorClass: "validation-error--underline",
+            }),
         },
         errors: {},
 
-        date: Date.now(),
+        date: 0,
     };
 
     closeModal = () => {
@@ -28,7 +34,7 @@ class TodoForm extends Form {
         this.setState({
             data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
             errors: { ...this.state.errors, task: "" },
-            date: Date.now(),
+            date: 0,
         });
     };
 
@@ -39,7 +45,10 @@ class TodoForm extends Form {
 
         this.context.updateAppContext({ todos: [...this.context.todos, newTodo], modal: false });
 
-        this.setState({ data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } } });
+        this.setState({
+            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+            date: 0,
+        });
     };
 
     onFormSubmit = ({ task }) => {
@@ -62,6 +71,7 @@ class TodoForm extends Form {
 
                     this.setState({
                         data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+                        date: 0,
                     });
                 }
             });

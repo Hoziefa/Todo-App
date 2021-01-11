@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import ScrollToTop from "./global/ScrollToTop";
-import NotFound from "./global/NotFound";
-import NavBar from "./global/NavBar";
+import ScrollToTop from "./common/ScrollToTop";
+import NotFound from "./common/NotFound";
+import NavBar from "./common/NavBar";
 
 import Home from "./home";
 import Todos from "./todos";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 
-const App = ({ currentUser, history }) => {
+const App = ({ currentUser }) => {
     // useEffect(() => (currentUser ? history.push("/") : history.push("/login")), [currentUser]);
 
     return (
