@@ -1,19 +1,10 @@
 import React, { Component } from "react";
-import joi from "joi-browser";
 import { validate } from "../../utils/misc";
 
 class Form extends Component {
     state = { data: {}, errors: {} };
 
     validate() {
-        // const data = Object.entries(this.state.data).reduce((acc, [key, { value }]) => ({ ...acc, [key]: value }), {});
-        // const { error } = joi.validate(data, this.schema, { abortEarly: false });
-        // if (!error) return;
-        // return error.details.reduce(
-        //     (acc, { context, message }) => (!acc[context.key] ? { ...acc, [context.key]: message } : acc),
-        //     {},
-        // );
-
         return validate(this.state.data);
     }
 
@@ -30,7 +21,7 @@ class Form extends Component {
         switch (element) {
             case "input":
                 return (
-                    <div className={`field ${error ? "error" : ""} ${active ? "active" : ""}`}>
+                    <div className={`field ${error ? "error" : ""} ${rest.value || active ? "active" : ""}`}>
                         {label && <label>{label}</label>}
 
                         {icon && <i className={`${icon}`}></i>}

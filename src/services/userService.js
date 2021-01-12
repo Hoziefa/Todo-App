@@ -1,4 +1,4 @@
-import firebase from "../services/firebase";
+import firebase from "../services/firebaseService";
 
 class UserService {
     usersRef = firebase.database().ref("users");
@@ -12,9 +12,9 @@ class UserService {
 
             await user.updateProfile({ displayName: username });
 
-            return user;
-        } catch ({ messages }) {
-            return { error: messages };
+            return { success: true, message: "registered successfully", user };
+        } catch ({ message }) {
+            return { success: false, message };
         }
     }
 
@@ -23,14 +23,21 @@ class UserService {
             return await firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
-                .then(({ user }) => user);
+                .then(({ user }) => ({ success: true, message: "registered successfully", user }));
         } catch ({ message }) {
-            return { error: message.includes("password") ? "password or email is wrong!" : "user is not registered" };
+            return {
+                success: false,
+                error: message.includes("password") ? "password or email is wrong!" : "user is not registered",
+            };
         }
     }
 
     async logoutUser() {
-        await firebase.auth().signOut();
+        try {
+            await firebase.auth().signOut();
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
     get currentUser() {

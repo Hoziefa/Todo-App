@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
-import { generateInput } from "../../utils/misc";
+import { inputGenerator } from "../../utils/misc";
 
 import userService from "../../services/userService";
 
@@ -12,7 +12,7 @@ import Form from "../reusableComponents/Form";
 class Register extends Form {
     state = {
         data: {
-            username: generateInput({
+            username: inputGenerator({
                 name: "username",
                 min: 3,
                 max: 30,
@@ -21,7 +21,7 @@ class Register extends Form {
                 icon: "fas fa-user",
             }),
 
-            email: generateInput({
+            email: inputGenerator({
                 name: "email",
                 type: "email",
                 autoComplete: "on",
@@ -29,7 +29,7 @@ class Register extends Form {
                 icon: "fas fa-envelope",
             }),
 
-            password: generateInput({
+            password: inputGenerator({
                 name: "password",
                 type: "password",
                 placeholder: "password",
@@ -38,7 +38,7 @@ class Register extends Form {
                 icon: "fas fa-lock",
             }),
 
-            "password confirmation": generateInput({
+            "password confirmation": inputGenerator({
                 name: "password confirmation",
                 type: "password",
                 placeholder: "password confirmation",
@@ -61,9 +61,7 @@ class Register extends Form {
 
         const currentUser = await userService.registerUser(data);
 
-        if (currentUser.error)
-            Swal.fire({ title: "Error!", text: currentUser.error, icon: "error", confirmButtonText: "Okay" });
-        else {
+        if (currentUser.success) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -80,6 +78,10 @@ class Register extends Form {
                 icon: "success",
                 title: "Signed in successfully",
             });
+        } else {
+            Swal.fire({ title: "Error!", text: currentUser.message, icon: "error", confirmButtonText: "Okay" });
+
+            this.setState({ loading: false });
         }
     };
 
@@ -107,7 +109,7 @@ class Register extends Form {
                                 )}
 
                                 <button className="submit-btn" type="submit">
-                                    {this.state.loading ? <i class="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
+                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
                                 </button>
                             </form>
                         </div>

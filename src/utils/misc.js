@@ -28,7 +28,7 @@ export const validate = formValues =>
         return acc;
     }, {});
 
-export const generateInput = ({
+export const inputGenerator = ({
     element = "input",
     name = "",
     type = "text",

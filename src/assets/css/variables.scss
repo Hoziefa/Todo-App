@@ -2,25 +2,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Allan:wght@400;700&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Cantora+One&display=swap");
-
 @import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Cutive&display=swap");
-
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Mystery+Quest&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap");
 
@@ -218,37 +202,15 @@ $lightBlack-color: #7f7f7f;
 
 //ToDo-*----------  START FONTS BASE  ----------*/
 
-$comicSnsMs-font: "Comic Sans MS";
 $comicNeue-font: "Comic Neue";
+$comicSnsMs-font: "Comic Sans MS";
 $montserrat-font: "Montserrat";
 $poppins-font: "Poppins";
-$arvo-font: "Arvo", sans-serif;
-$anton-font: "Anton", sans-serif;
-$allan-font: "Allan", sans-serif;
-$cantoraOne-font: "Cantora One", sans-serif;
-$apercu-font: "apercu", sans-serif;
-$archivo-font: "Archivo", sans-serif;
-$chivo-font: "Chivo", sans-serif;
-$canon-font: "Canon", sans-serif;
 $roboto-font: "Roboto";
-$openSans-font: "Open Sans";
 $raleway-font: "raleway";
-$helveticaNeue-font: "Helvetica Neue";
-$droidSans-font: "Droid Sans";
-$dejaVuSansCode-font: "DejaVu Sans Code";
-$verdanaHand-font: "Verdana Hand";
 $nexaRustShadow-font: "Nexa Rust Slab Shadow 01";
-$indieFlower-font: "Indie Flower";
-$caveat-font: "Caveat";
 $introRustLine-font: "Intro Rust G Base 2 Line";
 $lato-font: "Lato";
-$mysteryQuest-font: "Mystery Quest", cursive;
-$antonio-font: "Antonio", cursive;
-$aeroSans-font: "AeroSans", sans-serif;
-$actionManShaded-font: "Action Man Shaded", sans-serif;
-$actionMan-font: "Action Man", sans-serif;
-$segoeUI-font: "Segoe UI", sans-serif;
-$segoePrint-font: "Segoe Print", sans-serif;
 $oswald-font: "Oswald", sans-serif;
 $righteous-font: "Righteous", cursive;
 $monoton-font: "Monoton", cursive;
@@ -265,21 +227,12 @@ $arimo-font: "Arimo", sans-serif;
 
 $primary-color: $intel-blue;
 $secondary-color: $fancyPureBlue-color; // 615954 || c9c9c9 || aa4a30
-$thirds-color: #e1ddc3;
 
-$primary-border-color: #eee; // ccc
-
-$primaryWhite-color: $creamWhite-color;
-
-$mainFont: $arimo-font;
+$mainFont: $roboto-font;
 $subFont: $montserrat-font;
-
-$titlesFont: $raleway-font;
-$secondaryTitlesFont: $dejaVuSansCode-font;
 
 $decorated-font: $nexaRustShadow-font;
 $decorated2st-font: $introRustLine-font;
-$decorated3rd-font: $verdanaHand-font;
 
 //%-*=====  End of ACTION-VARIABLES SECTION  ======*-//
 
