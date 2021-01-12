@@ -1,7 +1,5 @@
 @import "./variables.scss";
 
-//*=====  Start GLOBAL-STYLES  ======*//
-
 :root {
     font-size: 16px;
 
@@ -268,13 +266,168 @@ button:disabled {
     }
 }
 
-//*=====  End of GLOBAL-STYLES  ======*//
+.page-loader {
+    all: initial;
 
-//*=====  Start APPLICATION-STYLES  ======*//
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s;
 
-/*===============================*/
-//%-<*        NOT FOUND      *>-%//
-/*===============================*/
+    background-image: radial-gradient(
+        circle at top right,
+        rgb(49, 157, 235) 0%,
+        rgb(49, 157, 235) 13%,
+        rgb(76, 166, 234) 13%,
+        rgb(76, 166, 234) 23%,
+        rgb(103, 176, 232) 23%,
+        rgb(103, 176, 232) 33%,
+        rgb(130, 185, 231) 33%,
+        rgb(130, 185, 231) 46%,
+        rgb(156, 194, 230) 46%,
+        rgb(156, 194, 230) 48%,
+        rgb(183, 203, 229) 48%,
+        rgb(183, 203, 229) 63%,
+        rgb(236, 236, 236) 63%,
+        rgb(236, 236, 236) 83%,
+        rgb(245, 245, 245) 83%,
+        rgb(245, 245, 245) 100%
+    );
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    $fill-color: white;
+
+    section {
+        .loader {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 75px;
+            display: inline-block;
+            vertical-align: middle;
+
+            svg {
+                polygon {
+                    fill: $fill-color;
+                }
+            }
+        }
+
+        .loader-star {
+            position: absolute;
+            top: calc(50% - 12px);
+        }
+
+        .loader-2 .loader-star {
+            position: static;
+            width: 100%;
+            height: 100%;
+            transform: scale(0.7);
+            animation: loader-2-star 1s ease alternate infinite;
+        }
+
+        .loader-2 .loader-circles {
+            width: 8px;
+            height: 8px;
+            background: $fill-color;
+            border-radius: 50%;
+            position: absolute;
+            left: calc(50% - 4px);
+            top: calc(50% - 4px);
+            transition: all 1s ease;
+            animation: loader-2-circles 1s ease-in-out alternate infinite;
+        }
+
+        @-webkit-keyframes loader-2-circles {
+            0% {
+                box-shadow: 0 0 0 $fill-color;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            50% {
+                box-shadow: 24px -22px $fill-color, 30px -15px 0 -3px $fill-color, 31px 0px $fill-color,
+                    29px 9px 0 -3px $fill-color, 24px 23px $fill-color, 17px 30px 0 -3px $fill-color, 0px 33px $fill-color,
+                    -10px 28px 0 -3px $fill-color, -24px 22px $fill-color, -29px 14px 0 -3px $fill-color,
+                    -31px -3px $fill-color, -30px -11px 0 -3px $fill-color, -20px -25px $fill-color,
+                    -12px -30px 0 -3px $fill-color, 5px -29px $fill-color, 13px -25px 0 -3px $fill-color;
+                transform: rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(360deg);
+                box-shadow: 25px -22px $fill-color, 15px -22px 0 -3px black, 31px 2px $fill-color, 21px 2px 0 -3px black,
+                    23px 25px $fill-color, 13px 25px 0 -3px black, 0px 33px $fill-color, -10px 33px 0 -3px black,
+                    -26px 24px $fill-color, -19px 17px 0 -3px black, -32px 0px $fill-color, -23px 0px 0 -3px black,
+                    -25px -23px $fill-color, -16px -23px 0 -3px black, 0px -31px $fill-color, -2px -23px 0 -3px black;
+            }
+        }
+
+        @keyframes loader-2-circles {
+            0% {
+                box-shadow: 0 0 0 $fill-color;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            50% {
+                box-shadow: 24px -22px $fill-color, 30px -15px 0 -3px $fill-color, 31px 0px $fill-color,
+                    29px 9px 0 -3px $fill-color, 24px 23px $fill-color, 17px 30px 0 -3px $fill-color, 0px 33px $fill-color,
+                    -10px 28px 0 -3px $fill-color, -24px 22px $fill-color, -29px 14px 0 -3px $fill-color,
+                    -31px -3px $fill-color, -30px -11px 0 -3px $fill-color, -20px -25px $fill-color,
+                    -12px -30px 0 -3px $fill-color, 5px -29px $fill-color, 13px -25px 0 -3px $fill-color;
+                transform: rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(360deg);
+                box-shadow: 25px -22px $fill-color, 15px -22px 0 -3px black, 31px 2px $fill-color, 21px 2px 0 -3px black,
+                    23px 25px $fill-color, 13px 25px 0 -3px black, 0px 33px $fill-color, -10px 33px 0 -3px black,
+                    -26px 24px $fill-color, -19px 17px 0 -3px black, -32px 0px $fill-color, -23px 0px 0 -3px black,
+                    -25px -23px $fill-color, -16px -23px 0 -3px black, 0px -31px $fill-color, -2px -23px 0 -3px black;
+            }
+        }
+
+        @-webkit-keyframes loader-2-star {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(0.7) rotate(360deg);
+            }
+        }
+
+        @keyframes loader-2-star {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(0.7) rotate(360deg);
+            }
+        }
+    }
+
+    @keyframes waveBackground {
+        0% {
+        }
+
+        100% {
+        }
+    }
+}
+
 .not-found {
     min-height: 90vh;
     font-family: $righteous-font;
@@ -322,11 +475,25 @@ button:disabled {
     }
 }
 
-//%-*----------  -END OF NOT FOUND PAGE-  ----------*-%//
+.dimmer-loader {
+    height: 200px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(78, 87, 87, 0.5);
+    border-radius: 7px;
 
-/*================================*/
-//%-<*       MODAL-FORM       *>-%//
-/*================================*/
+    i {
+        font-size: 3rem;
+    }
+}
+
+.cropper {
+    position: relative;
+    height: 200px;
+    margin: 0 0 1rem;
+}
 
 .modal-container {
     position: fixed;
@@ -348,8 +515,8 @@ button:disabled {
 
     .title {
         text-align: center;
-        font-size: 2.25rem !important;
-        color: $primary-color !important;
+        font-size: 2.25rem;
+        color: $primary-color;
         margin-bottom: 2rem;
 
         h2 {
@@ -368,87 +535,8 @@ button:disabled {
             color: $text-color;
             box-shadow: 0 1px 2px 0 #22242626;
             border: 1px solid #22242626;
-            padding: 3rem 2rem 4rem;
 
             form {
-                .inputs-container {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 1rem;
-                    flex-wrap: wrap;
-
-                    .field {
-                        position: relative;
-                        flex: 1;
-                        height: fit-content;
-
-                        label {
-                            color: #0000008a;
-                            font: 500 1rem $roboto-font;
-                            text-transform: capitalize;
-                            pointer-events: none;
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            transform-origin: top left;
-                            transform: translate(2%, 55%) scale(1);
-                            transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-                                transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                        }
-
-                        input {
-                            border-bottom: 2px solid #b2b2b2;
-                        }
-
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            bottom: 0;
-                            left: 0;
-                            transform: scaleX(0);
-                            width: 100%;
-                            border-bottom: 2px solid $secondary-color;
-                            transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                        }
-
-                        &:focus-within:not(.error) {
-                            label {
-                                color: $primary-color;
-                            }
-
-                            &::after {
-                                transform: scaleX(1);
-                            }
-                        }
-
-                        &.active {
-                            label {
-                                transform: translateY(-60%) scale(0.8);
-                            }
-                        }
-
-                        &.error {
-                            color: $errorDarkColor;
-
-                            label {
-                                color: inherit;
-                            }
-
-                            input {
-                                border-bottom-color: $errorLightestColor;
-                            }
-                        }
-                    }
-
-                    .react-datepicker-wrapper {
-                        input {
-                            border-bottom: 2px solid #b2b2b2;
-                            color: #0000008a;
-                        }
-                    }
-                }
-
                 .actions {
                     display: flex;
                     justify-content: center;
@@ -506,33 +594,211 @@ button:disabled {
         }
     }
 
-    @media (min-width: 768px) {
-        .modal-content {
-            flex-basis: 700px;
-        }
-    }
-
-    @media (max-width: 400px) {
+    &.add-todo--modal {
         .form-container {
             .form-wrapper {
+                padding: 3rem 2rem 4rem;
+
                 form {
                     .inputs-container {
-                        .field,
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 1rem;
+                        flex-wrap: wrap;
+
+                        .field {
+                            position: relative;
+                            flex: 1;
+                            height: fit-content;
+
+                            label {
+                                color: #0000008a;
+                                font: 500 1rem $roboto-font;
+                                text-transform: capitalize;
+                                pointer-events: none;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                transform-origin: top left;
+                                transform: translate(2%, 55%) scale(1);
+                                transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+                                    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                            }
+
+                            input {
+                                border-bottom: 2px solid #b2b2b2;
+                            }
+
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                bottom: 0;
+                                left: 0;
+                                transform: scaleX(0);
+                                width: 100%;
+                                border-bottom: 2px solid $secondary-color;
+                                transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                            }
+
+                            &:focus-within:not(.error) {
+                                label {
+                                    color: $primary-color;
+                                }
+
+                                &::after {
+                                    transform: scaleX(1);
+                                }
+                            }
+
+                            &.active {
+                                label {
+                                    transform: translateY(-60%) scale(0.8);
+                                }
+                            }
+
+                            &.error {
+                                color: $errorDarkColor;
+
+                                label {
+                                    color: inherit;
+                                }
+
+                                input {
+                                    border-bottom-color: $errorLightestColor;
+                                }
+                            }
+                        }
+
                         .react-datepicker-wrapper {
-                            flex-basis: 100%;
+                            input {
+                                border-bottom: 2px solid #b2b2b2;
+                                color: #0000008a;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 400px) {
+            .form-container {
+                .title {
+                    font-size: 1.5rem;
+                }
+
+                .form-wrapper {
+                    form {
+                        .inputs-container {
+                            .field,
+                            .react-datepicker-wrapper {
+                                flex-basis: 100%;
+                            }
+
+                            .field {
+                                margin-bottom: 2rem;
+                            }
                         }
                     }
                 }
             }
         }
     }
+
+    &.update-user-profile--modal {
+        .modal-content {
+            flex-basis: 500px;
+        }
+
+        .form-container {
+            .form-wrapper {
+                padding: 1rem 2rem;
+
+                form {
+                    .field {
+                        position: relative;
+
+                        &:not(:last-of-type) {
+                            margin-bottom: 1rem;
+                        }
+
+                        label {
+                            text-transform: capitalize;
+                            display: block;
+                            font-weight: 500;
+                            margin-bottom: 0.5rem;
+
+                            &::first-letter {
+                                font-size: large;
+                            }
+                        }
+
+                        input {
+                            border: 1px solid #22242626;
+                            box-shadow: 0 0 0 0 transparent inset;
+                            border-radius: 0.5rem;
+                            margin-bottom: 0.2rem;
+                            padding: 1rem;
+                            padding-left: 2.5rem;
+                            transition: color 0.1s ease, border-color 0.1s ease;
+
+                            &::-webkit-input-placeholder {
+                                color: #918985;
+                            }
+
+                            &:focus {
+                                background: #fff;
+                                border-color: $primary-color;
+                                box-shadow: 0 0 0 0 #22242659 inset;
+                            }
+                        }
+
+                        i {
+                            position: absolute;
+                            top: 50%;
+                            left: 1rem;
+                            transform: translateY(-60%);
+                            color: #000000de;
+                            pointer-events: none;
+                            opacity: 0.5;
+                        }
+
+                        &:not(.error):focus-within {
+                            i {
+                                color: $primary-color !important;
+                                opacity: 1;
+                            }
+                        }
+
+                        &.error {
+                            color: $errorDarkColor;
+
+                            input {
+                                background-color: #fff6f6;
+                                border-color: $errorLightestColor;
+
+                                &::-webkit-input-placeholder {
+                                    color: currentColor;
+                                }
+                            }
+
+                            i {
+                                color: inherit;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (min-width: 768px) {
+        .modal-content {
+            flex-basis: 700px;
+        }
+    }
 }
 
-//%-*----------  -END OF MODAL-FORM-  ----------*-%//
-
-/*===================================*/
-//%-<*       REGISTER FORM       *>-%//
-/*===================================*/
 .register-form {
     padding: 1rem;
 
@@ -541,7 +807,7 @@ button:disabled {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        min-height: calc(100vh var(--nav-height) - 2rem);
+        min-height: calc(100vh - var(--nav-height) - 2rem);
 
         .form-title {
             text-align: center;
@@ -690,11 +956,7 @@ button:disabled {
         }
     }
 }
-//%-*----------  -END OF REGISTER FORM-  ----------*-%//
 
-/*================================*/
-//%-<*       LOGIN FORM       *>-%//
-/*================================*/
 .login-form {
     padding: 1.5rem 1rem;
 
@@ -850,11 +1112,7 @@ button:disabled {
         }
     }
 }
-//%-*----------  -END OF LOGIN FORM-  ----------*-%//
 
-/*====================================*/
-//%-<*           NAVBAR           *>-%//
-/*====================================*/
 nav.main-nav {
     padding: 1rem 0;
     border-bottom: 1px solid #ddd;
@@ -1210,11 +1468,7 @@ nav.main-nav {
         }
     }
 }
-//%-*----------  -END OF NAVBAR-  ----------*-%//
 
-/*================================*/
-//%-<*       APP-HOME       *>-%//
-/*================================*/
 .home,
 .todos-page {
     @extend %windowRestHeight;
@@ -1222,6 +1476,31 @@ nav.main-nav {
 
     .user-profile {
         margin-bottom: 7rem;
+        display: flex;
+
+        .user-info {
+        }
+
+        .user-avatar {
+            margin-left: auto;
+            cursor: pointer;
+
+            img {
+                // width: 50px;
+                // height: 50px;
+                // border-radius: 50%;
+                padding: 3px;
+                background-color: #eee;
+                border: 3px solid #ddd;
+
+                display: inline-block;
+                vertical-align: middle;
+                max-width: 100%;
+                width: 4.5em;
+                height: 4.5em;
+                border-radius: 500rem;
+            }
+        }
     }
 
     .todos-app {
@@ -1544,16 +1823,35 @@ nav.main-nav {
                     margin: 0 auto;
                     width: fit-content;
 
-                    .clear-calendar {
-                        color: #f44336;
-                        position: absolute;
-                        top: -13px;
-                        right: -10px;
-                        width: 30px;
-                        height: 30px;
-                        background-color: #333;
-                        border: 3px solid #999;
-                        border-radius: 50%;
+                    .clear-calendar--btn {
+                        display: block;
+                        margin-left: auto;
+                        text-transform: capitalize;
+                        background-color: $secondary-color;
+                        font-family: $oswald-font;
+                        padding: 0.625rem 3rem 0.625rem 2rem;
+                        border-radius: 5px;
+                        position: relative;
+                        color: white;
+                        transition: background-color 0.3s;
+
+                        i {
+                            font-size: 90%;
+                            background-color: rgba(0, 0, 0, 0.051);
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 2.57142857em;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        &:hover,
+                        &:active {
+                            background-color: $primary-color;
+                        }
                     }
 
                     .react-calendar {
@@ -1579,7 +1877,3 @@ nav.main-nav {
         }
     }
 }
-
-//%-*----------  -END OF APP-HOME-  ----------*-%//
-
-//*=====  End of APPLICATION-STYLES  ======*//

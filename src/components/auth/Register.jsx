@@ -8,8 +8,11 @@ import { inputGenerator } from "../../utils/misc";
 import userService from "../../services/userService";
 
 import Form from "../reusableComponents/Form";
+import AppContext from "../../contexts/appContext";
 
 class Register extends Form {
+    static contextType = AppContext;
+
     state = {
         data: {
             username: inputGenerator({
@@ -78,6 +81,8 @@ class Register extends Form {
                 icon: "success",
                 title: "Signed in successfully",
             });
+
+            this.context.updateAppContext({ currentUserProfile: await userService.getCurrentUserProfile() });
         } else {
             Swal.fire({ title: "Error!", text: currentUser.message, icon: "error", confirmButtonText: "Okay" });
 

@@ -17,24 +17,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap");
 
 @font-face {
-    font-family: "Canon";
-    src: url(../fonts/CANON.ttf) format("truetype");
-
-    font-family: "Chivo";
-    src: url(../fonts/Chivo-Regular.otf) format("opentype");
-
     font-family: "Comic Sans MS";
     src: url(../fonts/comic.ttf) format("truetype");
-
-    font-family: "Action Man Shaded";
-    src: url(../fonts/Action_Man_Shaded.ttf);
-
-    font-family: "Action Man";
-    src: url(../fonts/Action_Man.ttf);
-
-    font-family: "Action Man Bold";
-    font-weight: bold;
-    src: url(../fonts/Action_Man_Bold.ttf);
 
     font-family: "Intro Rust G Base 2 Line";
     src: url(../fonts/IntroRustG-Base2Line.otf) format("opentype");
@@ -44,159 +28,19 @@
 }
 
 /*=============================================
-//%=        START VARIABLES SECTION        =%//
+//%=        START VARIABLES        =%//
 =============================================*/
 
 //ToDo-*----------  START COLORS BASE  ----------*/
 
-$fancyFuchsiaColor-color: #e91e63;
-$fancyFuchsiaColor2-color: #ef4361;
-
-$fancyGreenColor-color: #4caf50;
-
-$GrassGreenColor: #7eb908;
-$LightGreenColor: #3ad890;
-$teal: #00aba9;
-$maximumBlueGreen-color: #2bcbba;
-$turquoiseTopaz-color: #0fb9b1;
-
-$reptileGreen-color: #26de81;
-$algalFuelGreen-color: #20bf6b;
-$algalFuelGreenLight-color: #2ecc71;
-
-$creamWhite-color: #f8f8ff;
-$floralwhite-color: #fffaf0;
-$whitesmoke-color: #f5f5f5;
-$lightGray-color: #b6b6b6;
-$whiteLittleDark-color: #ececec;
-$grayText-color: #9e9e9e;
-$goodBlackGray-color: #212121;
-$goodBlackDark-color: #121212;
-$blackBlueGray-color: #252f31;
-$blackBlueDark-color: #191e22; //- #232323 little lighter
-$darkGray-color: #6a6e71; //- #6C6C6C little grayer
-$grayPlaceholder-color: #bec6cc, #444451;
-
-$grayOverlay-color: rgba(49, 55, 61, 0.9);
-
-$darkLessNavy-color: #23232e;
-$darkestNavy-color: #141418;
-
-$fancyNavy-color: #6649b8;
-
-$SkyBlueColor: #a4e4f1;
-
-$LightOrangeColor: #eab022;
-
-$fancyLightYellow-color: #ffeb3b;
-$flirtatiousYellow-color: #fed330;
-
-$PinkColor: #fa86c1;
-
-$DarkOrangeColor-one: #f7600e;
-$DarkOrangeColor-two: #da532c;
-$w3DeepOrange: #ff5722;
-$orangeHibiscus-color: #fd9644;
-$beniukonBronzeOrange-color: #fa8231;
-
-$DarkBlueColor: #2b5797;
-$BlueColor: #04a0ea;
-$flat-midnight-blue: #34495e;
-$flat-babyBlue-blue: #609ce1;
-$flat-azure-blue: #069af3;
-$BluerBlueColor: #0badcc;
-$twinkleBlue-color: #d1d8e0;
-$highBlue-color: #45aaf2;
-$fancyBlue-color: #0099ff;
-
-$FuchsiaColor: #e82f69;
-$FuchsiaColor: #ff0048;
-$bloodyRed-color: #ee1111;
-$w3Red: #f44336;
-$fusionRed-color: #fc5c65;
-$desire-color: #eb3b5a;
-$redPigment-color: #ea2027;
-
-$flat-silver: #bdc3c7;
-
-$w3Indigo: #3f51b5;
-
-$google-blue: #4285f4;
-$google-yellow: #fbbc05;
-$google-green: #34a853;
-$google-redOrange: #ea4335;
-
-$twitter-skyBlue: #55acee;
-$twitter-black: #292f33;
-$twitter-blueGray: #66757f;
-$twitter-lightGray: #ccd6dd;
-$twitter-blueLight: #e1e8ed;
-
-$facebook-Darkblue: #3b5998;
-$facebook-lightBlue: #8b9dc3;
-$facebook-lighterBlue: #dfe3ee;
-$facebook-white: #f7f7f7;
-
-$microsoft-orange: #f65314;
-$microsoft-green: #7cbb00;
-$microsoft-blue: #00a1f1;
-$microsoft-yellow: #ffbb00;
-
 $intel-blue: #0f7dc2;
 
-$instagram-blue: #3f729b;
-
-$ibm-blue: #006699;
-
-$yahoo-purple: #7b0099;
-
-$amazon-orange: #ff9900;
-$amazon-blue: #146eb4;
-
-$netflix-black: #221f1f;
-$netflix-red: #e50914;
-$netflix-white: #f5f5f1;
-
-$coca-cola-red: #ed1c16;
-
-$pepsi-fire: #e32934;
-$pepsi-blue: #004883;
-
-$ikea-orange: #ffcc00;
-$ikea-blue: #003399;
-
-$android-green: #a4c639;
-
-$royalblueWhite-color: #babecc;
-$royalblueWhiter-color: #ebecf0;
-$darkBlackBlue-color: #495057;
-$blueLight-color: #607d8b;
 $fancyPureBlue-color: #03a9f4;
-$fancyNormBlue-color: #2196f3;
-$littleDarkTeal-color: #009688;
-$bootstrap-success-color: #28a745;
-$bootstrap-danger-color: #dc3545;
-$bootstrap-warning-color: #ffc107;
-$bootstrap-info-color: #17a2b8;
-$bootstrap-light-color: #f8f9fa;
-$bootstrap-primary-color: #007bff;
-$bootstrap-primaryGray-color: #6c757d;
-$bootstrap-black-color: #343a40;
-$bootstrap-white-color: #f8f9fa;
-
-$whiteGrey-color: #f1f2f6;
-$darkerBlack-color: #3b3b3b;
-$lessBlack-color: #525252;
-$lightingGreenDarker-color: #17bfa4;
-$lightingGreen-color: #5fc7bc;
 
 $errorDarkestColor: darkred;
 $errorDarkColor: #9f3a38;
 $errorLightColor: #f44336e8;
 $errorLightestColor: #e0b4b4;
-
-$darkBlack-color: #1e1e1e;
-$lightBlack-color: #7f7f7f;
 
 //ToDo-*----------  END COLORS BASE  ----------*/
 
@@ -219,14 +63,8 @@ $arimo-font: "Arimo", sans-serif;
 
 //ToDo-*----------  END FONTS BASE  ----------*/
 
-//%-*=====  End of VARIABLES SECTION  ======*-//
-
-/*=============================================
-//%=         ACTION-VARIABLES SECTION          =%//
-=============================================*/
-
 $primary-color: $intel-blue;
-$secondary-color: $fancyPureBlue-color; // 615954 || c9c9c9 || aa4a30
+$secondary-color: $fancyPureBlue-color;
 
 $mainFont: $roboto-font;
 $subFont: $montserrat-font;
@@ -234,29 +72,21 @@ $subFont: $montserrat-font;
 $decorated-font: $nexaRustShadow-font;
 $decorated2st-font: $introRustLine-font;
 
-//%-*=====  End of ACTION-VARIABLES SECTION  ======*-//
-
 //%-*=====  PROJECT VARIABLES AND THEMES AND DEPENDENCIES  ======*-//
-//% SKINS-COLORS:
-$red-skin: #fd152b;
-$fusilRed-skin: #e50914;
-$blue-skin: #2196fc;
-$orange-skin: #fa5b0f;
-$yellow-skin: #ffb400;
-$green-skin: #72b626;
 
+// In feature:
 //% LIGHT-THEME:
 :root,
 :root.light {
-    --light-bg: #fafafa; // fdf9ff || fafafa || ghostwhite
+    --light-bg: #fafafa;
     --dark-bg: #f2f2fc;
-    --heading-color: #404040; // 404040 || 302e4d
-    --text-color: #1d1d1d; // ddd || 0e1731 || 504e70 || 121212 || ececec || d4d3d3 #000000de #1b1c1d
-    --dark-border: #d4d4e3; // 4d4d4d
-    --light-border: #e8dfec; // 85b7d9
+    --heading-color: #404040;
+    --text-color: #1d1d1d;
+    --dark-border: #d4d4e3;
+    --light-border: #e8dfec;
 
-    --primary-color: #16b0cf; // ff9a76 f08a5d fca652 d57149 $DarkOrangeColor-one #24a19c #16b0cf
-    --secondary-color: #6ebfb5; // ff9a76 f08a5d fca652 d57149 $DarkOrangeColor-one 24a19c
+    --primary-color: #16b0cf;
+    --secondary-color: #6ebfb5;
     --secondary-text-color: #1d1d1d;
 
     --nav-height: 0;
@@ -272,9 +102,7 @@ $green-skin: #72b626;
     --text-color: #e9e9e9;
 }
 
-//% SCSS-VARIABLES TO CONTROL THEME:
-// $primary-color: var(--primary-color);
-// $secondary-color: var(--secondary-color);
+//% SCSS-VARIABLES Colors:
 $light-bg: var(--light-bg);
 $dark-bg: var(--dark-bg);
 $heading-color: var(--heading-color);
@@ -282,3 +110,5 @@ $text-color: var(--text-color);
 $dark-border: var(--dark-border);
 $light-border: var(--light-border);
 $secondaryText-color: var(--secondary-text-color);
+
+//%-*=====  End of VARIABLES  ======*-//

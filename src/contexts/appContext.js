@@ -5,6 +5,7 @@ const AppContext = React.createContext({});
 export class AppContextProvider extends Component {
     state = {
         currentUser: this.props.currentUser,
+        currentUserProfile: null,
         todos: [],
         filterDescription: window.localStorage.getItem("filterDescription") || "",
         filterDate: new Date(window.localStorage.getItem("filterDate") || Date.now()),
