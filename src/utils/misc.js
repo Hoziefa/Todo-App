@@ -1,32 +1,37 @@
 export const validate = formValues =>
-    Object.values(formValues).reduce((acc, { name, label, min, max, value, validationlabel, config: { type } }) => {
-        let fieldName = validationlabel || label || name;
+    Object.values(formValues).reduce(
+        (acc, { name, label, min, max, value, validationlabel, noValidate, config: { type } }) => {
+            if (noValidate) return acc;
 
-        if (typeof value === "string") value = value.trim();
+            let fieldName = validationlabel || label || name;
 
-        if (type === "number" && +value <= 0) acc[name] = `${fieldName} must be greater than or equal to 1`;
+            if (typeof value === "string") value = value.trim();
 
-        if (type === "email" && !/\S+@\S+\.\S+/.test(value)) acc[name] = `must be a valid email`;
+            if (type === "number" && +value <= 0) acc[name] = `${fieldName} must be greater than or equal to 1`;
 
-        if (value && (min || max) && (+value.length < min || +value.length > max)) {
-            acc[name] = `${fieldName} field must be ${
-                min && max
-                    ? `between ${min} and ${max}`
-                    : min && !max
-                    ? `more than ${min}`
-                    : max && !min
-                    ? `less than ${max}`
-                    : ""
-            }`;
-        }
+            if (type === "email" && !/\S+@\S+\.\S+/.test(value)) acc[name] = `must be a valid email`;
 
-        if (type === "password" && name === "password confirmation" && value !== formValues.password.value)
-            acc[name] = "Your password and confirmation password do not match";
+            if (value && (min || max) && (+value.length < min || +value.length > max)) {
+                acc[name] = `${fieldName} field must be ${
+                    min && max
+                        ? `between ${min} and ${max}`
+                        : min && !max
+                        ? `more than ${min}`
+                        : max && !min
+                        ? `less than ${max}`
+                        : ""
+                }`;
+            }
 
-        if (!value) acc[name] = `${fieldName} field is required`;
+            if (type === "password" && name === "password confirmation" && value !== formValues.password.value)
+                acc[name] = "Your password and confirmation password do not match";
 
-        return acc;
-    }, {});
+            if (!value) acc[name] = `${fieldName} field is required`;
+
+            return acc;
+        },
+        {},
+    );
 
 export const inputGenerator = ({
     element = "input",

@@ -21,6 +21,7 @@ class TodoForm extends Form {
                 label: "what do you want to do?",
                 validationlabel: "new to-do",
                 validationErrorClass: "validation-error--underline",
+                autoComplete: "off",
             }),
         },
         errors: {},
@@ -85,14 +86,14 @@ class TodoForm extends Form {
 
         return (
             <div className="add-todo--form">
-                <Modal active={this.context.modal} onClose={this.closeModal}>
+                <Modal active={this.context.modal} onClose={this.closeModal} className="add-todo--modal">
                     <div className="form-container">
                         <div className="form-wrapper">
                             <div className="title">
                                 <h2>create new to-do</h2>
                             </div>
 
-                            <form onSubmit={this.onsubmit} className=".form">
+                            <form onSubmit={this.onsubmit} className="form">
                                 <div className="inputs-container">
                                     {this.renderInput(data.task, errors.task)}
 
@@ -108,7 +109,7 @@ class TodoForm extends Form {
                                     <button
                                         type="submit"
                                         className="submit-btn"
-                                        disabled={!data.task.value.trim() || !date}>
+                                        disabled={errors.task || !data.task.value || !date}>
                                         create <i className="fas fa-plus"></i>
                                     </button>
 

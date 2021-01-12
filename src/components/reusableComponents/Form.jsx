@@ -15,7 +15,20 @@ class Form extends Component {
     }
 
     renderInput = (
-        { element, config, validationErrorClass, noValidate, label, icon, touched, active, options = [], ...rest },
+        {
+            element,
+            config,
+            validationErrorClass,
+            noValidate,
+            label,
+            icon,
+            touched,
+            active,
+            onFileUploadChange,
+            displayErrorMsg = true,
+            options = [],
+            ...rest
+        },
         error,
     ) => {
         switch (element) {
@@ -57,9 +70,49 @@ class Form extends Component {
                     </div>
                 );
 
+            case "file":
+                return (
+                    <div className={`field ${!noValidate && error ? "error" : ""}`}>
+                        {label && <label>{label}</label>}
+
+                        {icon && <i className={`${icon}`}></i>}
+
+                        <input
+                            {...config}
+                            {...rest}
+                            onChange={e => this.onInputFileChange(e, onFileUploadChange)}
+                            onBlur={this.onBlur}
+                            onFocus={this.onFocus}
+                        />
+
+                        {!noValidate && displayErrorMsg && this.displayError(touched, error, validationErrorClass)}
+                    </div>
+                );
+
             default:
                 return null;
         }
+    };
+
+    onInputFileChange = (e, onFileUploadChange) => {
+        const { name, value } = e.currentTarget;
+
+        this.setState(
+            {
+                data: { ...this.state.data, [name]: { ...this.state.data[name], value } },
+            },
+            () => {
+                const errors = this.validate();
+
+                this.setState({
+                    errors: this.state.data[name].touched
+                        ? { ...this.state.errors, [name]: errors[name] }
+                        : this.state.errors,
+                });
+            },
+        );
+
+        onFileUploadChange(e);
     };
 
     onChange = ({ currentTarget: { name, value } }) => {
@@ -77,6 +130,8 @@ class Form extends Component {
                 });
             },
         );
+
+        this.onFormChange && this.onFormChange({ name: value });
     };
 
     onBlur = ({ currentTarget: { name, value } }) => {
