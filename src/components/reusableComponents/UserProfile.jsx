@@ -5,6 +5,8 @@ import userService from "../../services/userService";
 
 import UpdateUserProfileForm from "./UpdateUserProfileForm";
 
+import placeholderImage from "../../assets/placeholder-image.jpg";
+
 class UserProfile extends Component {
     static contextType = AppContext;
 
@@ -30,7 +32,7 @@ class UserProfile extends Component {
                     </div>
 
                     <div className="user-avatar" onClick={this.displayModal}>
-                        <img src={currentUserProfile?.avatar} alt="avatar" />
+                        <img src={currentUserProfile?.avatar || placeholderImage} alt="avatar" />
                     </div>
                 </div>
 

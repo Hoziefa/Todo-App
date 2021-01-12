@@ -36,7 +36,7 @@ class Todos extends Home {
                         <SectionHeading title="to-do list">
                             <div className="calendar-container">
                                 <button className="clear-calendar--btn" onClick={this.onResetDate}>
-                                    reset date <i className="fas fa-times"></i>
+                                    reset <i className="fas fa-times"></i>
                                 </button>
 
                                 <Calendar onChange={this.onDateChange} value={filterDate} showDoubleView />

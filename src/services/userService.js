@@ -12,7 +12,7 @@ class UserService {
                 .then(async ({ user }) => {
                     await user.updateProfile({
                         displayName: username,
-                        photoURL: `https://www.gravatar.com/avatar/${md5(user.email)}?d=identicon`,
+                        photoURL: `https://i.pravatar.cc/150?u=${md5(email)}`,
                     });
 
                     await this.usersRef.child(user.uid).set({ username: user.displayName, avatar: user.photoURL, email });
@@ -69,6 +69,14 @@ class UserService {
         await this.usersRef.child(this.currentUser.uid).update({ avatar: newAvatar });
 
         return newAvatar;
+    }
+
+    async changeCurrentUserProfile(username) {
+        if (!this.currentUser?.uid) return;
+
+        await this.currentUser.updateProfile({ displayName: username });
+
+        await this.usersRef.child(this.currentUser.uid).update({ username });
     }
 
     get currentUser() {

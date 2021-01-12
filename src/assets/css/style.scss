@@ -180,7 +180,7 @@ button:disabled {
     display: block;
     max-height: 0;
     white-space: nowrap;
-    font: 600 small $ubuntu-font;
+    font: 600 80% $ubuntu-font;
     text-transform: capitalize;
     padding-left: 0.5rem;
 }
@@ -475,6 +475,83 @@ button:disabled {
     }
 }
 
+.file-upload-container {
+    position: relative;
+    margin: 0.5rem 0;
+
+    .file-upload {
+        background-size: 100% 100% !important;
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $primary-color;
+            filter: opacity(0.5);
+        }
+
+        &::after {
+            content: "+";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $primary-color;
+            font-size: 2.5rem;
+            border-radius: 50%;
+            background-color: $secondary-color;
+        }
+
+        &::before,
+        &::after {
+            pointer-events: none;
+        }
+
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        &.src-pr {
+            &::before,
+            &::after {
+                opacity: 0;
+                transition: 0.4s;
+            }
+
+            &:hover {
+                &::before,
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        width: 100%;
+    }
+}
+
 .dimmer-loader {
     height: 200px;
     margin-bottom: 2rem;
@@ -606,6 +683,7 @@ button:disabled {
                         align-items: center;
                         gap: 1rem;
                         flex-wrap: wrap;
+                        position: relative;
 
                         .field {
                             position: relative;
@@ -670,10 +748,23 @@ button:disabled {
                             }
                         }
 
-                        .react-datepicker-wrapper {
-                            input {
-                                border-bottom: 2px solid #b2b2b2;
-                                color: #0000008a;
+                        .date--picker {
+                            .react-datepicker-wrapper {
+                                input {
+                                    border-bottom: 2px solid #b2b2b2;
+                                    color: #0000008a;
+                                    padding-right: 16px;
+                                }
+                            }
+
+                            .fa-calendar-alt {
+                                position: absolute;
+                                top: 50%;
+                                right: 6px;
+                                transform: translateY(-60%);
+                                pointer-events: none;
+                                color: #00000033;
+                                font-size: 1.75rem;
                             }
                         }
                     }
@@ -691,12 +782,23 @@ button:disabled {
                     form {
                         .inputs-container {
                             .field,
-                            .react-datepicker-wrapper {
+                            .date--picker {
                                 flex-basis: 100%;
                             }
 
                             .field {
                                 margin-bottom: 2rem;
+                            }
+
+                            .date--picker {
+                                .react-datepicker-wrapper {
+                                    width: 100%;
+                                }
+
+                                .fa-calendar-alt {
+                                    top: auto;
+                                    bottom: 0;
+                                }
                             }
                         }
                     }
@@ -1604,6 +1706,8 @@ nav.main-nav {
                             }
 
                             .react-datepicker-wrapper {
+                                flex: 0.5;
+
                                 input {
                                     border-bottom: 2px solid #b2b2b2;
                                     color: #0000008a;
@@ -1698,6 +1802,24 @@ nav.main-nav {
                         &.completed {
                             background-color: #eee;
                             border-radius: 0.5rem;
+                        }
+
+                        @media (max-width: 450px) {
+                            .inputs-container {
+                                .field,
+                                .react-datepicker-wrapper {
+                                    flex-basis: 100%;
+                                }
+                            }
+
+                            .actions {
+                                align-self: flex-end;
+
+                                .confirm-todo--btn,
+                                .cancel-todo--btn {
+                                    font-size: 1.15rem;
+                                }
+                            }
                         }
                     }
                 }
@@ -1829,7 +1951,7 @@ nav.main-nav {
                         text-transform: capitalize;
                         background-color: $secondary-color;
                         font-family: $oswald-font;
-                        padding: 0.625rem 3rem 0.625rem 2rem;
+                        padding: 0.5rem 3rem 0.5rem 2rem;
                         border-radius: 5px;
                         position: relative;
                         color: white;

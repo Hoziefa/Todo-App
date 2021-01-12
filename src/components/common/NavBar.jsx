@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { NavLink, Link, withRouter } from "react-router-dom";
+
+import AppContext from "../../contexts/appContext";
+
 import userService from "../../services/userService";
 
 import logo from "../../assets/logo.png";
 
 class NavBar extends Component {
+    static contextType = AppContext;
+
     state = { open: false };
 
     navRef = React.createRef();
@@ -19,6 +24,8 @@ class NavBar extends Component {
         await userService.logoutUser();
 
         this.props.history.push("/");
+
+        this.context.updateAppContext({ currentUserProfile: null });
     };
 
     renderLogging = currentUser =>
