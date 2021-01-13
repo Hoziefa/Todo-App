@@ -114,7 +114,7 @@ class Register extends Form {
                                 )}
 
                                 <button className="submit-btn" type="submit">
-                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : "log in"}
+                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : "register"}
                                 </button>
                             </form>
                         </div>

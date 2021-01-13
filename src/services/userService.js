@@ -12,7 +12,7 @@ class UserService {
                 .then(async ({ user }) => {
                     await user.updateProfile({
                         displayName: username,
-                        photoURL: `https://i.pravatar.cc/150?u=${md5(email)}`,
+                        photoURL: `https://www.gravatar.com/avatar/${md5(email)}?d=mp`,
                     });
 
                     await this.usersRef.child(user.uid).set({ username: user.displayName, avatar: user.photoURL, email });

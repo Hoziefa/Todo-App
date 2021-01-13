@@ -189,6 +189,9 @@ class UpdateUserProfileForm extends Form {
 
     render() {
         const { data, errors, image, uploading } = this.state;
+        const { currentUserProfile } = this.context;
+
+        let isSubmitBtnDisabled = errors.username || (data.username.value === currentUserProfile?.username && !image);
 
         return (
             <Modal active={this.props.modal} onClose={this.closeModal} className="update-user-profile--modal">
@@ -226,7 +229,7 @@ class UpdateUserProfileForm extends Form {
                             {this.renderInput(data.username, errors.username)}
 
                             <div className="actions">
-                                <button type="submit" className="submit-btn" disabled={errors.username}>
+                                <button type="submit" className="submit-btn" disabled={isSubmitBtnDisabled}>
                                     update <i className="fas fa-plus"></i>
                                 </button>
 
