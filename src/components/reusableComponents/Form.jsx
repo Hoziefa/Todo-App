@@ -81,7 +81,7 @@ class Form extends Component {
                         <div className="file-upload-container">
                             <div
                                 className={`file-upload ${avatar ? "src-pr" : ""}`}
-                                style={{ background: avatar && `url(${avatar})` }}>
+                                style={{ background: avatar && `#eee url(${avatar})` }}>
                                 <input
                                     {...config}
                                     {...rest}
