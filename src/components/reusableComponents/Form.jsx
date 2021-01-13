@@ -26,6 +26,7 @@ class Form extends Component {
             active,
             onFileUploadChange,
             displayErrorMsg = true,
+            avatar,
             options = [],
             ...rest
         },
@@ -77,13 +78,19 @@ class Form extends Component {
 
                         {icon && <i className={`${icon}`}></i>}
 
-                        <input
-                            {...config}
-                            {...rest}
-                            onChange={e => this.onInputFileChange(e, onFileUploadChange)}
-                            onBlur={this.onBlur}
-                            onFocus={this.onFocus}
-                        />
+                        <div className="file-upload-container">
+                            <div
+                                className={`file-upload ${avatar ? "src-pr" : ""}`}
+                                style={{ background: avatar && `#eee url(${avatar})` }}>
+                                <input
+                                    {...config}
+                                    {...rest}
+                                    onChange={e => this.onInputFileChange(e, onFileUploadChange)}
+                                    onBlur={this.onBlur}
+                                    onFocus={this.onFocus}
+                                />
+                            </div>
+                        </div>
 
                         {!noValidate && displayErrorMsg && this.displayError(touched, error, validationErrorClass)}
                     </div>

@@ -97,12 +97,16 @@ class TodoForm extends Form {
                                 <div className="inputs-container">
                                     {this.renderInput(data.task, errors.task)}
 
-                                    <DatePicker
-                                        selected={date}
-                                        dateFormat="Pp"
-                                        showTimeSelect
-                                        onChange={(date, e) => this.setState({ date: date.getTime() })}
-                                    />
+                                    <div className="date--picker">
+                                        <DatePicker
+                                            selected={date}
+                                            dateFormat="Pp"
+                                            showTimeSelect
+                                            onChange={(date, e) => this.setState({ date: date.getTime() })}
+                                        />
+
+                                        <i className="far fa-calendar-alt"></i>
+                                    </div>
                                 </div>
 
                                 <div className="actions">

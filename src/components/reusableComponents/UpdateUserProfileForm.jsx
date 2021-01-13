@@ -31,9 +31,10 @@ class UpdateUserProfileForm extends Form {
                 name: "avatar",
                 type: "file",
                 element: "file",
-                label: "new avatar",
                 validationErrorClass: "validation-error--underline",
+                noValidate: true,
                 displayErrorMsg: false,
+                avatar: this.context.currentUserProfile?.avatar,
                 onFileUploadChange: e => this.onFileUploadChange(e),
             }),
         },
@@ -47,10 +48,15 @@ class UpdateUserProfileForm extends Form {
         croppedImage: null,
         croppedAreaPixels: null,
         blob: null,
+        uploadSuccess: false,
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (!prevState.data.username.initialvalue && !this.state.data.username.initialvalue) {
+        if (
+            !prevState.data.username.initialvalue &&
+            !this.state.data.username.initialvalue &&
+            this.context.currentUserProfile?.username
+        ) {
             this.setState({
                 data: {
                     ...this.state.data,
@@ -59,6 +65,7 @@ class UpdateUserProfileForm extends Form {
                         value: this.context.currentUserProfile?.username,
                         initialvalue: this.context.currentUserProfile?.username,
                     },
+                    avatar: { ...this.state.data.avatar, avatar: this.context.currentUserProfile?.avatar },
                 },
             });
         }
@@ -69,7 +76,7 @@ class UpdateUserProfileForm extends Form {
             data: {
                 ...this.state.data,
                 username: { ...this.state.data.username, value: this.context.currentUserProfile?.username },
-                avatar: { ...this.state.data.avatar, value: "" },
+                avatar: { ...this.state.data.avatar, value: "", avatar: this.context.currentUserProfile?.avatar },
             },
             errors: { ...this.state.errors, username: "", avatar: "" },
             uploading: false,
@@ -80,55 +87,13 @@ class UpdateUserProfileForm extends Form {
             croppedImage: null,
             croppedAreaPixels: null,
             blob: null,
+            uploadSuccess: false,
         });
 
         this.props.closeModal();
     };
 
-    //#region Change user avatar and name
-    onFileUploadChange = ({ target: { files: [file] } = {} }) => {
-        const reader = new FileReader();
-
-        file && reader.readAsDataURL(file);
-
-        reader.addEventListener("load", () => this.setState({ image: reader.result }), false);
-    };
-
-    onCropComplete = (croppedArea, croppedAreaPixels) => this.setState({ croppedAreaPixels });
-
-    handleCroppedImage = async () => {
-        const { image, croppedAreaPixels } = this.state;
-
-        try {
-            const { croppedImage, blob } = await getCroppedImg(image, croppedAreaPixels);
-
-            this.setState({ croppedImage, blob });
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    onFormSubmit = async ({ username }) => {
-        if (!this.state.image || !username) return;
-
-        await this.handleCroppedImage();
-
-        const { currentUser, updateAppContext } = this.context;
-        const { blob } = this.state;
-
-        if (!blob) return;
-
-        this.setState({ uploading: true });
-
-        const newAvatar = await userService.changeCurrentUserAvatar(
-            { blob, metadata: { contentType: blob.type } },
-            `avatars/user/${currentUser?.uid}`,
-        );
-
-        updateAppContext({ currentUserProfile: { ...this.context.currentUserProfile, avatar: newAvatar, username } });
-
-        this.closeModal();
-
+    displaySuccessAlert() {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -145,11 +110,88 @@ class UpdateUserProfileForm extends Form {
             icon: "success",
             title: "Updated Successfully",
         });
+    }
+
+    //#region Change user avatar and name
+    onFileUploadChange = ({ target: { files: [file] } = {} }) => {
+        const reader = new FileReader();
+
+        file && reader.readAsDataURL(file);
+
+        reader.addEventListener("load", () => this.setState({ image: reader.result, uploadSuccess: true }), false);
+    };
+
+    onCropComplete = (croppedArea, croppedAreaPixels) => this.setState({ croppedAreaPixels });
+
+    handleCroppedImage = async () => {
+        const { image, croppedAreaPixels } = this.state;
+
+        try {
+            const { croppedImage, blob } = await getCroppedImg(image, croppedAreaPixels);
+
+            this.setState({ croppedImage, blob, uploadSuccess: true });
+        } catch (e) {
+            console.error(e);
+
+            this.setState({ uploadSuccess: false });
+        }
+    };
+
+    onUploadFile = async () => {
+        await this.handleCroppedImage();
+
+        const { blob } = this.state;
+
+        if (!blob) return;
+
+        this.setState({ uploading: true });
+
+        const newAvatar = await userService.changeCurrentUserAvatar(
+            { blob, metadata: { contentType: blob.type } },
+            `avatars/user/${this.context.currentUser?.uid}`,
+        );
+
+        return newAvatar;
+    };
+
+    onFormSubmit = async ({ username }) => {
+        const { updateAppContext, currentUserProfile } = this.context;
+
+        if (username && this.state.uploadSuccess) {
+            await userService.changeCurrentUserProfile(username);
+
+            const newAvatar = await this.onUploadFile();
+
+            updateAppContext({ currentUserProfile: { ...this.context.currentUserProfile, avatar: newAvatar, username } });
+
+            this.closeModal();
+
+            this.displaySuccessAlert();
+        } else if (username && !this.state.image && username !== currentUserProfile?.username) {
+            await userService.changeCurrentUserProfile(username);
+
+            updateAppContext({ currentUserProfile: { ...this.context.currentUserProfile, username } });
+
+            this.closeModal();
+
+            this.displaySuccessAlert();
+        } else if (this.state.uploadSuccess) {
+            const newAvatar = await this.onUploadFile();
+
+            updateAppContext({ currentUserProfile: { ...this.context.currentUserProfile, avatar: newAvatar } });
+
+            this.closeModal();
+
+            this.displaySuccessAlert();
+        }
     };
     //#endregion Change user avatar and name
 
     render() {
         const { data, errors, image, uploading } = this.state;
+        const { currentUserProfile } = this.context;
+
+        let isSubmitBtnDisabled = errors.username || (data.username.value === currentUserProfile?.username && !image);
 
         return (
             <Modal active={this.props.modal} onClose={this.closeModal} className="update-user-profile--modal">
@@ -187,7 +229,7 @@ class UpdateUserProfileForm extends Form {
                             {this.renderInput(data.username, errors.username)}
 
                             <div className="actions">
-                                <button type="submit" className="submit-btn" disabled={errors.username || !image}>
+                                <button type="submit" className="submit-btn" disabled={isSubmitBtnDisabled}>
                                     update <i className="fas fa-plus"></i>
                                 </button>
 

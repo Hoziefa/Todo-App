@@ -113,9 +113,8 @@ textarea {
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-        box-shadow: 0 0 0 30px #fafafa inset !important; // $secondary-color
+        box-shadow: 0 0 0 30px #fafafa inset !important;
         color: $text-color !important;
-        // -webkit-text-fill-color: $text-color !important;
     }
 }
 
@@ -132,10 +131,6 @@ input {
 
     &[type="color"] {
         appearance: none;
-
-        // &::-webkit-color-swatch-wrapper {
-        //     // padding: 0;
-        // }
 
         &::-webkit-color-swatch {
             border: none;
@@ -176,11 +171,11 @@ button:disabled {
 }
 
 .validation-error--underline {
-    color: $errorLightColor; // f44336
+    color: $errorLightColor;
     display: block;
     max-height: 0;
     white-space: nowrap;
-    font: 600 small $ubuntu-font;
+    font: 600 80% $ubuntu-font;
     text-transform: capitalize;
     padding-left: 0.5rem;
 }
@@ -193,15 +188,14 @@ button:disabled {
     transform: translateY(-100%);
     padding: 10px;
     border-radius: 5px;
-    font: bold 80% $ubuntu-font; // 13px small
+    font: bold 80% $ubuntu-font;
     text-transform: capitalize;
     display: block;
 
-    background-color: #fff6f6; // fff6b7
+    background-color: #fff6f6;
 
     color: $errorLightColor;
     border: 1px solid currentColor;
-    // border-color: $errorLightestColor;
 
     &::after {
         content: "";
@@ -475,6 +469,83 @@ button:disabled {
     }
 }
 
+.file-upload-container {
+    position: relative;
+    margin: 0.5rem 0;
+
+    .file-upload {
+        background-size: 100% 100% !important;
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $primary-color;
+            filter: opacity(0.5);
+        }
+
+        &::after {
+            content: "+";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $primary-color;
+            font-size: 2.5rem;
+            border-radius: 50%;
+            background-color: $secondary-color;
+        }
+
+        &::before,
+        &::after {
+            pointer-events: none;
+        }
+
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        &.src-pr {
+            &::before,
+            &::after {
+                opacity: 0;
+                transition: 0.4s;
+            }
+
+            &:hover {
+                &::before,
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        width: 100%;
+    }
+}
+
 .dimmer-loader {
     height: 200px;
     margin-bottom: 2rem;
@@ -569,11 +640,6 @@ button:disabled {
                         &.submit-btn {
                             background-color: $secondary-color;
 
-                            &:disabled {
-                                color: #00000042;
-                                background-color: #0000001f;
-                            }
-
                             &:hover:not(:disabled),
                             &:active:not(:disabled) {
                                 background-color: $primary-color;
@@ -583,10 +649,15 @@ button:disabled {
                         &.cancel-btn {
                             background-color: $errorLightColor;
 
-                            &:hover,
-                            &:active {
+                            &:hover:not(:disabled),
+                            &:active:not(:disabled) {
                                 background-color: #da3a2fe8;
                             }
+                        }
+
+                        &:disabled {
+                            color: #00000042;
+                            background-color: #0000001f;
                         }
                     }
                 }
@@ -606,6 +677,7 @@ button:disabled {
                         align-items: center;
                         gap: 1rem;
                         flex-wrap: wrap;
+                        position: relative;
 
                         .field {
                             position: relative;
@@ -670,10 +742,25 @@ button:disabled {
                             }
                         }
 
-                        .react-datepicker-wrapper {
-                            input {
-                                border-bottom: 2px solid #b2b2b2;
-                                color: #0000008a;
+                        .date--picker {
+                            .react-datepicker-wrapper {
+                                width: 100%;
+
+                                input {
+                                    border-bottom: 2px solid #b2b2b2;
+                                    color: #0000008a;
+                                    padding-right: 16px;
+                                }
+                            }
+
+                            .fa-calendar-alt {
+                                position: absolute;
+                                top: 50%;
+                                right: 6px;
+                                transform: translateY(-60%);
+                                pointer-events: none;
+                                color: #00000033;
+                                font-size: 1.75rem;
                             }
                         }
                     }
@@ -691,12 +778,19 @@ button:disabled {
                     form {
                         .inputs-container {
                             .field,
-                            .react-datepicker-wrapper {
+                            .date--picker {
                                 flex-basis: 100%;
                             }
 
                             .field {
                                 margin-bottom: 2rem;
+                            }
+
+                            .date--picker {
+                                .fa-calendar-alt {
+                                    top: auto;
+                                    bottom: 0;
+                                }
                             }
                         }
                     }
@@ -885,9 +979,6 @@ button:disabled {
                             color: #000000de;
                             pointer-events: none;
                             opacity: 0.5;
-                            // display: flex;
-                            // align-items: center;
-                            // height: 95%;
                         }
 
                         &:not(.error):focus-within {
@@ -920,6 +1011,12 @@ button:disabled {
                         width: 60%;
                         margin-top: 1rem;
                     }
+
+                    .validation-error--tooltip {
+                        &::after {
+                            left: 1rem;
+                        }
+                    }
                 }
             }
 
@@ -949,7 +1046,6 @@ button:disabled {
         }
     }
 
-    // 768px
     @media (max-width: 600px) {
         .form-container .form-wrapper {
             width: 100%;
@@ -1076,6 +1172,12 @@ button:disabled {
                         @extend %submit-btn;
                         width: 60%;
                     }
+
+                    .validation-error--tooltip {
+                        &::after {
+                            left: 1rem;
+                        }
+                    }
                 }
             }
 
@@ -1105,7 +1207,6 @@ button:disabled {
         }
     }
 
-    // 768px
     @media (max-width: 600px) {
         .form-container .form-wrapper {
             width: 100%;
@@ -1168,75 +1269,10 @@ nav.main-nav {
             display: flex;
             align-items: center;
             column-gap: 0.25rem;
-
-            h2 {
-                font-size: inherit;
-                // color: #ddd;
-            }
         }
     }
 
     .toggle-nav-btn {
-        /*position: absolute;
-            top: 50%;
-            right: 1rem;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            padding: 0.35rem;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            transition: 0.3s;
-    
-            span {
-                display: block;
-                width: 100%;
-                height: 4px;
-                background-color: $secondary-color;
-                padding: 0;
-                margin: 0;
-                border: none;
-                border-radius: 20px;
-                position: relative;
-                pointer-events: none;
-                transition: 0.3s;
-    
-                &::before,
-                &::after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    background-color: $secondary-color;
-                    width: inherit;
-                    height: inherit;
-                    transform: translateX(-10%) scaleX(1.2);
-                    border-radius: inherit;
-                    transition: 0.3s;
-                }
-    
-                &::before {
-                    top: -10px;
-                }
-    
-                &::after {
-                    bottom: -10px;
-                }
-            }
-    
-            &.active {
-                span {
-                    max-height: 0;
-    
-                    &::before {
-                        transform: rotate(50deg) translate(7px, 4px);
-                    }
-    
-                    &::after {
-                        transform: rotate(-50deg) translate(7px, -4px);
-                    }
-                }
-            }*/
         display: none;
 
         &.navbar-toggler {
@@ -1249,7 +1285,7 @@ nav.main-nav {
             margin-left: auto;
 
             .menu_toggle {
-                width: 22px; // old 22px
+                width: 22px;
                 height: 22px;
                 position: relative;
                 cursor: pointer;
@@ -1267,7 +1303,7 @@ nav.main-nav {
 
                     span {
                         width: 0%;
-                        height: 2px; // old 2px
+                        height: 2px;
                         position: relative;
                         top: 0;
                         left: 0;
@@ -1295,7 +1331,7 @@ nav.main-nav {
                     position: absolute;
                     height: 100%;
                     width: 100%;
-                    transform: rotate(45deg); // remove it
+                    transform: rotate(45deg);
                     display: block;
 
                     span {
@@ -1305,12 +1341,12 @@ nav.main-nav {
                         transition: 0.2s ease-in-out;
 
                         &:nth-child(1) {
-                            width: 2px; // make it 100%
-                            height: 100%; // make it 2px
+                            width: 2px;
+                            height: 100%;
                             position: absolute;
-                            top: 0; // make it 10px
-                            left: 10px; // make it 0
-                            transition-delay: 0.3s; // add transform rotate(45deg)
+                            top: 0;
+                            left: 10px;
+                            transition-delay: 0.3s;
                         }
 
                         &:nth-child(2) {
@@ -1319,7 +1355,7 @@ nav.main-nav {
                             position: absolute;
                             top: 10px;
                             left: 0;
-                            transition-delay: 0.4s; // add transform rotate(-45deg)
+                            transition-delay: 0.4s;
                         }
                     }
                 }
@@ -1395,7 +1431,7 @@ nav.main-nav {
         }
 
         .toggle-nav-btn {
-            display: flex !important;
+            display: block;
         }
 
         .links-container {
@@ -1486,13 +1522,9 @@ nav.main-nav {
             cursor: pointer;
 
             img {
-                // width: 50px;
-                // height: 50px;
-                // border-radius: 50%;
                 padding: 3px;
                 background-color: #eee;
                 border: 3px solid #ddd;
-
                 display: inline-block;
                 vertical-align: middle;
                 max-width: 100%;
@@ -1604,9 +1636,12 @@ nav.main-nav {
                             }
 
                             .react-datepicker-wrapper {
+                                flex: 0.5;
+
                                 input {
                                     border-bottom: 2px solid #b2b2b2;
                                     color: #0000008a;
+                                    text-align: right;
                                 }
                             }
                         }
@@ -1699,6 +1734,30 @@ nav.main-nav {
                             background-color: #eee;
                             border-radius: 0.5rem;
                         }
+
+                        @media (max-width: 450px) {
+                            .inputs-container {
+                                .field,
+                                .react-datepicker-wrapper {
+                                    flex-basis: 100%;
+                                }
+
+                                .react-datepicker-wrapper {
+                                    input {
+                                        text-align: left;
+                                    }
+                                }
+                            }
+
+                            .actions {
+                                align-self: flex-end;
+
+                                .confirm-todo--btn,
+                                .cancel-todo--btn {
+                                    font-size: 1.15rem;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1740,7 +1799,7 @@ nav.main-nav {
 
                         &::-webkit-input-placeholder {
                             color: #c7c7c7;
-                            font-size: medium;
+                            font-size: 90%;
                         }
 
                         &:focus {
@@ -1826,10 +1885,11 @@ nav.main-nav {
                     .clear-calendar--btn {
                         display: block;
                         margin-left: auto;
+                        margin-bottom: 0.25rem;
                         text-transform: capitalize;
                         background-color: $secondary-color;
                         font-family: $oswald-font;
-                        padding: 0.625rem 3rem 0.625rem 2rem;
+                        padding: 0.5rem 3rem 0.5rem 2rem;
                         border-radius: 5px;
                         position: relative;
                         color: white;
@@ -1851,6 +1911,10 @@ nav.main-nav {
                         &:hover,
                         &:active {
                             background-color: $primary-color;
+                        }
+
+                        &:active {
+                            transform: scale(0.98);
                         }
                     }
 

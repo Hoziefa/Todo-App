@@ -19,9 +19,21 @@ class Home extends Component {
         this.setState({ loading: false });
     }
 
+    onFilterByDescriptionInputChange = ({ currentTarget: { value } }) => {
+        this.context.updateAppContext({ filterDescription: value });
+
+        window.localStorage.setItem("filterDescription", value);
+    };
+
+    onDisplayAddTodoModal = () => {
+        this.context.updateAppContext({ modal: true, filterDescription: "" });
+
+        window.localStorage.removeItem("filterDescription");
+    };
+
     render() {
         const { loading } = this.state;
-        const { todos, filterDescription, updateAppContext } = this.context;
+        const { todos, filterDescription } = this.context;
 
         const filteredTodos = todos.filter(({ task }) => task?.toLowerCase()?.includes(filterDescription?.toLowerCase()));
 
@@ -40,22 +52,12 @@ class Home extends Component {
                                     name="filterDescription"
                                     placeholder="search to-do ..."
                                     value={filterDescription}
-                                    onChange={({ currentTarget: { value } }) => {
-                                        this.context.updateAppContext({ filterDescription: value });
-
-                                        window.localStorage.setItem("filterDescription", value);
-                                    }}
+                                    onChange={this.onFilterByDescriptionInputChange}
                                 />
                                 <i className="fas fa-search"></i>
                             </div>
 
-                            <button
-                                className="add-todo-btn"
-                                onClick={() => {
-                                    updateAppContext({ modal: true, filterDescription: "" });
-
-                                    window.localStorage.removeItem("filterDescription");
-                                }}>
+                            <button className="add-todo-btn" onClick={this.onDisplayAddTodoModal}>
                                 <i className="fas fa-plus"></i>
                             </button>
                         </SectionHeading>

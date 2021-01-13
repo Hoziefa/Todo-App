@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { NavLink, Link, withRouter } from "react-router-dom";
+
+import AppContext from "../../contexts/appContext";
+
 import userService from "../../services/userService";
 
 import logo from "../../assets/logo.png";
 
 class NavBar extends Component {
+    static contextType = AppContext;
+
     state = { open: false };
 
     navRef = React.createRef();
@@ -19,17 +24,39 @@ class NavBar extends Component {
         await userService.logoutUser();
 
         this.props.history.push("/");
+
+        this.context.updateAppContext({ currentUserProfile: null });
     };
 
     renderLogging = currentUser =>
         currentUser ? (
-            <li onClick={this.logoutUser}>
-                <button>log out</button>
-            </li>
+            <>
+                <li>
+                    <NavLink exact to="/">
+                        home
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink exact to="/todos">
+                        todos
+                    </NavLink>
+                </li>
+
+                <li onClick={this.logoutUser}>
+                    <button>log out</button>
+                </li>
+            </>
         ) : (
-            <li>
-                <NavLink to="/login">log in</NavLink>
-            </li>
+            <>
+                <li>
+                    <NavLink to="/login">log in</NavLink>
+                </li>
+
+                <li>
+                    <NavLink to="/register">register</NavLink>
+                </li>
+            </>
         );
 
     render() {
@@ -62,21 +89,7 @@ class NavBar extends Component {
                         </span>
                     </button>
 
-                    <ul className="links-container">
-                        <li>
-                            <NavLink exact to="/">
-                                home
-                            </NavLink>
-                        </li>
-
-                        <li>
-                            <NavLink exact to="/todos">
-                                todos
-                            </NavLink>
-                        </li>
-
-                        {this.renderLogging(this.props.currentUser)}
-                    </ul>
+                    <ul className="links-container">{this.renderLogging(this.props.currentUser)}</ul>
                 </div>
             </nav>
         );
