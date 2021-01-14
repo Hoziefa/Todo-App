@@ -1047,8 +1047,14 @@ button:disabled {
     }
 
     @media (max-width: 600px) {
-        .form-container .form-wrapper {
-            width: 100%;
+        .form-container {
+            .form-title {
+                font-size: 2rem;
+            }
+
+            .form-wrapper {
+                width: 100%;
+            }
         }
     }
 }
@@ -1208,8 +1214,14 @@ button:disabled {
     }
 
     @media (max-width: 600px) {
-        .form-container .form-wrapper {
-            width: 100%;
+        .form-container {
+            .form-title {
+                font-size: 2rem;
+            }
+
+            .form-wrapper {
+                width: 100%;
+            }
         }
     }
 }
