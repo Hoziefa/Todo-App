@@ -194,7 +194,10 @@ class UpdateUserProfileForm extends Form {
         let isSubmitBtnDisabled = errors.username || (data.username.value === currentUserProfile?.username && !image);
 
         return (
-            <Modal active={this.props.modal} onClose={this.closeModal} className="update-user-profile--modal">
+            <Modal
+                active={this.props.modal}
+                onClose={() => !uploading && this.closeModal()}
+                className="update-user-profile--modal">
                 <div className="form-container">
                     <div className="form-wrapper">
                         <div className="title">

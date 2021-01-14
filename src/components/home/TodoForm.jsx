@@ -33,7 +33,7 @@ class TodoForm extends Form {
         this.context.updateAppContext({ modal: false });
 
         this.setState({
-            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false, touched: false } },
             errors: { ...this.state.errors, task: "" },
             date: 0,
         });
@@ -47,7 +47,7 @@ class TodoForm extends Form {
         this.context.updateAppContext({ todos: [...this.context.todos, newTodo], modal: false });
 
         this.setState({
-            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false } },
+            data: { ...this.state.data, task: { ...this.state.data.task, value: "", active: false, touched: false } },
             date: 0,
         });
     };

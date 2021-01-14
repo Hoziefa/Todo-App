@@ -23,6 +23,8 @@ class NavBar extends Component {
     logoutUser = async () => {
         await userService.logoutUser();
 
+        this.setState({ open: false });
+
         this.props.history.push("/");
 
         this.context.updateAppContext({ currentUserProfile: null });

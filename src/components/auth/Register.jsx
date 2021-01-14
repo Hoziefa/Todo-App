@@ -96,7 +96,7 @@ class Register extends Form {
                 <div className="form-container">
                     <div className="form-title">
                         <i className="fas fa-puzzle-piece"></i>
-                        <h2>Register for to-dos</h2>
+                        <h2>Register for to-do</h2>
                     </div>
 
                     <div className="form-wrapper">
