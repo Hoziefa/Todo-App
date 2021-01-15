@@ -27,7 +27,7 @@ class NavBar extends Component {
 
         this.props.history.push("/");
 
-        this.context.updateAppContext({ currentUserProfile: null });
+        this.context.updateAppContext({ currentUser: null, currentUserProfile: null });
     };
 
     renderLogging = currentUser =>

@@ -14,6 +14,10 @@ export class AppContextProvider extends Component {
 
     updateAppContext = props => this.setState(props);
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.currentUser && !this.state.currentUser) this.setState({ currentUser: this.props.currentUser });
+    }
+
     render() {
         return (
             <AppContext.Provider value={{ ...this.state, updateAppContext: this.updateAppContext }}>
