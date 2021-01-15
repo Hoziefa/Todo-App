@@ -148,7 +148,7 @@ class UpdateUserProfileForm extends Form {
 
         const newAvatar = await userService.changeCurrentUserAvatar(
             { blob, metadata: { contentType: blob.type } },
-            `avatars/user/${this.context.currentUser?.uid}`,
+            `avatars/user/${userService.currentUser?.uid}`,
         );
 
         return newAvatar;
