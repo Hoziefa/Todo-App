@@ -75,7 +75,11 @@ class UpdateUserProfileForm extends Form {
         this.setState({
             data: {
                 ...this.state.data,
-                username: { ...this.state.data.username, value: this.context.currentUserProfile?.username },
+                username: {
+                    ...this.state.data.username,
+                    value: this.context.currentUserProfile?.username,
+                    touched: false,
+                },
                 avatar: { ...this.state.data.avatar, value: "", avatar: this.context.currentUserProfile?.avatar },
             },
             errors: { ...this.state.errors, username: "", avatar: "" },
