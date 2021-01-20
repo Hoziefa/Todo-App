@@ -75,7 +75,11 @@ class UpdateUserProfileForm extends Form {
         this.setState({
             data: {
                 ...this.state.data,
-                username: { ...this.state.data.username, value: this.context.currentUserProfile?.username },
+                username: {
+                    ...this.state.data.username,
+                    value: this.context.currentUserProfile?.username,
+                    touched: false,
+                },
                 avatar: { ...this.state.data.avatar, value: "", avatar: this.context.currentUserProfile?.avatar },
             },
             errors: { ...this.state.errors, username: "", avatar: "" },
@@ -148,7 +152,7 @@ class UpdateUserProfileForm extends Form {
 
         const newAvatar = await userService.changeCurrentUserAvatar(
             { blob, metadata: { contentType: blob.type } },
-            `avatars/user/${this.context.currentUser?.uid}`,
+            `avatars/user/${userService.currentUser?.uid}`,
         );
 
         return newAvatar;

@@ -101,7 +101,7 @@ textarea {
     &::-webkit-input-placeholder {
         color: #cecece;
         text-transform: capitalize;
-        font: 600 smaller $arimo-font;
+        font: 600 90% $arimo-font;
         transition: opacity 0.3s;
     }
 
@@ -193,7 +193,6 @@ button:disabled {
     display: block;
 
     background-color: #fff6f6;
-
     color: $errorLightColor;
     border: 1px solid currentColor;
 
@@ -582,82 +581,82 @@ button:disabled {
 
     .modal-content {
         flex-basis: 100%;
-    }
 
-    .title {
-        text-align: center;
-        font-size: 2.25rem;
-        color: $primary-color;
-        margin-bottom: 2rem;
+        .title {
+            text-align: center;
+            font-size: 2.25rem;
+            color: $primary-color;
+            margin-bottom: 2rem;
 
-        h2 {
-            font-size: inherit;
-            font-family: $monoton-font;
-            word-spacing: 0.25rem;
+            h2 {
+                font-size: inherit;
+                font-family: $monoton-font;
+                word-spacing: 0.25rem;
+            }
         }
-    }
 
-    .form-container {
-        min-height: auto;
+        .form-container {
+            min-height: auto;
 
-        .form-wrapper {
-            border-radius: 10px;
-            background-color: #fff;
-            color: $text-color;
-            box-shadow: 0 1px 2px 0 #22242626;
-            border: 1px solid #22242626;
+            .form-wrapper {
+                border-radius: 10px;
+                background-color: #fff;
+                color: $text-color;
+                box-shadow: 0 1px 2px 0 #22242626;
+                border: 1px solid #22242626;
 
-            form {
-                .actions {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-top: 2rem;
-                    column-gap: 1rem;
+                form {
+                    .actions {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-top: 2rem;
+                        column-gap: 1rem;
 
-                    button {
-                        text-transform: capitalize;
-                        font-family: $oswald-font;
-                        padding: 0.625rem 3rem 0.625rem 2rem;
-                        border-radius: 5px;
-                        position: relative;
-                        color: white;
-                        transition: background-color 0.3s;
+                        button {
+                            text-transform: capitalize;
+                            font-family: $oswald-font;
+                            padding: 0.625rem 3rem 0.625rem 2rem;
+                            border-radius: 5px;
+                            position: relative;
+                            color: white;
+                            transition: background-color 0.3s;
 
-                        i {
-                            font-size: 90%;
-                            background-color: rgba(0, 0, 0, 0.051);
-                            position: absolute;
-                            top: 0;
-                            right: 0;
-                            width: 2.57142857em;
-                            height: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
-
-                        &.submit-btn {
-                            background-color: $secondary-color;
-
-                            &:hover:not(:disabled),
-                            &:active:not(:disabled) {
-                                background-color: $primary-color;
+                            i {
+                                font-size: 90%;
+                                background-color: rgba(0, 0, 0, 0.051);
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                width: 2.57142857em;
+                                height: 100%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
                             }
-                        }
 
-                        &.cancel-btn {
-                            background-color: $errorLightColor;
+                            &.submit-btn {
+                                background-color: $secondary-color;
 
-                            &:hover:not(:disabled),
-                            &:active:not(:disabled) {
-                                background-color: #da3a2fe8;
+                                &:hover:not(:disabled),
+                                &:active:not(:disabled) {
+                                    background-color: $primary-color;
+                                }
                             }
-                        }
 
-                        &:disabled {
-                            color: #00000042;
-                            background-color: #0000001f;
+                            &.cancel-btn {
+                                background-color: $errorLightColor;
+
+                                &:hover:not(:disabled),
+                                &:active:not(:disabled) {
+                                    background-color: #da3a2fe8;
+                                }
+                            }
+
+                            &:disabled {
+                                color: #00000042;
+                                background-color: #0000001f;
+                            }
                         }
                     }
                 }
@@ -666,101 +665,103 @@ button:disabled {
     }
 
     &.add-todo--modal {
-        .form-container {
-            .form-wrapper {
-                padding: 3rem 2rem 4rem;
+        .modal-content {
+            .form-container {
+                .form-wrapper {
+                    padding: 3rem 2rem 4rem;
 
-                form {
-                    .inputs-container {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        gap: 1rem;
-                        flex-wrap: wrap;
-                        position: relative;
-
-                        .field {
+                    form {
+                        .inputs-container {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 1rem;
+                            flex-wrap: wrap;
                             position: relative;
-                            flex: 1;
-                            height: fit-content;
 
-                            label {
-                                color: #0000008a;
-                                font: 500 1rem $roboto-font;
-                                text-transform: capitalize;
-                                pointer-events: none;
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                transform-origin: top left;
-                                transform: translate(2%, 55%) scale(1);
-                                transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-                                    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                            }
-
-                            input {
-                                border-bottom: 2px solid #b2b2b2;
-                            }
-
-                            &::after {
-                                content: "";
-                                position: absolute;
-                                bottom: 0;
-                                left: 0;
-                                transform: scaleX(0);
-                                width: 100%;
-                                border-bottom: 2px solid $secondary-color;
-                                transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                            }
-
-                            &:focus-within:not(.error) {
-                                label {
-                                    color: $primary-color;
-                                }
-
-                                &::after {
-                                    transform: scaleX(1);
-                                }
-                            }
-
-                            &.active {
-                                label {
-                                    transform: translateY(-60%) scale(0.8);
-                                }
-                            }
-
-                            &.error {
-                                color: $errorDarkColor;
+                            .field {
+                                position: relative;
+                                flex: 1;
+                                height: fit-content;
 
                                 label {
-                                    color: inherit;
+                                    color: #0000008a;
+                                    font: 500 1rem $roboto-font;
+                                    text-transform: capitalize;
+                                    pointer-events: none;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    transform-origin: top left;
+                                    transform: translate(2%, 55%) scale(1);
+                                    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+                                        transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
                                 }
-
-                                input {
-                                    border-bottom-color: $errorLightestColor;
-                                }
-                            }
-                        }
-
-                        .date--picker {
-                            .react-datepicker-wrapper {
-                                width: 100%;
 
                                 input {
                                     border-bottom: 2px solid #b2b2b2;
-                                    color: #0000008a;
-                                    padding-right: 16px;
+                                }
+
+                                &::after {
+                                    content: "";
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 0;
+                                    transform: scaleX(0);
+                                    width: 100%;
+                                    border-bottom: 2px solid $secondary-color;
+                                    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                                }
+
+                                &:focus-within:not(.error) {
+                                    label {
+                                        color: $primary-color;
+                                    }
+
+                                    &::after {
+                                        transform: scaleX(1);
+                                    }
+                                }
+
+                                &.active {
+                                    label {
+                                        transform: translateY(-60%) scale(0.8);
+                                    }
+                                }
+
+                                &.error {
+                                    color: $errorDarkColor;
+
+                                    label {
+                                        color: inherit;
+                                    }
+
+                                    input {
+                                        border-bottom-color: $errorLightestColor;
+                                    }
                                 }
                             }
 
-                            .fa-calendar-alt {
-                                position: absolute;
-                                top: 50%;
-                                right: 6px;
-                                transform: translateY(-60%);
-                                pointer-events: none;
-                                color: #00000033;
-                                font-size: 1.75rem;
+                            .date--picker {
+                                .react-datepicker-wrapper {
+                                    width: 100%;
+
+                                    input {
+                                        border-bottom: 2px solid #b2b2b2;
+                                        color: #0000008a;
+                                        padding-right: 16px;
+                                    }
+                                }
+
+                                .fa-calendar-alt {
+                                    position: absolute;
+                                    top: 50%;
+                                    right: 6px;
+                                    transform: translateY(-60%);
+                                    pointer-events: none;
+                                    color: #00000033;
+                                    font-size: 1.75rem;
+                                }
                             }
                         }
                     }
@@ -768,28 +769,36 @@ button:disabled {
             }
         }
 
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-basis: 700px;
+            }
+        }
+
         @media (max-width: 400px) {
-            .form-container {
-                .title {
-                    font-size: 1.5rem;
-                }
+            .modal-content {
+                .form-container {
+                    .title {
+                        font-size: 1.5rem;
+                    }
 
-                .form-wrapper {
-                    form {
-                        .inputs-container {
-                            .field,
-                            .date--picker {
-                                flex-basis: 100%;
-                            }
+                    .form-wrapper {
+                        form {
+                            .inputs-container {
+                                .field,
+                                .date--picker {
+                                    flex-basis: 100%;
+                                }
 
-                            .field {
-                                margin-bottom: 2rem;
-                            }
+                                .field {
+                                    margin-bottom: 2rem;
+                                }
 
-                            .date--picker {
-                                .fa-calendar-alt {
-                                    top: auto;
-                                    bottom: 0;
+                                .date--picker {
+                                    .fa-calendar-alt {
+                                        top: auto;
+                                        bottom: 0;
+                                    }
                                 }
                             }
                         }
@@ -801,94 +810,92 @@ button:disabled {
 
     &.update-user-profile--modal {
         .modal-content {
-            flex-basis: 500px;
-        }
+            .form-container {
+                .form-wrapper {
+                    padding: 1rem 2rem;
 
-        .form-container {
-            .form-wrapper {
-                padding: 1rem 2rem;
+                    form {
+                        .field {
+                            position: relative;
 
-                form {
-                    .field {
-                        position: relative;
-
-                        &:not(:last-of-type) {
-                            margin-bottom: 1rem;
-                        }
-
-                        label {
-                            text-transform: capitalize;
-                            display: block;
-                            font-weight: 500;
-                            margin-bottom: 0.5rem;
-
-                            &::first-letter {
-                                font-size: large;
-                            }
-                        }
-
-                        input {
-                            border: 1px solid #22242626;
-                            box-shadow: 0 0 0 0 transparent inset;
-                            border-radius: 0.5rem;
-                            margin-bottom: 0.2rem;
-                            padding: 1rem;
-                            padding-left: 2.5rem;
-                            transition: color 0.1s ease, border-color 0.1s ease;
-
-                            &::-webkit-input-placeholder {
-                                color: #918985;
+                            &:not(:last-of-type) {
+                                margin-bottom: 1rem;
                             }
 
-                            &:focus {
-                                background: #fff;
-                                border-color: $primary-color;
-                                box-shadow: 0 0 0 0 #22242659 inset;
+                            label {
+                                text-transform: capitalize;
+                                display: block;
+                                font-weight: 500;
+                                margin-bottom: 0.5rem;
+
+                                &::first-letter {
+                                    font-size: large;
+                                }
                             }
-                        }
-
-                        i {
-                            position: absolute;
-                            top: 50%;
-                            left: 1rem;
-                            transform: translateY(-60%);
-                            color: #000000de;
-                            pointer-events: none;
-                            opacity: 0.5;
-                        }
-
-                        &:not(.error):focus-within {
-                            i {
-                                color: $primary-color !important;
-                                opacity: 1;
-                            }
-                        }
-
-                        &.error {
-                            color: $errorDarkColor;
 
                             input {
-                                background-color: #fff6f6;
-                                border-color: $errorLightestColor;
+                                border: 1px solid #22242626;
+                                box-shadow: 0 0 0 0 transparent inset;
+                                border-radius: 0.5rem;
+                                margin-bottom: 0.2rem;
+                                padding: 1rem;
+                                padding-left: 2.5rem;
+                                transition: color 0.1s ease, border-color 0.1s ease;
 
                                 &::-webkit-input-placeholder {
-                                    color: currentColor;
+                                    color: #918985;
+                                }
+
+                                &:focus {
+                                    background: #fff;
+                                    border-color: $primary-color;
+                                    box-shadow: 0 0 0 0 #22242659 inset;
                                 }
                             }
 
                             i {
-                                color: inherit;
+                                position: absolute;
+                                top: 50%;
+                                left: 1rem;
+                                transform: translateY(-60%);
+                                color: #000000de;
+                                pointer-events: none;
+                                opacity: 0.5;
+                            }
+
+                            &:not(.error):focus-within {
+                                i {
+                                    color: $primary-color !important;
+                                    opacity: 1;
+                                }
+                            }
+
+                            &.error {
+                                color: $errorDarkColor;
+
+                                input {
+                                    background-color: #fff6f6;
+                                    border-color: $errorLightestColor;
+
+                                    &::-webkit-input-placeholder {
+                                        color: currentColor;
+                                    }
+                                }
+
+                                i {
+                                    color: inherit;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }
 
-    @media (min-width: 768px) {
-        .modal-content {
-            flex-basis: 700px;
+        @media (min-width: 600px) {
+            .modal-content {
+                flex-basis: 500px;
+            }
         }
     }
 }
@@ -1526,9 +1533,6 @@ nav.main-nav {
         margin-bottom: 7rem;
         display: flex;
 
-        .user-info {
-        }
-
         .user-avatar {
             margin-left: auto;
             cursor: pointer;
@@ -1745,6 +1749,12 @@ nav.main-nav {
                         &.completed {
                             background-color: #eee;
                             border-radius: 0.5rem;
+
+                            .todo-task {
+                                p {
+                                    text-decoration: line-through;
+                                }
+                            }
                         }
 
                         @media (max-width: 450px) {
@@ -1939,6 +1949,9 @@ nav.main-nav {
                         }
 
                         @media (max-width: 500px) {
+                            padding: 0 1rem;
+                            overflow: hidden;
+
                             .react-calendar__viewContainer {
                                 display: block !important;
 
