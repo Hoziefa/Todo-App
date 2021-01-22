@@ -55,7 +55,7 @@ class Login extends Form {
 
             Toast.fire({
                 icon: "success",
-                title: "Signed in successfully",
+                title: `Welcome back ${currentUser.user.displayName}`,
             });
         } else {
             Swal.fire({ title: "Error!", text: currentUser.message, icon: "error", confirmButtonText: "Okay" });
