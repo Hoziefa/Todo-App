@@ -14,10 +14,12 @@ class NavBar extends Component {
 
     navRef = React.createRef();
 
-    componentDidMount() {
-        let { height: navHeight } = this.navRef.current.getBoundingClientRect();
+    componentDidUpdate() {
+        const { height: navHeight } = this.navRef.current.getBoundingClientRect();
+        const domElmStyle = document.documentElement.style;
 
-        document.documentElement.style.setProperty("--nav-height", `${navHeight}px`);
+        +domElmStyle.getPropertyValue("--nav-height").split("px")[0] !== navHeight &&
+            domElmStyle.setProperty("--nav-height", `${navHeight}px`);
     }
 
     logoutUser = async () => {
@@ -69,7 +71,7 @@ class NavBar extends Component {
                 <div className="container">
                     <div className="logo">
                         <Link to="/">
-                            <img src={logo} alt="logo" width="60" height="60" />
+                            <img src={logo} alt="logo" />
                         </Link>
                     </div>
 

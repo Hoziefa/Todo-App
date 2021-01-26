@@ -2,10 +2,6 @@ import React from "react";
 import Todo from "./Todo";
 
 const TodosList = ({ todos }) => {
-    //ToDo: Render all to-dos length
-    //ToDo: Render all completed to-dos length
-    //ToDo: Render all uncompleted to-dos length
-
     return (
         <div className="todos-container section-content">
             <div className="todos-info">
