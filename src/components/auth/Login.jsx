@@ -70,7 +70,9 @@ class Login extends Form {
                 <div className="form-container">
                     <div className="form-title">
                         <i className="fas fa-sign-in-alt"></i>
-                        <h2>log in to to-do</h2>
+                        <h2>
+                            log in to to.<span>do</span>
+                        </h2>
                     </div>
 
                     <div className="form-wrapper">

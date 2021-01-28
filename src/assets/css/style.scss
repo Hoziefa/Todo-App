@@ -924,6 +924,10 @@ button:disabled {
                 font-size: inherit;
                 font-family: $monoton-font;
                 line-height: 100%;
+
+                span {
+                    color: #000100;
+                }
             }
         }
 
@@ -1091,6 +1095,10 @@ button:disabled {
                 font-family: $monoton-font;
                 word-spacing: 0.25rem;
                 line-height: 100%;
+
+                span {
+                    color: #000100;
+                }
             }
         }
 
