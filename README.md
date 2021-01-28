@@ -2,7 +2,7 @@
 
 ### Features:
 
-**note: These are some of the features:**
+**These are some of the features:**
 
 1. Add Task with date, time.
 2. Edit Task description, date and time.
