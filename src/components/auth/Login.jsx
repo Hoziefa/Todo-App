@@ -55,7 +55,7 @@ class Login extends Form {
 
             Toast.fire({
                 icon: "success",
-                title: "Signed in successfully",
+                title: `Welcome back ${currentUser.user.displayName}`,
             });
         } else {
             Swal.fire({ title: "Error!", text: currentUser.message, icon: "error", confirmButtonText: "Okay" });
@@ -69,8 +69,10 @@ class Login extends Form {
             <div className="login-form">
                 <div className="form-container">
                     <div className="form-title">
-                        <i className="fas fa-code-branch"></i>
-                        <h2>log in to to-do</h2>
+                        <i className="fas fa-sign-in-alt"></i>
+                        <h2>
+                            log in to to.<span>do</span>
+                        </h2>
                     </div>
 
                     <div className="form-wrapper">

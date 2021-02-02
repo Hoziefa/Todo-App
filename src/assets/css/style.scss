@@ -101,7 +101,7 @@ textarea {
     &::-webkit-input-placeholder {
         color: #cecece;
         text-transform: capitalize;
-        font: 600 90% $arimo-font;
+        font: 600 smaller $arimo-font;
         transition: opacity 0.3s;
     }
 
@@ -924,6 +924,10 @@ button:disabled {
                 font-size: inherit;
                 font-family: $monoton-font;
                 line-height: 100%;
+
+                span {
+                    color: #000100;
+                }
             }
         }
 
@@ -1091,6 +1095,10 @@ button:disabled {
                 font-family: $monoton-font;
                 word-spacing: 0.25rem;
                 line-height: 100%;
+
+                span {
+                    color: #000100;
+                }
             }
         }
 
@@ -1235,47 +1243,7 @@ button:disabled {
 
 nav.main-nav {
     padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-    background-color: $dark-bg;
     position: relative;
-
-    background-image: radial-gradient(circle at center center, transparent, rgb(255, 255, 255)),
-        linear-gradient(
-            309deg,
-            rgba(90, 90, 90, 0.05) 0%,
-            rgba(90, 90, 90, 0.05) 50%,
-            rgba(206, 206, 206, 0.05) 50%,
-            rgba(206, 206, 206, 0.05) 100%
-        ),
-        linear-gradient(
-            39deg,
-            rgba(13, 13, 13, 0.05) 0%,
-            rgba(13, 13, 13, 0.05) 50%,
-            rgba(189, 189, 189, 0.05) 50%,
-            rgba(189, 189, 189, 0.05) 100%
-        ),
-        linear-gradient(
-            144deg,
-            rgba(249, 249, 249, 0.05) 0%,
-            rgba(249, 249, 249, 0.05) 50%,
-            rgba(111, 111, 111, 0.05) 50%,
-            rgba(111, 111, 111, 0.05) 100%
-        ),
-        linear-gradient(
-            166deg,
-            rgba(231, 231, 231, 0.05) 0%,
-            rgba(231, 231, 231, 0.05) 50%,
-            rgba(220, 220, 220, 0.05) 50%,
-            rgba(220, 220, 220, 0.05) 100%
-        ),
-        linear-gradient(
-            212deg,
-            rgba(80, 80, 80, 0.05) 0%,
-            rgba(80, 80, 80, 0.05) 50%,
-            rgba(243, 243, 243, 0.05) 50%,
-            rgba(243, 243, 243, 0.05) 100%
-        ),
-        radial-gradient(circle at center center, hsl(107, 19%, 100%), hsl(107, 19%, 100%));
 
     .container {
         position: static;
@@ -1284,10 +1252,19 @@ nav.main-nav {
     }
 
     .logo {
+        padding-left: 2rem;
+
         a {
-            display: flex;
-            align-items: center;
-            column-gap: 0.25rem;
+            display: block;
+            width: 60px;
+
+            img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                filter: hue-rotate(16deg);
+                transform: scale(2);
+            }
         }
     }
 
@@ -1433,8 +1410,9 @@ nav.main-nav {
                 color: inherit;
 
                 &.active {
-                    background-color: $secondary-color;
+                    background-image: linear-gradient($secondary-color, $primary-color);
                     color: ghostwhite;
+                    border-radius: 5px;
 
                     button {
                         font-weight: 900 !important;
@@ -1510,7 +1488,7 @@ nav.main-nav {
                 a,
                 button {
                     &.active {
-                        background-color: $secondary-color;
+                        border-radius: 0;
                     }
                 }
             }
@@ -1522,6 +1500,18 @@ nav.main-nav {
             }
         }
     }
+
+    @media (max-width: 480px) {
+        .logo {
+            padding-left: 8px;
+
+            a {
+                img {
+                    transform: scale(1.25);
+                }
+            }
+        }
+    }
 }
 
 .home,
@@ -1530,8 +1520,15 @@ nav.main-nav {
     position: relative;
 
     .user-profile {
-        margin-bottom: 7rem;
         display: flex;
+        align-items: baseline;
+        margin-bottom: 7rem;
+
+        .user-info {
+            p {
+                line-height: 2;
+            }
+        }
 
         .user-avatar {
             margin-left: auto;
@@ -1540,12 +1537,12 @@ nav.main-nav {
             img {
                 padding: 3px;
                 background-color: #eee;
-                border: 3px solid #ddd;
+                border: 3px solid #ccc;
                 display: inline-block;
                 vertical-align: middle;
                 max-width: 100%;
-                width: 4.5em;
-                height: 4.5em;
+                width: 5em;
+                height: 5em;
                 border-radius: 500rem;
             }
         }
@@ -1563,7 +1560,7 @@ nav.main-nav {
                 display: flex;
                 align-items: center;
                 column-gap: 1rem;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid #0000001f;
                 padding-bottom: 1rem;
 
                 .section-icon {
@@ -1594,6 +1591,36 @@ nav.main-nav {
             }
 
             .todos-container.section-content {
+                .todos-info {
+                    display: flex;
+                    gap: 0.5rem;
+                    margin: 1.5rem 0;
+
+                    span {
+                        display: block;
+                        padding: 0.5rem 1rem;
+                        text-transform: capitalize;
+                        color: white;
+                        border-radius: 0.25rem;
+                    }
+
+                    .all-todos {
+                        background-image: linear-gradient(45deg, $primary-color, $secondary-color);
+                    }
+
+                    .all-todos--complete {
+                        background-image: linear-gradient(45deg, #25b499, darken($color: #25b499, $amount: 15%));
+                    }
+
+                    .all-todos--incomplete {
+                        background-image: linear-gradient(45deg, #f33a6d, darken($color: #f33a6d, $amount: 25%));
+                    }
+
+                    @media (max-width: 400px) {
+                        flex-wrap: wrap;
+                    }
+                }
+
                 .todos-list {
                     margin-top: 1rem;
 
@@ -1856,7 +1883,8 @@ nav.main-nav {
                         font-size: 1rem;
                     }
 
-                    &:hover {
+                    &:hover,
+                    &:active {
                         background-color: $primary-color;
                     }
                 }

@@ -79,7 +79,7 @@ class Register extends Form {
 
             Toast.fire({
                 icon: "success",
-                title: "Signed in successfully",
+                title: `Welcome to our To.Do app ${currentUser.user.displayName} enjoy`,
             });
 
             this.context.updateAppContext({ currentUserProfile: await userService.getCurrentUserProfile() });
@@ -96,7 +96,9 @@ class Register extends Form {
                 <div className="form-container">
                     <div className="form-title">
                         <i className="fas fa-puzzle-piece"></i>
-                        <h2>Register for to-do</h2>
+                        <h2>
+                            Register for to.<span>do</span>
+                        </h2>
                     </div>
 
                     <div className="form-wrapper">
