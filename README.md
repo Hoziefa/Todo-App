@@ -9,5 +9,5 @@
 3. Delete Task.
 4. Filter tasks by description, filter tasks by date.
 5. User filters are persisted the latest state still as it is (any search value entered).
-6. Each user has it's own profile and he can edit its name and image.
+6. Each user has it's own profile and he can edit his name and image.
 7. Responsive design.
