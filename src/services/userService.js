@@ -22,7 +22,7 @@ class UserService {
 
             return { success: true, message: "registered successfully", user };
         } catch ({ message }) {
-            return { success: false, message };
+            return { success: false, message, user: null };
         }
     }
 
@@ -36,6 +36,7 @@ class UserService {
             return {
                 success: false,
                 message: message.includes("password") ? "password or email is wrong!" : "user is not registered",
+                user: null,
             };
         }
     }
@@ -43,8 +44,8 @@ class UserService {
     async logoutUser() {
         try {
             await firebase.auth().signOut();
-        } catch (error) {
-            console.error(error.message);
+        } catch ({ message }) {
+            console.error(message);
         }
     }
 

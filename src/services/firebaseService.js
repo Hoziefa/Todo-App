@@ -21,7 +21,6 @@ export const storageRef = path => firebase.storage().ref(path);
 
 export const firebaseLooper = data => Object.entries(data || []).map(([id, value]) => ({ id, ...value }));
 
-export const getImageDownloadURL = async (storageDir, image) =>
-    await firebase.storage().ref(storageDir).child(image).getDownloadURL();
+export const getImageDownloadURL = async (storageDir, image) => await firebase.storage().ref(storageDir).child(image).getDownloadURL();
 
 export default firebase;
