@@ -30,6 +30,4 @@ class TodosService {
     }
 }
 
-const todosService = new TodosService();
-
-export default todosService;
+export default new TodosService();
