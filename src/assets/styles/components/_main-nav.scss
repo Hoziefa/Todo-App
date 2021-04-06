@@ -1,0 +1,274 @@
+@import "../abstracts/mixins";
+
+nav.main-nav {
+    position: relative;
+    padding: 1rem 0;
+
+    .container {
+        position: static;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        padding-left: 2rem;
+
+        a {
+            display: block;
+            width: 60px;
+
+            img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                transform: scale(2);
+                filter: hue-rotate(16deg);
+            }
+        }
+    }
+
+    .toggle-nav-btn {
+        display: none;
+
+        &.navbar-switcher {
+            font-size: 1.25rem;
+            line-height: 1;
+            margin-left: auto;
+            padding: 0.25rem 0.75rem;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+
+            .menu_toggle {
+                position: relative;
+                display: block;
+                width: 22px;
+                height: 22px;
+                cursor: pointer;
+
+                @include respond(tab-md) {
+                    transition: all 0.2s linear;
+                }
+
+                .hamburger {
+                    position: absolute;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+
+                    span {
+                        position: relative;
+                        top: 0;
+                        left: 0;
+                        display: block;
+                        width: 0;
+                        height: 2px;
+                        margin: 4px 0;
+                        background: $secondary-color;
+                        border-radius: 3px;
+                        transition: 0.2s ease-in-out;
+
+                        &:nth-child(1) {
+                            transition-delay: 0s;
+                        }
+
+                        &:nth-child(2) {
+                            transition-delay: 0.125s;
+                        }
+
+                        &:nth-child(3) {
+                            transition-delay: 0.2s;
+                        }
+                    }
+                }
+
+                .hamburger-cross {
+                    position: absolute;
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    transform: rotate(45deg);
+
+                    span {
+                        display: block;
+                        background: $secondary-color;
+                        border-radius: 3px;
+                        transition: 0.2s ease-in-out;
+
+                        &:nth-child(1) {
+                            position: absolute;
+                            top: 0;
+                            left: 10px;
+                            width: 2px;
+                            height: 100%;
+                            transition-delay: 0.3s;
+                        }
+
+                        &:nth-child(2) {
+                            position: absolute;
+                            top: 10px;
+                            left: 0;
+                            width: 100%;
+                            height: 2px;
+                            transition-delay: 0.4s;
+                        }
+                    }
+                }
+            }
+
+            &.collapsed {
+                .menu_toggle {
+                    .hamburger span {
+                        width: 100%;
+
+                        &:nth-child(1) {
+                            transition-delay: 0.3s;
+                        }
+
+                        &:nth-child(2) {
+                            transition-delay: 0.4s;
+                        }
+
+                        &:nth-child(3) {
+                            transition-delay: 0.5s;
+                        }
+                    }
+
+                    .hamburger-cross span {
+                        &:nth-child(1) {
+                            height: 0;
+                            transition-delay: 0s;
+                        }
+
+                        &:nth-child(2) {
+                            width: 0;
+                            transition-delay: 0.2s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .links-container {
+        display: flex;
+        margin-left: auto;
+
+        li {
+            text-align: center;
+
+            a,
+            button {
+                font-family: $nav-links-font;
+                font-weight: 900;
+                line-height: 100%;
+                display: block;
+                width: 100%;
+                padding: 0.75rem 1rem;
+                text-transform: capitalize;
+                color: inherit;
+
+                &.active {
+                    color: ghostwhite;
+                    background-image: linear-gradient($secondary-color, $primary-color);
+                    border-radius: 5px;
+
+                    button {
+                        font-weight: 900 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    @include respond(tab-port) {
+        .logo {
+            margin-right: 0;
+        }
+
+        .toggle-nav-btn {
+            display: block;
+        }
+
+        .links-container {
+            position: absolute;
+            z-index: 1;
+            top: $nav-height;
+            left: 0;
+            display: block;
+            overflow: hidden;
+
+            width: 100%;
+            color: $primary-color;
+            background-image: linear-gradient(
+                    135deg,
+                    rgba(49, 49, 49, 0.07) 0%,
+                    rgba(49, 49, 49, 0.07) 12.5%,
+                    rgba(76, 76, 76, 0.07) 12.5%,
+                    rgba(76, 76, 76, 0.07) 25%,
+                    rgba(102, 102, 102, 0.07) 25%,
+                    rgba(102, 102, 102, 0.07) 37.5%,
+                    rgba(129, 129, 129, 0.07) 37.5%,
+                    rgba(129, 129, 129, 0.07) 50%,
+                    rgba(155, 155, 155, 0.07) 50%,
+                    rgba(155, 155, 155, 0.07) 62.5%,
+                    rgba(182, 182, 182, 0.07) 62.5%,
+                    rgba(182, 182, 182, 0.07) 75%,
+                    rgba(208, 208, 208, 0.07) 75%,
+                    rgba(208, 208, 208, 0.07) 87.5%,
+                    rgba(235, 235, 235, 0.07) 87.5%,
+                    rgba(235, 235, 235, 0.07) 100%
+            ),
+            linear-gradient(
+                    45deg,
+                    rgba(5, 5, 5, 0.07) 0%,
+                    rgba(5, 5, 5, 0.07) 12.5%,
+                    rgba(39, 39, 39, 0.07) 12.5%,
+                    rgba(39, 39, 39, 0.07) 25%,
+                    rgba(73, 73, 73, 0.07) 25%,
+                    rgba(73, 73, 73, 0.07) 37.5%,
+                    rgba(107, 107, 107, 0.07) 37.5%,
+                    rgba(107, 107, 107, 0.07) 50%,
+                    rgba(141, 141, 141, 0.07) 50%,
+                    rgba(141, 141, 141, 0.07) 62.5%,
+                    rgba(175, 175, 175, 0.07) 62.5%,
+                    rgba(175, 175, 175, 0.07) 75%,
+                    rgba(209, 209, 209, 0.07) 75%,
+                    rgba(209, 209, 209, 0.07) 87.5%,
+                    rgba(243, 243, 243, 0.07) 87.5%,
+                    rgba(243, 243, 243, 0.07) 100%
+            ),
+            linear-gradient(90deg, #FFF, #FFF);
+            transition: transform 0.3s;
+            transform: scaleY(0);
+            transform-origin: top;
+
+            li {
+                a,
+                button {
+                    &.active {
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+
+        &.open {
+            .links-container {
+                transform: scaleY(1);
+            }
+        }
+    }
+
+    @include respond(phone) {
+        .logo {
+            padding-left: 8px;
+
+            a {
+                img {
+                    transform: scale(1.25);
+                }
+            }
+        }
+    }
+}

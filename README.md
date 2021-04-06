@@ -1,4 +1,4 @@
-# A To-Do app built with React, Firebase
+# A To-Do app built with React, Firebase, Typescript
 
 ### Features:
 

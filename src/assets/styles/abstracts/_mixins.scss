@@ -1,0 +1,196 @@
+@import "variables";
+
+//Media Query manager
+/*
+    0 - 425px | 476px  phone
+    425px - 768px Tablet portrait
+    768px - 1024px Tablet landscape
+    1024px - 1400px is where our normal styles apply
+    1800 +  ; Big desktop
+    $breakpoint argument choices:
+    - phone
+    - tab-port
+    - tab-land
+    - laptop
+    - big-desktop
+*/
+@mixin respond($breakpoint) {
+    @if $breakpoint==phone {
+        @media (max-width: 425px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==phone-md {
+        @media (max-width: 600px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==tab-port {
+        @media (max-width: 768px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==tab-md {
+        @media (max-width: 991px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==tab-land {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==laptop {
+        @media (min-width: 1400px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint==desktop {
+        @media (min-width: 1800px) {
+            @content;
+        }
+    }
+}
+
+@mixin windowRestHeight($subtraction-operand: 0) {
+    //min-height: subtract(100vh, var(--nav-height));
+    //min-height: calc(100vh - var(--nav-height));
+    @if ($subtraction-operand > 0) {
+        min-height: calc(100vh - 92px - #{$subtraction-operand});
+    } @else {
+        min-height: calc(100vh - 92px);
+    }
+}
+
+@mixin submit-btn {
+    display: block;
+    margin: 2rem auto 0;
+    font: 500 1rem $comicSnsMs-font;
+    padding: 0.65rem 1rem;
+    text-transform: capitalize;
+    background-color: $primary-color;
+    color: ghostwhite;
+    border-radius: 0.5rem;
+
+    @media (max-width: 400px) {
+        width: 100% !important;
+    }
+}
+
+@mixin icon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-60%);
+    color: $blacker-color;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+@mixin btn-icon {
+    font-size: 90%;
+    background-color: rgba(0, 0, 0, 0.051);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.57142857em;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin field {
+    margin-bottom: 0.2rem;
+    padding: 1rem 1rem 1rem 2.5rem;
+    border: 1px solid #22242626;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 0 transparent inset;
+    transition: color 0.1s ease, border-color 0.1s ease;
+
+    &::-webkit-input-placeholder {
+        color: #918985;
+    }
+
+    &:focus {
+        border-color: $primary-color;
+        background: #FFF;
+        box-shadow: 0 0 0 0 #22242659 inset;
+    }
+}
+
+@mixin link-wrapper {
+    font-family: $righteous-font;
+    margin-top: 1rem;
+    padding: 1rem 0;
+    text-align: center;
+    text-transform: capitalize;
+    color: $primary-text-color;
+    border: 1.5px solid #22242626;
+    border-radius: 0.5rem;
+    background-color: #FAFAFA;
+    box-shadow: 0 1px 2px 0 #22242626;
+
+    a {
+        font-weight: 600;
+        color: $primary-color;
+        transition: color 0.3s;
+
+        &:hover,
+        &:active {
+            color: $secondary-color;
+        }
+    }
+}
+
+@mixin login-register-field {
+    position: relative;
+
+    &:not(:last-of-type) {
+        margin-bottom: 2rem;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        text-transform: capitalize;
+
+        &::first-letter {
+            font-size: large;
+        }
+    }
+
+    input { @include field; }
+
+    i { @include icon; }
+
+    &:not(.error):focus-within {
+        i {
+            opacity: 1;
+            color: $primary-color !important;
+        }
+    }
+
+    &.error {
+        color: $errorDark-color;
+
+        input {
+            background-color: #FFF6F6;
+            border-color: $errorLightest-color;
+
+            &::-webkit-input-placeholder {
+                color: currentColor;
+            }
+        }
+
+        i {
+            color: inherit;
+        }
+    }
+}

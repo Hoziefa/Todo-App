@@ -1,0 +1,297 @@
+.modal-container {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    overflow: hidden auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    background-color: #000000D9;
+
+    .modal-content {
+        flex-basis: 100%;
+
+        .title {
+            font-size: 2.25rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: $primary-color;
+
+            h2 {
+                font-family: $monoton-font;
+                font-size: inherit;
+                word-spacing: 0.25rem;
+            }
+        }
+
+        .form-container {
+            min-height: auto;
+
+            .form-wrapper {
+                color: $primary-text-color;
+                border: 1px solid #22242626;
+                border-radius: 10px;
+                background-color: #FFF;
+                box-shadow: 0 1px 2px 0 #22242626;
+
+                form {
+                    .actions {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-top: 2rem;
+                        column-gap: 1rem;
+
+                        button {
+                            font-family: $respective-font;
+                            position: relative;
+                            padding: 0.625rem 3rem 0.625rem 2rem;
+                            transition: background-color 0.3s;
+                            text-transform: capitalize;
+                            color: white;
+                            border-radius: 5px;
+
+                            i { @include btn-icon; }
+
+                            &.submit-btn {
+                                background-color: $secondary-color;
+
+                                &:hover:not(:disabled),
+                                &:active:not(:disabled) {
+                                    background-color: $primary-color;
+                                }
+                            }
+
+                            &.cancel-btn {
+                                background-color: $errorLight-color;
+
+                                &:hover:not(:disabled),
+                                &:active:not(:disabled) {
+                                    background-color: #DA3A2FE8;
+                                }
+                            }
+
+                            &:disabled {
+                                color: #00000042;
+                                background-color: #0000001F;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.add-todo--modal {
+        .modal-content {
+            .form-container {
+                .form-wrapper {
+                    padding: 3rem 2rem 4rem;
+
+                    form {
+                        .inputs-container {
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            flex-wrap: wrap;
+                            gap: 1rem;
+
+                            .field {
+                                position: relative;
+                                flex: 1;
+                                height: fit-content;
+
+                                label {
+                                    font: 500 1rem $main-font;
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+                                    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                                    transform: translate(2%, 55%) scale(1);
+                                    transform-origin: top left;
+                                    text-transform: capitalize;
+                                    pointer-events: none;
+                                    color: #0000008A;
+                                }
+
+                                input {
+                                    border-bottom: 2px solid #B2B2B2;
+                                }
+
+                                &::after {
+                                    position: absolute;
+                                    bottom: 0;
+                                    left: 0;
+                                    width: 100%;
+                                    content: "";
+                                    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                                    transform: scaleX(0);
+                                    border-bottom: 2px solid $secondary-color;
+                                }
+
+                                &:focus-within:not(.error) {
+                                    label {
+                                        color: $primary-color;
+                                    }
+
+                                    &::after {
+                                        transform: scaleX(1);
+                                    }
+                                }
+
+                                &.active {
+                                    label {
+                                        transform: translateY(-60%) scale(0.8);
+                                    }
+                                }
+
+                                &.error {
+                                    color: $errorDark-color;
+
+                                    label {
+                                        color: inherit;
+                                    }
+
+                                    input {
+                                        border-bottom-color: $errorLightest-color;
+                                    }
+                                }
+                            }
+
+                            .date--picker {
+                                .react-datepicker-wrapper {
+                                    width: 100%;
+
+                                    input {
+                                        padding-right: 16px;
+                                        color: #0000008A;
+                                        border-bottom: 2px solid #B2B2B2;
+                                    }
+                                }
+
+                                .fa-calendar-alt {
+                                    font-size: 1.75rem;
+                                    position: absolute;
+                                    top: 50%;
+                                    right: 6px;
+                                    transform: translateY(-60%);
+                                    pointer-events: none;
+                                    color: #00000033;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-basis: 700px;
+            }
+        }
+
+        @include respond(phone) {
+            .modal-content {
+                .form-container {
+                    .title {
+                        font-size: 1.5rem;
+                    }
+
+                    .form-wrapper {
+                        form {
+                            .inputs-container {
+                                .field,
+                                .date--picker {
+                                    flex-basis: 100%;
+                                }
+
+                                .field {
+                                    margin-bottom: 2rem;
+                                }
+
+                                .date--picker {
+                                    .fa-calendar-alt {
+                                        top: auto;
+                                        bottom: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.update-user-profile--modal {
+        .modal-content {
+            .form-container {
+                .form-wrapper {
+                    padding: 1rem 2rem;
+
+                    form {
+                        .field {
+                            position: relative;
+
+                            &:not(:last-of-type) {
+                                margin-bottom: 1rem;
+                            }
+
+                            label {
+                                font-weight: 500;
+                                display: block;
+                                margin-bottom: 0.5rem;
+                                text-transform: capitalize;
+
+                                &::first-letter {
+                                    font-size: large;
+                                }
+                            }
+
+                            input { @include field; }
+
+                            i { @include icon; }
+
+                            &:not(.error):focus-within {
+                                i {
+                                    opacity: 1;
+                                    color: $primary-color !important;
+                                }
+                            }
+
+                            &.error {
+                                color: $errorDark-color;
+
+                                input {
+                                    border-color: $errorLightest-color;
+                                    background-color: #FFF6F6;
+
+                                    &::-webkit-input-placeholder {
+                                        color: currentColor;
+                                    }
+                                }
+
+                                i {
+                                    color: inherit;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (min-width: 600px) {
+            .modal-content {
+                flex-basis: 500px;
+            }
+        }
+    }
+}
