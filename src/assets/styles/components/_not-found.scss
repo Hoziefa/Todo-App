@@ -1,0 +1,46 @@
+.not-found {
+    font-family: $decorated3rd-font;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+
+    .not-found--wrapper {
+        position: relative;
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        width: 60%;
+        min-height: 70vh;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+        border-radius: 20px;
+        background: linear-gradient(45deg, $primary-color, $secondary-color);
+        background-size: 100% 100%;
+        filter: drop-shadow($primary-color 0 0 20px);
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        a {
+            button {
+                font: 500 1.5rem $decorated3rd-font;
+                min-width: 20%;
+                padding: 0.75rem 2rem;
+                text-align: center;
+                text-transform: capitalize;
+                color: inherit;
+                border-radius: 5px;
+                background-color: $primary-color;
+            }
+        }
+
+        @include respond(tab-port) {
+            width: 90%;
+        }
+    }
+}

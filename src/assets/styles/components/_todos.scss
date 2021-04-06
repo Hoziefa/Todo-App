@@ -1,0 +1,70 @@
+.todos-page {
+    .todos-app {
+        .section {
+            .section-heading {
+                display: block;
+
+                .section-icon {
+                    width: fit-content;
+                }
+
+                .section-title {
+                    margin-bottom: 2rem;
+                }
+
+                .calendar-container {
+                    position: relative;
+                    width: fit-content;
+                    margin: 0 auto;
+
+                    .clear-calendar--btn {
+                        font-family: $respective-font;
+                        position: relative;
+                        display: block;
+                        margin-bottom: 0.25rem;
+                        margin-left: auto;
+                        padding: 0.5rem 3rem 0.5rem 2rem;
+                        text-transform: capitalize;
+                        color: white;
+                        background-color: $secondary-color;
+                        border-radius: 5px;
+                        transition: background-color 0.3s;
+
+                        i { @include btn-icon; }
+
+                        &:hover,
+                        &:active {
+                            background-color: $primary-color;
+                        }
+
+                        &:active {
+                            transform: scale(0.98);
+                        }
+                    }
+
+                    .react-calendar {
+                        width: 100%;
+
+                        input {
+                            text-align: center;
+                            border-bottom: 2px solid currentColor;
+                        }
+
+                        @include respond(tab-port) {
+                            overflow: hidden;
+                            padding: 0 1rem;
+
+                            .react-calendar__viewContainer {
+                                display: block !important;
+
+                                > .react-calendar__month-view {
+                                    width: 100% !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

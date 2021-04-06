@@ -1,0 +1,82 @@
+@import "../abstracts/mixins";
+
+.register-form {
+    padding: 1.5rem 1rem 1rem;
+
+    .form-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        @include windowRestHeight(2rem);
+
+        .form-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: $primary-color;
+
+            i {
+                font-size: 5.5rem;
+                margin-bottom: 0.35rem;
+            }
+
+            h2 {
+                font-family: $decorated4th-font;
+                font-size: inherit;
+                line-height: 100%;
+
+                span {
+                    color: #000100;
+                }
+            }
+        }
+
+        .form-wrapper {
+            width: 600px;
+            padding: 1rem 0 0;
+
+            .form {
+                padding: 1.5rem 2rem;
+                color: $primary-text-color;
+                background-color: #FFF;
+                border: 1px solid #22242626;
+                border-radius: 10px;
+                box-shadow: 0 1px 2px 0 #22242626;
+
+                form {
+                    .field {
+                        @include login-register-field;
+                    }
+
+                    .submit-btn {
+                        @include submit-btn;
+                        width: 60%;
+                        margin-top: 1rem;
+                    }
+
+                    .validation-error--tooltip {
+                        &::after {
+                            left: 1rem;
+                        }
+                    }
+                }
+            }
+
+            .login-link-wrapper {
+                @include link-wrapper;
+            }
+        }
+    }
+
+    @include respond(phone-md) {
+        .form-container {
+            .form-title {
+                font-size: 2rem;
+            }
+
+            .form-wrapper {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,161 @@
+.page-loader {
+    all: initial;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s;
+
+    background-image: radial-gradient(
+        circle at top right,
+        rgb(49, 157, 235) 0%,
+        rgb(49, 157, 235) 13%,
+        rgb(76, 166, 234) 13%,
+        rgb(76, 166, 234) 23%,
+        rgb(103, 176, 232) 23%,
+        rgb(103, 176, 232) 33%,
+        rgb(130, 185, 231) 33%,
+        rgb(130, 185, 231) 46%,
+        rgb(156, 194, 230) 46%,
+        rgb(156, 194, 230) 48%,
+        rgb(183, 203, 229) 48%,
+        rgb(183, 203, 229) 63%,
+        rgb(236, 236, 236) 63%,
+        rgb(236, 236, 236) 83%,
+        rgb(245, 245, 245) 83%,
+        rgb(245, 245, 245) 100%
+    );
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    $fill-color: white;
+
+    section {
+        .loader {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 75px;
+            display: inline-block;
+            vertical-align: middle;
+
+            svg {
+                polygon {
+                    fill: $fill-color;
+                }
+            }
+        }
+
+        .loader-star {
+            position: absolute;
+            top: calc(50% - 12px);
+        }
+
+        .loader-2 .loader-star {
+            position: static;
+            width: 100%;
+            height: 100%;
+            transform: scale(0.7);
+            animation: loader-2-star 1s ease alternate infinite;
+        }
+
+        .loader-2 .loader-circles {
+            width: 8px;
+            height: 8px;
+            background: $fill-color;
+            border-radius: 50%;
+            position: absolute;
+            left: calc(50% - 4px);
+            top: calc(50% - 4px);
+            transition: all 1s ease;
+            animation: loader-2-circles 1s ease-in-out alternate infinite;
+        }
+
+        @-webkit-keyframes loader-2-circles {
+            0% {
+                box-shadow: 0 0 0 $fill-color;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            50% {
+                box-shadow: 24px -22px $fill-color, 30px -15px 0 -3px $fill-color, 31px 0px $fill-color,
+                    29px 9px 0 -3px $fill-color, 24px 23px $fill-color, 17px 30px 0 -3px $fill-color, 0px 33px $fill-color,
+                    -10px 28px 0 -3px $fill-color, -24px 22px $fill-color, -29px 14px 0 -3px $fill-color,
+                    -31px -3px $fill-color, -30px -11px 0 -3px $fill-color, -20px -25px $fill-color,
+                    -12px -30px 0 -3px $fill-color, 5px -29px $fill-color, 13px -25px 0 -3px $fill-color;
+                transform: rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(360deg);
+                box-shadow: 25px -22px $fill-color, 15px -22px 0 -3px black, 31px 2px $fill-color, 21px 2px 0 -3px black,
+                    23px 25px $fill-color, 13px 25px 0 -3px black, 0px 33px $fill-color, -10px 33px 0 -3px black,
+                    -26px 24px $fill-color, -19px 17px 0 -3px black, -32px 0px $fill-color, -23px 0px 0 -3px black,
+                    -25px -23px $fill-color, -16px -23px 0 -3px black, 0px -31px $fill-color, -2px -23px 0 -3px black;
+            }
+        }
+
+        @keyframes loader-2-circles {
+            0% {
+                box-shadow: 0 0 0 $fill-color;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            50% {
+                box-shadow: 24px -22px $fill-color, 30px -15px 0 -3px $fill-color, 31px 0px $fill-color,
+                    29px 9px 0 -3px $fill-color, 24px 23px $fill-color, 17px 30px 0 -3px $fill-color, 0px 33px $fill-color,
+                    -10px 28px 0 -3px $fill-color, -24px 22px $fill-color, -29px 14px 0 -3px $fill-color,
+                    -31px -3px $fill-color, -30px -11px 0 -3px $fill-color, -20px -25px $fill-color,
+                    -12px -30px 0 -3px $fill-color, 5px -29px $fill-color, 13px -25px 0 -3px $fill-color;
+                transform: rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: rotate(360deg);
+                box-shadow: 25px -22px $fill-color, 15px -22px 0 -3px black, 31px 2px $fill-color, 21px 2px 0 -3px black,
+                    23px 25px $fill-color, 13px 25px 0 -3px black, 0px 33px $fill-color, -10px 33px 0 -3px black,
+                    -26px 24px $fill-color, -19px 17px 0 -3px black, -32px 0px $fill-color, -23px 0px 0 -3px black,
+                    -25px -23px $fill-color, -16px -23px 0 -3px black, 0px -31px $fill-color, -2px -23px 0 -3px black;
+            }
+        }
+
+        @-webkit-keyframes loader-2-star {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(0.7) rotate(360deg);
+            }
+        }
+
+        @keyframes loader-2-star {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(0.7) rotate(360deg);
+            }
+        }
+    }
+
+    @keyframes waveBackground {
+        0% {
+        }
+
+        100% {
+        }
+    }
+}

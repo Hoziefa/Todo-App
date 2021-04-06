@@ -1,0 +1,79 @@
+.home {
+    .todos-app {
+        .section {
+            .section-heading {
+                .field {
+                    position: relative;
+                    flex: 0.7;
+                    margin-left: auto;
+
+                    input {
+                        padding: 0.75rem 1rem 0.75rem;
+                        border: 1px solid #22242634;
+                        border-radius: 0.5rem;
+                        transition: color 0.1s ease, border-color 0.1s ease;
+
+                        &::-webkit-input-placeholder {
+                            font-size: 90%;
+                            color: #C7C7C7;
+                        }
+
+                        &:focus {
+                            border-color: $primary-color;
+                            background: #FFF;
+                            box-shadow: 0 0 0 0 #22242659 inset;
+                        }
+                    }
+
+                    i {
+                        position: absolute;
+                        top: 50%;
+                        right: 1rem;
+                        pointer-events: none;
+                        opacity: 0.5;
+                        color: #000000DE;
+                        transform: translateY(-50%);
+                    }
+                }
+
+                .add-todo-btn {
+                    align-self: center;
+                    flex-basis: 58px;
+                    height: 58px;
+                    color: white;
+                    border-radius: 50%;
+                    background-color: $secondary-color;
+                    box-shadow: 0 3px 5px -1px #00000033, 0 6px 10px 0 #00000024, 0 1px 18px 0 #0000001F;
+                    transition: background-color 0.3s;
+
+                    i { font-size: 1rem; }
+
+                    &:hover,
+                    &:active {
+                        background-color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+
+    @include respond(tab-port) {
+        .todos-app {
+            .todos {
+                .section-heading {
+                    flex-wrap: wrap;
+
+                    .field {
+                        flex: 1 0 calc(100% - 100px);
+                        margin: 0;
+                    }
+
+                    .add-todo-btn {
+                        flex-basis: 45px;
+                        height: 45px;
+                    }
+                }
+            }
+        }
+    }
+}
