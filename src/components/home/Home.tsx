@@ -45,7 +45,7 @@ class Home extends Component<{}, IHomeState> {
                             <i className="fas fa-search" />
                         </div>
 
-                        <button className="add-todo-btn" onClick={ this.onDisplayAddTodoModal }><i className="fas fa-plus" /></button>
+                        <button className="add-todo-btn" aria-label="add-todo" onClick={ this.onDisplayAddTodoModal }><i className="fas fa-plus" /></button>
                     </SectionHeading>
 
                     { loading

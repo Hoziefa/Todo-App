@@ -23,7 +23,7 @@ class Todos extends Home {
                     <div className="todos section">
                         <SectionHeading title="to-do list">
                             <div className="calendar-container">
-                                <button className="clear-calendar--btn" onClick={ this.onResetDate }>reset <i className="fas fa-times" /></button>
+                                <button className="clear-calendar--btn" aria-label="clear" onClick={ this.onResetDate }>reset <i className="fas fa-times" /></button>
 
                                 <Calendar onChange={ this.onDateChange } value={ filterDate } showDoubleView />
                             </div>
