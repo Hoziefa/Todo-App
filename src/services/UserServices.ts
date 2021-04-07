@@ -1,9 +1,8 @@
 import md5 from 'md5';
-import { firebaseService, IAuthService } from './FirebaseService';
+import { CurrentUserFromService, firebaseService, IAuthService } from './FirebaseService';
 import { CurrentUser, ICurrentUserProfile, ILoginRegister } from 'types';
-import firebase from 'firebase/app';
 
-type AuthResponse = { success: boolean; message: string; user: CurrentUser | null };
+type AuthResponse = { success: boolean; message: string; user: CurrentUser };
 
 const usersRef = firebaseService.databaseRef('users');
 
@@ -18,28 +17,8 @@ class Auth {
         return Auth.instance;
     }
 
-    public get currentUser(): firebase.User {
+    public get currentUser(): CurrentUserFromService {
         return this.authService.currentUser;
-    }
-
-    public async registerUser({ email, password, username }: ILoginRegister): Promise<AuthResponse> {
-        try {
-            const user = await this.authService.createUserWithEmailAndPassword(email, password).then(async ({ user }): Promise<CurrentUser> => {
-                await user!.updateProfile({
-                    displayName: username,
-                    photoURL: `https://www.gravatar.com/avatar/${ md5(email) }?d=mp`,
-                });
-
-                await usersRef.child(user!.uid).set({ username: user!.displayName, avatar: user!.photoURL, email });
-
-                return user;
-            });
-
-            return { success: true, message: 'registered successfully', user };
-        }
-        catch ({ message }) {
-            return { success: false, message, user: null };
-        }
     }
 
     public async loginUser({ email, password }: ILoginRegister): Promise<AuthResponse> {
@@ -57,6 +36,23 @@ class Auth {
         }
         catch ({ message }) {
             console.error(message);
+        }
+    }
+
+    public async registerUser({ email, password, username }: ILoginRegister): Promise<AuthResponse> {
+        try {
+            const user = await this.authService.createUserWithEmailAndPassword(email, password).then(async ({ user }): Promise<CurrentUser> => {
+                await user!.updateProfile({ displayName: username, photoURL: `https://www.gravatar.com/avatar/${ md5(email) }?d=mp` });
+
+                await usersRef.child(user!.uid).set({ username: user!.displayName, avatar: user!.photoURL, email });
+
+                return user;
+            });
+
+            return { success: true, message: 'registered successfully', user };
+        }
+        catch ({ message }) {
+            return { success: false, message, user: null };
         }
     }
 }

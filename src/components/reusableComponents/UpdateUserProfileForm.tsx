@@ -18,7 +18,7 @@ interface IUpdateUserProfileFormProps {
 
 interface IUpdateUserProfileFormState {
     data: { username: IGeneratedInput<string>; avatar: IGeneratedInput<string> };
-    errors: { username?: string; avatar?: string };
+    errors: { username: string; avatar: string };
     uploading: boolean;
     image: string;
     crop: { x: number; y: number };
@@ -35,6 +35,43 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
 
     context!: React.ContextType<typeof AppContext>;
 
+    public readonly state: Readonly<IUpdateUserProfileFormState> = {
+        data: {
+            username: inputGenerator({
+                name: 'username',
+                min: 3,
+                max: 30,
+                placeholder: 'username',
+                validationErrorStyle: 'validation-error--underline',
+                icon: 'fas fa-user',
+                value: this.context?.currentUserProfile?.username,
+                initialvalue: this.context?.currentUserProfile?.username,
+            }),
+
+            avatar: inputGenerator({
+                name: 'avatar',
+                type: 'file',
+                element: 'file',
+                validationErrorStyle: 'validation-error--underline',
+                noValidate: true,
+                displayErrorMsg: false,
+                avatar: this.context?.currentUserProfile?.avatar,
+                onFileUploadChange: (e): void => this.onFileUploadChange(e),
+            }),
+        },
+
+        errors: { username: '', avatar: '' },
+        uploading: false,
+        image: '',
+        crop: { x: 0, y: 0 },
+        zoom: 1,
+        aspect: 4 / 3,
+        croppedImage: null,
+        croppedAreaPixels: null,
+        blob: null,
+        uploadSuccess: false,
+    };
+
     public render(): ReactNode {
         const { data, errors, image, uploading } = this.state;
 
@@ -48,7 +85,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                             { uploading
                                 ? <div className="dimmer-loader"><img src={ uploadingImage } alt="uploading" width="434" height="326" /></div>
                                 : <>
-                                    { this.renderInput(data.avatar, errors.avatar!) }
+                                    { this.renderInput(data.avatar, errors.avatar) }
 
                                     { data.avatar.value && image && (
                                         <div className="cropper">
@@ -66,7 +103,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                                 </>
                             }
 
-                            { this.renderInput(data.username, errors.username!) }
+                            { this.renderInput(data.username, errors.username) }
 
                             <div className="actions">
                                 <button type="submit" className="submit-btn" disabled={ this.shouldSubmitBtnBeDisabled() }>
@@ -179,43 +216,6 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
 
     private onCropComplete = (_croppedArea: Area, croppedAreaPixels: Area): void => this.setState({ croppedAreaPixels });
 
-    public readonly state: Readonly<IUpdateUserProfileFormState> = {
-        data: {
-            username: inputGenerator({
-                name: 'username',
-                min: 3,
-                max: 30,
-                placeholder: 'username',
-                validationErrorStyle: 'validation-error--underline',
-                icon: 'fas fa-user',
-                value: this.context?.currentUserProfile?.username,
-                initialvalue: this.context?.currentUserProfile?.username,
-            }),
-
-            avatar: inputGenerator({
-                name: 'avatar',
-                type: 'file',
-                element: 'file',
-                validationErrorStyle: 'validation-error--underline',
-                noValidate: true,
-                displayErrorMsg: false,
-                avatar: this.context?.currentUserProfile?.avatar,
-                onFileUploadChange: (e): void => this.onFileUploadChange(e),
-            }),
-        },
-
-        errors: {},
-        uploading: false,
-        image: '',
-        crop: { x: 0, y: 0 },
-        zoom: 1,
-        aspect: 4 / 3,
-        croppedImage: null,
-        croppedAreaPixels: null,
-        blob: null,
-        uploadSuccess: false,
-    };
-
     private handleCroppedImage = async (): Promise<void> => {
         const { image, croppedAreaPixels } = this.state;
 
@@ -249,7 +249,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
         const { errors, data, image, uploading } = this.state;
         const { currentUserProfile } = this.context;
 
-        return !!errors.username || (data.username.value === currentUserProfile?.username && !image) || uploading;
+        return uploading || !!errors.username || (data.username.value === currentUserProfile?.username && !image);
     }
 }
 

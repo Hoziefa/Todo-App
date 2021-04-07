@@ -5,7 +5,7 @@ import { ITodo } from 'types';
 class TodosService {
     private static instance: TodosService;
 
-    private readonly todosRef = firebaseService.firebase.database().ref('todos');
+    private readonly todosRef = firebaseService.databaseRef('todos');
 
     private constructor() {}
 

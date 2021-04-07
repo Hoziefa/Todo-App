@@ -10,7 +10,7 @@ import { IGeneratedInput } from 'types';
 
 interface ITodoFormState {
     data: { task: IGeneratedInput<string> };
-    errors: { task?: string };
+    errors: { task: string };
     date: Date | null;
 }
 
@@ -30,7 +30,7 @@ class TodoForm extends Form<{}, ITodoFormState> {
                 autoComplete: 'off',
             }),
         },
-        errors: {},
+        errors: { task: '' },
 
         date: null,
     };
@@ -47,7 +47,7 @@ class TodoForm extends Form<{}, ITodoFormState> {
 
                             <form onSubmit={ this.onsubmit } className="form">
                                 <div className="inputs-container">
-                                    { this.renderInput(data.task, errors.task!) }
+                                    { this.renderInput(data.task, errors.task) }
 
                                     <div className="date--picker">
                                         <DatePicker selected={ date } dateFormat="Pp" showTimeSelect onChange={ (date: Date): void => this.setState({ date }) } />

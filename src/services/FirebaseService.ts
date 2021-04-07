@@ -11,6 +11,8 @@ export interface IAuthService {
     signOut(): Promise<void>;
 }
 
+export type CurrentUserFromService = firebase.User;
+
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -42,8 +44,6 @@ class FirebaseService implements IAuthService {
     public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
 
     public firebaseLooper = <T = any>(data: object): Array<T> => Object.entries(data || []).map(([id, value]): T => ({ id, ...value }));
-
-    public getImageDownloadURL = async (storageDir: string, imagePath: string): Promise<string> => await firebase.storage().ref(storageDir).child(imagePath).getDownloadURL();
 
     public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
         return this.firebase.auth().createUserWithEmailAndPassword(email, password);

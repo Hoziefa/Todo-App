@@ -12,7 +12,7 @@ class DataPersister implements IDataPersister {
     }
 
     public persistData<T>(key: string, data: T): void {
-        localStorage.setItem(key, JSON.stringify(data));
+        window.localStorage.setItem(key, JSON.stringify(data));
     }
 
     public deleteData(key: string): void {
@@ -20,11 +20,11 @@ class DataPersister implements IDataPersister {
     }
 
     public readData<T>(key: string): T | null {
-        return JSON.parse(localStorage.getItem(key) ?? 'null');
+        return JSON.parse(window.localStorage.getItem(key) ?? 'null');
     }
 
     public clearData(): void {
-        localStorage.clear();
+        window.localStorage.clear();
     }
 }
 
