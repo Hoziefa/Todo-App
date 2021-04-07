@@ -44,11 +44,11 @@ class Todo extends Component<ITodoProps, ITodoState> {
                         </div>
 
                         <div className="actions">
-                            <button className="confirm-todo--btn" onClick={ (): void => this.onConfirmEditTodo(todo) }>
+                            <button className="confirm-todo--btn" aria-label="confirm" onClick={ (): void => this.onConfirmEditTodo(todo) }>
                                 <i className="fas fa-check" />
                             </button>
 
-                            <button className="cancel-todo--btn" onClick={ this.onCancelEditTodo }>
+                            <button className="cancel-todo--btn" aria-label="cancel" onClick={ this.onCancelEditTodo }>
                                 <i className="fas fa-times" />
                             </button>
                         </div>
@@ -74,9 +74,9 @@ class Todo extends Component<ITodoProps, ITodoState> {
                         </div>
 
                         <div className="actions">
-                            { !todo.completed && <button className="edit-todo--btn" onClick={ this.onEditTodoMode }><i className="fas fa-pen" /></button> }
+                            { !todo.completed && <button className="edit-todo--btn" aria-label="edit" onClick={ this.onEditTodoMode }><i className="fas fa-pen" /></button> }
 
-                            <button className="delete-todo--btn" onClick={ (): void => this.onDeleteTodo(todo.id!) }><i className="fas fa-trash" /></button>
+                            <button className="delete-todo--btn" aria-label="delete" onClick={ (): void => this.onDeleteTodo(todo.id!) }><i className="fas fa-trash" /></button>
                         </div>
                     </>
                 ) }

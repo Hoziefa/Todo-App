@@ -33,7 +33,7 @@ class NavBar extends Component<INavBarProps, INavBarState> {
             <nav className={ `main-nav ${ open ? 'open' : '' }`.trim() } ref={ this.navRef }>
                 <div className="container">
                     <div className="logo">
-                        <Link to="/"><img src={ logo } alt="logo" /></Link>
+                        <Link to="/"><img src={ logo } alt="logo" width="512" height="512" /></Link>
                     </div>
 
                     <button
