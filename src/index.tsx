@@ -8,6 +8,6 @@ import 'react-calendar/dist/Calendar.css';
 
 import './assets/styles/main.scss';
 
-firebaseService.firebase.auth().onAuthStateChanged(currentUser => {
-    ReactDOM.render(<App currentUser={currentUser} />, document.getElementById('root'));
+firebaseService.firebase.auth().onAuthStateChanged((currentUser): void => {
+    ReactDOM.render(<App currentUser={ currentUser } />, document.getElementById('root'));
 });

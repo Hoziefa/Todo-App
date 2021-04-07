@@ -1,14 +1,14 @@
 @import "../abstracts/mixins";
 
 .register-form {
-    padding: 1.5rem 1rem 1rem;
+    padding: 1rem;
 
     .form-container {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        @include windowRestHeight(2rem);
+        @include get-window-rest-height(2rem);
 
         .form-title {
             font-size: 2.5rem;
@@ -45,7 +45,7 @@
 
                 form {
                     .field {
-                        @include login-register-field;
+                        @include login-register-field-container;
                     }
 
                     .submit-btn {
@@ -63,12 +63,12 @@
             }
 
             .login-link-wrapper {
-                @include link-wrapper;
+                @include login-register-exist-user-link-message;
             }
         }
     }
 
-    @include respond(phone-md) {
+    @include respond(tab-port) {
         .form-container {
             .form-title {
                 font-size: 2rem;

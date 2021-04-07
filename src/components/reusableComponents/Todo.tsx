@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Component, ReactNode } from 'react';
 import DatePicker from 'react-datepicker';
 
-import { AppContext } from '../../contexts/appContext';
+import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
 import { dateService } from 'services/DateService';
 import { ITodo } from 'types';
@@ -27,51 +27,13 @@ class Todo extends Component<ITodoProps, ITodoState> {
         editing: false,
     };
 
-    //#region Handle changes on task/date fields.
-    private onEditTodoChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>): void => this.setState({ activeTask: value });
-
-    private onCompleteTodoChange = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>, updateTodo: ITodo): void => {
-        this.context.updateAppContext({ todos: this.context.todos.map((todo): ITodo => (todo.id === updateTodo.id ? { ...todo, completed: checked } : todo)) });
-
-        todosService.updateTodo({ ...updateTodo, completed: checked }).then();
-    };
-
-    //#endregion Handle changes on task/date fields.
-
-    //#region ToDo_Actions
-    private onEditTodoMode = (): void => this.setState({ editing: true });
-
-    private onDeleteTodo = (todoId: string): void => {
-        this.context.updateAppContext({ todos: this.context.todos.filter(({ id }): boolean => id !== todoId) });
-
-        todosService.deleteTodo(todoId).then();
-    };
-
-    private onConfirmEditTodo = (updateTodo: ITodo): void => {
-        const { activeTask, activeDate } = this.state;
-
-        if (!activeTask.trim()) return;
-
-        const newTodo = { ...updateTodo, task: activeTask, date: activeDate.getTime() };
-
-        this.context.updateAppContext({ todos: this.context.todos.map((todo): ITodo => (todo.id === newTodo.id ? newTodo : todo)) });
-
-        todosService.updateTodo(newTodo).then();
-
-        this.setState({ editing: false });
-    };
-
-    private onCancelEditTodo = (): void => this.setState({ editing: false, activeTask: this.props.todo.task, activeDate: dateService.toDate(this.props.todo.date) });
-
-    //#endregion ToDo_Actions
-
     public render(): ReactNode {
         const { activeTask, activeDate, editing } = this.state;
         const { todo } = this.props;
 
         return (
             <li className={ `todo-item ${ todo.completed ? 'completed' : '' }` }>
-                <span className="todo-create-date">{ dateService.diffFromNow(todo.timestamp) }</span>
+                <span className="todo-created-date">{ dateService.diffFromNow(todo.timestamp) }</span>
 
                 { !todo.completed && editing ? (
                     <>
@@ -121,6 +83,44 @@ class Todo extends Component<ITodoProps, ITodoState> {
             </li>
         );
     }
+
+    //#region Handle changes on task/date fields.
+    private onEditTodoChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>): void => this.setState({ activeTask: value });
+
+    private onCompleteTodoChange = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>, updateTodo: ITodo): void => {
+        this.context.updateAppContext({ todos: this.context.todos.map((todo): ITodo => (todo.id === updateTodo.id ? { ...todo, completed: checked } : todo)) });
+
+        todosService.updateTodo({ ...updateTodo, completed: checked }).then();
+    };
+
+    //#endregion Handle changes on task/date fields.
+
+    //#region ToDo_Actions
+    private onEditTodoMode = (): void => this.setState({ editing: true });
+
+    private onDeleteTodo = (todoId: string): void => {
+        this.context.updateAppContext({ todos: this.context.todos.filter(({ id }): boolean => id !== todoId) });
+
+        todosService.deleteTodo(todoId).then();
+    };
+
+    private onConfirmEditTodo = (updateTodo: ITodo): void => {
+        const { activeTask, activeDate } = this.state;
+
+        if (!activeTask.trim()) return;
+
+        const newTodo = { ...updateTodo, task: activeTask, date: activeDate.getTime() };
+
+        this.context.updateAppContext({ todos: this.context.todos.map((todo): ITodo => (todo.id === newTodo.id ? newTodo : todo)) });
+
+        todosService.updateTodo(newTodo).then();
+
+        this.setState({ editing: false });
+    };
+
+    private onCancelEditTodo = (): void => this.setState({ editing: false, activeTask: this.props.todo.task, activeDate: dateService.toDate(this.props.todo.date) });
+
+    //#endregion ToDo_Actions
 }
 
 export default Todo;

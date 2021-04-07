@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Calendar, { OnChangeDateCallback } from 'react-calendar';
 
 import TodosList from '../reusableComponents/TodosList';
-import Home from '../home';
+import Home from '../home/Home';
 import { SectionHeading } from '../reusableComponents/SectionHeading';
 import UserProfile from '../reusableComponents/UserProfile';
 import { dataPersister } from 'services/DataPersister';
@@ -10,20 +10,6 @@ import { dateService } from 'services/DateService';
 import { EDataPersistKeys } from 'types';
 
 class Todos extends Home {
-    private onResetDate = (): void => {
-        this.context.updateAppContext({ filterDate: dateService.toDate() });
-
-        dataPersister.deleteData(EDataPersistKeys.DateFilterKey);
-    };
-
-    private onDateChange: OnChangeDateCallback = (date): void => {
-        if (Array.isArray(date)) return;
-
-        this.context.updateAppContext({ filterDate: date });
-
-        dataPersister.persistData(EDataPersistKeys.DateFilterKey, date);
-    };
-
     public render(): ReactNode {
         const { loading } = this.state;
         const { todos, filterDate } = this.context;
@@ -52,6 +38,20 @@ class Todos extends Home {
             </div>
         );
     }
+
+    private onResetDate = (): void => {
+        this.context.updateAppContext({ filterDate: dateService.toDate() });
+
+        dataPersister.deleteData(EDataPersistKeys.DateFilterKey);
+    };
+
+    private onDateChange: OnChangeDateCallback = (date): void => {
+        if (Array.isArray(date)) return;
+
+        this.context.updateAppContext({ filterDate: date });
+
+        dataPersister.persistData(EDataPersistKeys.DateFilterKey, date);
+    };
 }
 
 export default Todos;

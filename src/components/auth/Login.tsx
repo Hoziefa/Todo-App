@@ -44,41 +44,12 @@ class Login extends Form<ILoginProps, ILoginState> {
         loading: false,
     };
 
-    protected onFormSubmit = async (formValues: ILoginRegister): Promise<void> => {
-        this.setState({ loading: true });
-
-        const currentUser = await userServices.auth.loginUser(formValues);
-
-        if (currentUser.success) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: toast => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                    toast.addEventListener('mouseleave', Swal.resumeTimer);
-                },
-            });
-
-            Toast.fire({
-                icon: 'success',
-                title: `Welcome back ${currentUser.user?.displayName}`,
-            });
-        } else {
-            Swal.fire({ title: 'Error!', text: currentUser.message, icon: 'error', confirmButtonText: 'Okay' });
-
-            this.setState({ loading: false });
-        }
-    };
-
     public render(): ReactNode {
         return (
             <div className="login-form">
                 <div className="form-container">
                     <div className="form-title">
-                        <i className="fas fa-sign-in-alt"></i>
+                        <i className="fas fa-sign-in-alt" />
                         <h2>
                             log in to to.<span>do</span>
                         </h2>
@@ -86,13 +57,13 @@ class Login extends Form<ILoginProps, ILoginState> {
 
                     <div className="form-wrapper">
                         <div className="form">
-                            <form onSubmit={this.onsubmit}>
-                                {this.renderInput(this.state.data.email, this.state.errors.email!)}
+                            <form onSubmit={ this.onsubmit }>
+                                { this.renderInput(this.state.data.email, this.state.errors.email!) }
 
-                                {this.renderInput(this.state.data.password, this.state.errors.password!)}
+                                { this.renderInput(this.state.data.password, this.state.errors.password!) }
 
                                 <button className="submit-btn" type="submit">
-                                    {this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg"></i> : 'log in'}
+                                    { this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'log in' }
                                 </button>
                             </form>
                         </div>
@@ -105,6 +76,33 @@ class Login extends Form<ILoginProps, ILoginState> {
             </div>
         );
     }
+
+    protected onFormSubmit = async (formValues: ILoginRegister): Promise<void> => {
+        this.setState({ loading: true });
+
+        const currentUser = await userServices.auth.loginUser(formValues);
+
+        if (currentUser.success) {
+            const toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast): void => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                },
+            });
+
+            await toast.fire({ icon: 'success', title: `Welcome back ${ currentUser.user?.displayName }` });
+        }
+        else {
+            Swal.fire({ title: 'Error!', text: currentUser.message, icon: 'error', confirmButtonText: 'Okay' }).then();
+
+            this.setState({ loading: false });
+        }
+    };
 }
 
 export default Login;

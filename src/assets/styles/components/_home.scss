@@ -1,4 +1,8 @@
+@import "../abstracts/mixins";
+
 .home {
+    @include home-todos-common-style;
+
     .todos-app {
         .section {
             .section-heading {
@@ -19,8 +23,8 @@
                         }
 
                         &:focus {
-                            border-color: $primary-color;
                             background: #FFF;
+                            border-color: $primary-color;
                             box-shadow: 0 0 0 0 #22242659 inset;
                         }
                     }
@@ -41,8 +45,8 @@
                     flex-basis: 58px;
                     height: 58px;
                     color: white;
-                    border-radius: 50%;
                     background-color: $secondary-color;
+                    border-radius: 50%;
                     box-shadow: 0 3px 5px -1px #00000033, 0 6px 10px 0 #00000024, 0 1px 18px 0 #0000001F;
                     transition: background-color 0.3s;
 

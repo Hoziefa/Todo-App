@@ -1,3 +1,5 @@
+@import "../abstracts/mixins";
+
 .modal-container {
     position: fixed;
     z-index: 100;
@@ -33,9 +35,9 @@
 
             .form-wrapper {
                 color: $primary-text-color;
+                background-color: #FFF;
                 border: 1px solid #22242626;
                 border-radius: 10px;
-                background-color: #FFF;
                 box-shadow: 0 1px 2px 0 #22242626;
 
                 form {
@@ -50,10 +52,10 @@
                             font-family: $respective-font;
                             position: relative;
                             padding: 0.625rem 3rem 0.625rem 2rem;
-                            transition: background-color 0.3s;
                             text-transform: capitalize;
                             color: white;
                             border-radius: 5px;
+                            transition: background-color 0.3s;
 
                             i { @include btn-icon; }
 
@@ -111,13 +113,13 @@
                                     position: absolute;
                                     top: 0;
                                     left: 0;
+                                    text-transform: capitalize;
+                                    pointer-events: none;
+                                    color: #0000008A;
                                     transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
                                     transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
                                     transform: translate(2%, 55%) scale(1);
                                     transform-origin: top left;
-                                    text-transform: capitalize;
-                                    pointer-events: none;
-                                    color: #0000008A;
                                 }
 
                                 input {
@@ -130,9 +132,9 @@
                                     left: 0;
                                     width: 100%;
                                     content: "";
+                                    border-bottom: 2px solid $secondary-color;
                                     transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
                                     transform: scaleX(0);
-                                    border-bottom: 2px solid $secondary-color;
                                 }
 
                                 &:focus-within:not(.error) {
@@ -180,9 +182,9 @@
                                     position: absolute;
                                     top: 50%;
                                     right: 6px;
-                                    transform: translateY(-60%);
                                     pointer-events: none;
                                     color: #00000033;
+                                    transform: translateY(-60%);
                                 }
                             }
                         }
@@ -255,9 +257,9 @@
                                 }
                             }
 
-                            input { @include field; }
+                            input { @include login-register-field; }
 
-                            i { @include icon; }
+                            i { @include login-register-field-icon; }
 
                             &:not(.error):focus-within {
                                 i {
@@ -270,8 +272,8 @@
                                 color: $errorDark-color;
 
                                 input {
-                                    border-color: $errorLightest-color;
                                     background-color: #FFF6F6;
+                                    border-color: $errorLightest-color;
 
                                     &::-webkit-input-placeholder {
                                         color: currentColor;

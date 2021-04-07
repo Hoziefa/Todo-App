@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
-import { NavLink, Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { AppContext } from '../../contexts/appContext';
+import { AppContext } from '../../contexts/AppContext';
 
 import { userServices } from '../../services/UserServices';
 
@@ -26,47 +26,11 @@ class NavBar extends Component<INavBarProps, INavBarState> {
 
     private readonly navRef = React.createRef<HTMLElement>();
 
-    public componentDidUpdate(): void {
-        const { height: navHeight } = this.navRef.current!.getBoundingClientRect();
-        const domElmStyle = document.documentElement.style;
-
-        console.log(navHeight);
-
-        +domElmStyle.getPropertyValue('--nav-height').split('px')[0] !== navHeight && domElmStyle.setProperty('--nav-height', `${ navHeight }px`);
-    }
-
-    private logoutUser = async (): Promise<void> => {
-        await userServices.auth.logoutUser();
-
-        this.setState({ open: false });
-
-        this.props.history.push('/');
-
-        this.context.updateAppContext({ currentUser: null, currentUserProfile: null });
-    };
-
-    private renderLogging = (currentUser: CurrentUser): JSX.Element => {
-        return currentUser ? (
-            <>
-                <li><NavLink exact to="/">home</NavLink></li>
-                <li><NavLink exact to="/todos">todos</NavLink></li>
-                <li onClick={ this.logoutUser }>
-                    <button>log out</button>
-                </li>
-            </>
-        ) : (
-            <>
-                <li><NavLink to="/login">log in</NavLink></li>
-                <li><NavLink to="/register">register</NavLink></li>
-            </>
-        );
-    };
-
     public render(): ReactNode {
         const { open } = this.state;
 
         return (
-            <nav className={ `main-nav ${ open ? 'open' : '' }` } ref={ this.navRef }>
+            <nav className={ `main-nav ${ open ? 'open' : '' }`.trim() } ref={ this.navRef }>
                 <div className="container">
                     <div className="logo">
                         <Link to="/"><img src={ logo } alt="logo" /></Link>
@@ -83,11 +47,38 @@ class NavBar extends Component<INavBarProps, INavBarState> {
                         </span>
                     </button>
 
-                    <ul className="links-container">{ this.renderLogging(this.props.currentUser) }</ul>
+                    <ul className="links-container">{ this.renderNavLinksBasedOnAuth(this.props.currentUser) }</ul>
                 </div>
             </nav>
         );
     }
+
+    private logoutUser = async (): Promise<void> => {
+        await userServices.auth.logoutUser();
+
+        this.setState({ open: false });
+
+        this.props.history.push('/');
+
+        this.context.updateAppContext({ currentUser: null, currentUserProfile: null });
+    };
+
+    private renderNavLinksBasedOnAuth = (currentUser: CurrentUser): JSX.Element => {
+        return currentUser ? (
+            <>
+                <li><NavLink exact to="/">home</NavLink></li>
+                <li><NavLink exact to="/todos">todos</NavLink></li>
+                <li onClick={ this.logoutUser }>
+                    <button>log out</button>
+                </li>
+            </>
+        ) : (
+            <>
+                <li><NavLink to="/login">log in</NavLink></li>
+                <li><NavLink to="/register">register</NavLink></li>
+            </>
+        );
+    };
 }
 
 export default withRouter(NavBar);

@@ -76,15 +76,10 @@ $secondary-color: $fancyPureBlue-color;
 $primary-text-color: #2D2D2D;
 $primary-background-color: #FAFAFA;
 
-$blacker-color: #000000DE;
-
 $default-font-size: 1rem;
 
 //%-*=====  PROJECT VARIABLES AND THEMES AND DEPENDENCIES  ======*-//
 
-:root,
-:root.light {
-    --nav-height: 0;
-}
+$blacker-color: #000000DE;
 
-$nav-height: var(--nav-height);
+$nav-height: calc(60px + 2rem);
