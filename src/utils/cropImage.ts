@@ -1,28 +1,24 @@
 import { Area } from 'react-easy-crop/types';
 
 const createImage = (url: string): Promise<HTMLImageElement> =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, reject): void => {
         const image = new Image();
-        image.addEventListener('load', () => resolve(image));
-        image.addEventListener('error', error => reject(error));
+        image.addEventListener('load', (): void => resolve(image));
+        image.addEventListener('error', (error): void => reject(error));
         image.setAttribute('crossOrigin', 'anonymous');
         image.src = url;
     });
 
-const getRadianAngle = (degreeValue: number) => (degreeValue * Math.PI) / 180;
+const getRadianAngle = (degreeValue: number): number => (degreeValue * Math.PI) / 180;
 
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
- * @param {File} image - Image File url
+ * @param fileUrl {File} image - Image File url
  * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
  * @param {number} rotation - optional rotation parameter
  */
-export default async function getCroppedImg(
-    imageSrc: string,
-    pixelCrop: Area,
-    rotation = 0,
-): Promise<{ croppedImage: string; blob: Blob | null }> {
-    const image = await createImage(imageSrc);
+export const getCroppedImg = async (fileUrl: string, pixelCrop: Area, rotation = 0): Promise<{ croppedImage: string; blob: Blob | null }> => {
+    const image = await createImage(fileUrl);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
 
@@ -58,9 +54,7 @@ export default async function getCroppedImg(
     // return canvas.toDataURL('image/jpeg');
 
     // As a blob
-    return new Promise(resolve => {
-        canvas.toBlob(blob => {
-            resolve({ croppedImage: window.URL.createObjectURL(blob), blob });
-        }, 'image/jpeg');
+    return new Promise((resolve): void => {
+        canvas.toBlob((blob): void => {resolve({ croppedImage: window.URL.createObjectURL(blob), blob });}, 'image/jpeg');
     });
-}
+};

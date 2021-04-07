@@ -8,7 +8,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        @include windowRestHeight(3rem);
+        @include get-window-rest-height(3rem);
 
         .form-title {
             font-size: 2.5rem;
@@ -46,7 +46,7 @@
 
                 form {
                     .field {
-                        @include login-register-field;
+                        @include login-register-field-container;
                     }
 
                     .submit-btn {
@@ -62,11 +62,11 @@
                 }
             }
 
-            .register-link-wrapper { @include link-wrapper }
+            .register-link-wrapper { @include login-register-exist-user-link-message }
         }
     }
 
-    @include respond(phone-md) {
+    @include respond(tab-port) {
         .form-container {
             .form-title {
                 font-size: 2rem;

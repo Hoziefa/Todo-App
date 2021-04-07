@@ -1,4 +1,8 @@
+@import "../abstracts/mixins";
+
 .todos-page {
+    @include home-todos-common-style;
+
     .todos-app {
         .section {
             .section-heading {

@@ -1,14 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { AppContextProvider } from '../contexts/appContext';
+import { AppContextProvider } from '../contexts/AppContext';
 
 import ScrollToTop from './common/ScrollToTop';
 import PageLoader from './common/PageLoader';
 import NotFound from './common/NotFound';
 import NavBar from './common/NavBar';
 
-import Home from './home';
+import Home from './home/Home';
 import Todos from './todos/Todos';
 import Register from './auth/Register';
 import Login from './auth/Login';

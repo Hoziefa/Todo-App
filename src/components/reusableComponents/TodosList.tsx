@@ -6,20 +6,14 @@ const TodosList: React.FC<{ todos: Array<ITodo> }> = ({ todos }): JSX.Element =>
     return (
         <div className="todos-container section-content">
             <div className="todos-info">
-                <span className="all-todos">All tasks: {todos.length}</span>
+                <span className="all-todos">All tasks: { todos.length }</span>
 
-                <span className="all-todos--incomplete">
-                    incomplete: {todos.filter(({ completed }) => !completed).length}
-                </span>
+                <span className="all-todos--incomplete">incomplete: { todos.filter(({ completed }): boolean => !completed).length }</span>
 
-                <span className="all-todos--complete">complete: {todos.filter(({ completed }) => completed).length}</span>
+                <span className="all-todos--complete">complete: { todos.filter(({ completed }): boolean => completed).length }</span>
             </div>
 
-            <ul className="todos-list">
-                {todos.map(todo => (
-                    <Todo key={todo.id} todo={todo} />
-                ))}
-            </ul>
+            <ul className="todos-list">{ todos.map((todo): JSX.Element => <Todo key={ todo.id } todo={ todo } />) }</ul>
         </div>
     );
 };

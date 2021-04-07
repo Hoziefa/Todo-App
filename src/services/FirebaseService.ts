@@ -26,6 +26,7 @@ firebase.initializeApp(firebaseConfig);
 
 class FirebaseService implements IAuthService {
     private static instance: FirebaseService;
+
     public readonly firebase = firebase;
 
     private constructor() {}
@@ -36,13 +37,13 @@ class FirebaseService implements IAuthService {
         return FirebaseService.instance;
     }
 
-    public storageRef = (path: string) => firebase.storage().ref(path);
-    public databaseRef = (path: string) => firebase.database().ref(path);
+    public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
 
-    public firebaseLooper = (data: object) => Object.entries(data || []).map(([id, value]) => ({ id, ...value }));
+    public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
 
-    public getImageDownloadURL = async (storageDir: string, imagePath: string) =>
-        await firebase.storage().ref(storageDir).child(imagePath).getDownloadURL();
+    public firebaseLooper = <T = any>(data: object): Array<T> => Object.entries(data || []).map(([id, value]): T => ({ id, ...value }));
+
+    public getImageDownloadURL = async (storageDir: string, imagePath: string): Promise<string> => await firebase.storage().ref(storageDir).child(imagePath).getDownloadURL();
 
     public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
         return this.firebase.auth().createUserWithEmailAndPassword(email, password);

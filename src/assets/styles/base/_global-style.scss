@@ -27,8 +27,6 @@ body {
     color: $primary-text-color;
     background-color: $primary-background-color;
 
-    transition: padding 0.3s;
-
     &::-webkit-scrollbar {
         width: 0.45rem;
     }
@@ -60,6 +58,10 @@ h2 {
     }
 }
 
+p {
+    line-height: 1.6;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -74,7 +76,7 @@ a {
 button,
 input,
 textarea {
-    font-size: 1rem;
+    font-size: $default-font-size;
     background-color: transparent;
     border: none;
 }
@@ -100,7 +102,7 @@ textarea {
     color: inherit;
 
     &::-webkit-input-placeholder {
-        font: 600 smaller inherit;
+        font: 600 smaller $arimo-font;
         text-transform: capitalize;
         color: #CECECE;
         transition: opacity 0.3s;
@@ -117,10 +119,6 @@ textarea {
         color: $primary-text-color !important;
         box-shadow: 0 0 0 5rem white inset !important;
     }
-}
-
-textarea {
-    resize: none;
 }
 
 input {
@@ -143,12 +141,12 @@ input {
     }
 }
 
-button:disabled {
-    cursor: auto;
+textarea {
+    resize: none;
 }
 
-p {
-    line-height: 1.6;
+button:disabled {
+    cursor: auto;
 }
 
 :focus {
@@ -167,7 +165,7 @@ p {
 }
 
 .form-container {
-    @include windowRestHeight;
+    @include get-window-rest-height;
 
     .form-wrapper {
         padding: 2rem;
@@ -340,322 +338,4 @@ p {
     position: relative;
     height: 200px;
     margin: 0 0 1rem;
-}
-
-//ToDo: Need to be moved to it's proper place: solution: maybe with a mixin and add it on top of each file selector.
-.home,
-.todos-page {
-    @include windowRestHeight;
-    position: relative;
-
-    .user-profile {
-        display: flex;
-        align-items: baseline;
-        margin-bottom: 7rem;
-
-        .user-info {
-            p {
-                line-height: 2;
-            }
-        }
-
-        .user-avatar {
-            margin-left: auto;
-            cursor: pointer;
-
-            img {
-                display: inline-block;
-                width: 5em;
-                max-width: 100%;
-                height: 5em;
-                padding: 3px;
-                vertical-align: middle;
-                background-color: #EEE;
-                border: 3px solid #CCC;
-                border-radius: 500rem;
-            }
-        }
-    }
-
-    .todos-app {
-        padding: 4rem 1rem;
-
-        .section {
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 5px 0 #00000033, 0 2px 2px 0 #00000024, 0 3px 1px -2px #0000001F;
-
-            .section-heading {
-                display: flex;
-                align-items: center;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid #0000001F;
-                column-gap: 1rem;
-
-                .section-icon {
-                    padding: 1rem;
-                    border-radius: 0.5rem;
-                    box-shadow: 0 12px 20px -10px #29B6F647, 0 4px 20px 0px #0000001F, 0 7px 8px -5px #29B6F633;
-                    transform: translateY(-66%);
-
-                    i {
-                        font-size: 2rem;
-                        color: white;
-                    }
-                }
-
-                .section-title {
-                    font-family: $righteous-font;
-                    font-size: 1.25rem;
-                    text-transform: capitalize;
-                }
-            }
-        }
-
-        .todos {
-            .section-heading {
-                .section-icon {
-                    background: linear-gradient(60deg, $primary-color, $secondary-color);
-                }
-            }
-
-            .todos-container.section-content {
-                .todos-info {
-                    display: flex;
-                    margin: 1.5rem 0;
-                    gap: 0.5rem;
-
-                    span {
-                        display: block;
-                        padding: 0.5rem 1rem;
-                        text-transform: capitalize;
-                        color: white;
-                        border-radius: 0.25rem;
-                    }
-
-                    .all-todos {
-                        background-image: linear-gradient(45deg, $primary-color, $secondary-color);
-                    }
-
-                    .all-todos--complete {
-                        background-image: linear-gradient(45deg, #25B499, darken($color: #25B499, $amount: 15%));
-                    }
-
-                    .all-todos--incomplete {
-                        background-image: linear-gradient(45deg, #F33A6D, darken($color: #F33A6D, $amount: 25%));
-                    }
-
-                    @include respond(phone) {
-                        flex-wrap: wrap;
-                    }
-                }
-
-                .todos-list {
-                    margin-top: 1rem;
-
-                    .todo-item {
-                        position: relative;
-                        display: flex;
-                        align-items: center;
-                        padding: 1.6rem 1rem 0.5rem;
-                        gap: 1rem;
-
-                        &:not(:first-child) {
-                            margin-top: 1rem;
-                            border-top: 1px solid #0000001F;
-                        }
-
-                        .todo-create-date {
-                            font: 500 70% $righteous-font;
-                            position: absolute;
-                            top: 7px;
-                            left: 10px;
-                        }
-
-                        .inputs-container {
-                            display: flex;
-                            align-items: center;
-                            flex: 1;
-                            justify-content: space-between;
-                            flex-wrap: wrap;
-                            gap: 1rem;
-
-                            .field {
-                                position: relative;
-                                flex: 1;
-                                height: fit-content;
-
-                                input {
-                                    border-bottom: 2px solid #B2B2B2;
-                                }
-
-                                &::after {
-                                    position: absolute;
-                                    bottom: 0;
-                                    left: 0;
-                                    width: 100%;
-                                    content: "";
-                                    border-bottom: 2px solid $secondary-color;
-                                    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                                    transform: scaleX(0);
-                                }
-
-                                &:focus-within {
-                                    &::after {
-                                        transform: scaleX(1);
-                                    }
-                                }
-                            }
-
-                            .react-datepicker-wrapper {
-                                flex: 0.5;
-
-                                input {
-                                    text-align: right;
-                                    color: #0000008A;
-                                    border-bottom: 2px solid #B2B2B2;
-                                }
-                            }
-                        }
-
-                        .custom-radio {
-                            input[type="checkbox"] {
-                                display: none;
-
-                                + label {
-                                    font-size: 1rem;
-                                    display: block;
-                                    margin: -1px 4px 0 0;
-                                    color: #333;
-
-                                    span {
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                        width: 30px;
-                                        height: 30px;
-                                        cursor: pointer;
-                                        vertical-align: middle;
-                                        border: 2px solid #FFF;
-                                        border-radius: 50%;
-                                        box-shadow: 0 1px 3px 0 #00000054, 0 -1px 3px 0 #00000054;
-
-                                        img {
-                                            opacity: 0;
-                                            transition: all 0.3s ease;
-                                        }
-                                    }
-                                }
-
-                                &:checked + label span {
-                                    background-color: #2ECC71;
-
-                                    img {
-                                        opacity: 1;
-                                    }
-                                }
-                            }
-                        }
-
-                        .todo-task {
-                            flex: 1;
-
-                            .todo-estimate--date {
-                                font-size: 80%;
-                                color: gray;
-                            }
-                        }
-
-                        .actions {
-                            display: flex;
-                            align-items: center;
-
-                            button {
-                                font-size: 1rem;
-                                flex: 1;
-                                width: 50px;
-                                height: 50px;
-                                padding: 1rem;
-                                text-align: center;
-                                border-radius: 50%;
-                                transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-
-                                &:hover {
-                                    background-color: #00000014;
-                                }
-
-                                &.edit-todo--btn {
-                                    color: #6ABE6D;
-                                }
-
-                                &.delete-todo--btn {
-                                    color: #F44336;
-                                }
-
-                                &.confirm-todo--btn {
-                                    color: #6ABE6D;
-                                }
-
-                                &.cancel-todo--btn {
-                                    color: #F44336;
-                                }
-                            }
-                        }
-
-                        &.completed {
-                            background-color: #EEE;
-                            border-radius: 0.5rem;
-
-                            .todo-task {
-                                p {
-                                    text-decoration: line-through;
-                                }
-                            }
-                        }
-
-                        @include respond(phone) {
-                            .inputs-container {
-                                .field,
-                                .react-datepicker-wrapper {
-                                    flex-basis: 100%;
-                                }
-
-                                .react-datepicker-wrapper {
-                                    input {
-                                        text-align: left;
-                                    }
-                                }
-                            }
-
-                            .actions {
-                                align-self: flex-end;
-
-                                .confirm-todo--btn,
-                                .cancel-todo--btn {
-                                    font-size: 1.15rem;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            .message {
-                font-size: 1rem;
-                font-weight: 600;
-                padding: 2rem 0;
-                text-align: center;
-                text-transform: capitalize;
-            }
-        }
-
-        .loader {
-            padding: 2rem 0 1.25rem;
-            text-align: center;
-        }
-
-        @media (min-width: 991px) {
-            width: 60% !important;
-        }
-    }
 }

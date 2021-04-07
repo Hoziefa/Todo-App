@@ -19,28 +19,6 @@ export interface IObjectHasComputedProps<T = any> {
     [key: string]: T;
 }
 
-// export interface IGeneratedInput<T = any> {
-//     element?: 'input' | 'select' | 'file';
-//     name: string;
-//     value?: T;
-//     config?: { type: 'text' | 'number' };
-//     label?: string;
-//     min?: number;
-//     max?: number;
-//     validationlabel?: string;
-//     noValidate?: boolean;
-//     validationErrorStyle?: string;
-//     autoComplete?: 'off' | 'on' | 'new-password';
-//     icon?: string;
-//     touched?: boolean;
-//     active?: boolean;
-//     onFileUploadChange?: Function;
-//     displayErrorMsg?: boolean;
-//     avatar?: string;
-//     options?: any[];
-//     rest?: IObjectHasComputedProps;
-// }
-
 interface IGeneratedInputOptional<T = any> {
     element: 'input' | 'select' | 'file';
     value: T;

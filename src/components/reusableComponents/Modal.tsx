@@ -11,9 +11,9 @@ const Modal: React.FC<IModalProps> = ({ active, className = '', onClose, childre
     if (!active) return null;
 
     return ReactDOM.createPortal(
-        <div className={`modal-container ${className}`} onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-                {children}
+        <div className={ `modal-container ${ className }` } onClick={ onClose }>
+            <div className="modal-content" onClick={ (e): void => e.stopPropagation() }>
+                { children }
             </div>
         </div>,
 
