@@ -324,13 +324,16 @@ button:disabled {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
+    height: 326px;
     margin-bottom: 2rem;
-    background-color: rgba(78, 87, 87, 0.5);
+    background-color: $primary-background-color;
     border-radius: 7px;
 
-    i {
-        font-size: 3rem;
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
     }
 }
 
