@@ -1,17 +1,15 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Swal from 'sweetalert2';
 import Cropper from 'react-easy-crop';
-
 import { inputGenerator } from '../../utils/misc';
 import { getCroppedImg } from '../../utils/cropImage';
-
-import { AppContext } from '../../contexts/AppContext';
 import { userServices } from '../../services/UserServices';
-
+import { AppContext } from '../../contexts/AppContext';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
 import { IGeneratedInput } from 'types';
 import { Area } from 'react-easy-crop/types';
+import uploadingImage from '../../assets/uploading.gif';
 
 interface IUpdateUserProfileFormProps {
     modal: boolean;
@@ -48,7 +46,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
 
                         <form onSubmit={ this.onsubmit } className="form">
                             { uploading
-                                ? <div className="dimmer-loader"><i className="fas fa-spinner fa-pulse fa-lg" /></div>
+                                ? <div className="dimmer-loader"><img src={ uploadingImage } alt="uploading" width="434" height="326" /></div>
                                 : <>
                                     { this.renderInput(data.avatar, errors.avatar!) }
 
