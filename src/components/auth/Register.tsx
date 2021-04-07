@@ -11,7 +11,7 @@ interface IRegisterProps extends RouteComponentProps {}
 
 interface IRegisterState {
     data: { username: IGeneratedInput<string>; email: IGeneratedInput<string>; password: IGeneratedInput<string>; 'password confirmation': IGeneratedInput<string>; };
-    errors: { username?: string; email?: string; password?: string; 'password confirmation'?: string; };
+    errors: { username: string; email: string; password: string; 'password confirmation': string; };
     loading: boolean;
 }
 
@@ -56,12 +56,14 @@ class Register extends Form<IRegisterProps, IRegisterState> {
             }),
         },
 
-        errors: {},
+        errors: { username: '', email: '', password: '', 'password confirmation': '' },
 
         loading: false,
     };
 
     public render(): ReactNode {
+        const { errors, loading, data } = this.state;
+
         return (
             <div className="register-form">
                 <div className="form-container">
@@ -73,23 +75,19 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(this.state.data.username, this.state.errors.username!) }
+                                { this.renderInput(data.username, errors.username) }
 
-                                { this.renderInput(this.state.data.email, this.state.errors.email!) }
+                                { this.renderInput(data.email, errors.email) }
 
-                                { this.renderInput(this.state.data.password, this.state.errors.password!) }
+                                { this.renderInput(data.password, errors.password) }
 
-                                { this.renderInput(this.state.data['password confirmation'], this.state.errors['password confirmation']!) }
+                                { this.renderInput(data['password confirmation'], errors['password confirmation']) }
 
-                                <button className="submit-btn" type="submit">
-                                    { this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'register' }
-                                </button>
+                                <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'register' }</button>
                             </form>
                         </div>
 
-                        <div className="login-link-wrapper">
-                            already a user? <Link to="/login">login</Link>
-                        </div>
+                        <div className="login-link-wrapper">already a user? <Link to="/login">login</Link></div>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@ interface ILoginProps extends RouteComponentProps {}
 
 interface ILoginState {
     data: { email: IGeneratedInput<string>; password: IGeneratedInput<string> };
-    errors: { email?: string; password?: string };
+    errors: { email: string; password: string };
     loading: boolean;
 }
 
@@ -39,38 +39,34 @@ class Login extends Form<ILoginProps, ILoginState> {
             }),
         },
 
-        errors: {},
+        errors: { email: '', password: '' },
 
         loading: false,
     };
 
     public render(): ReactNode {
+        const { data, errors, loading } = this.state;
+
         return (
             <div className="login-form">
                 <div className="form-container">
                     <div className="form-title">
                         <i className="fas fa-sign-in-alt" />
-                        <h2>
-                            log in to to.<span>do</span>
-                        </h2>
+                        <h2>log in to to.<span>do</span></h2>
                     </div>
 
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(this.state.data.email, this.state.errors.email!) }
+                                { this.renderInput(data.email, errors.email) }
 
-                                { this.renderInput(this.state.data.password, this.state.errors.password!) }
+                                { this.renderInput(data.password, errors.password) }
 
-                                <button className="submit-btn" type="submit">
-                                    { this.state.loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'log in' }
-                                </button>
+                                <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'log in' }</button>
                             </form>
                         </div>
 
-                        <div className="register-link-wrapper">
-                            don't have an account? <Link to="/register">register</Link>
-                        </div>
+                        <div className="register-link-wrapper">don't have an account? <Link to="/register">register</Link></div>
                     </div>
                 </div>
             </div>
