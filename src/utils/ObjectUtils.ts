@@ -1,3 +1,5 @@
+import { IObjectHasComputedProps } from '../types';
+
 class ObjectUtils {
     private static instance: ObjectUtils;
 
@@ -25,6 +27,14 @@ class ObjectUtils {
 
     public extractClassesAttrs(classAttr: object): string {
         return Object.entries(classAttr ?? {}).reduce((acc: Array<string>, [className, show]): Array<string> => show ? [...acc, className] : acc, []).join(' ');
+    }
+
+    public mapRecordValues<T>(record: object, newValue: T): IObjectHasComputedProps<T> {
+        return Object.keys(record).reduce((acc, key): IObjectHasComputedProps<T> => ({ ...acc, [key]: newValue }), {});
+    }
+
+    public mapFormValuesToKeyValuePairs<T>(formValues: object): IObjectHasComputedProps<T> {
+        return Object.values(formValues).reduce((acc, { name, value }): IObjectHasComputedProps<T> => ({ ...acc, [name]: value }), {});
     }
 }
 

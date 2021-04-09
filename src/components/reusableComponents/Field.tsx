@@ -1,5 +1,5 @@
 import React from 'react';
-import { objectUtils } from '../../utils/ObjectUtils';
+import { objectUtils } from '../../utils';
 
 interface IFieldProps {
     classAttr: { error?: boolean, active?: boolean, defaultList?: Array<string> };

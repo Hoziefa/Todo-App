@@ -31,7 +31,7 @@ export interface ICurrentUserProfile {
     email?: string;
 }
 
-interface IGeneratedInputOptional {
+interface IGeneratedFieldOptionalProps {
     element: 'input' | 'select' | 'file' | 'date';
     value: any;
     type: 'text' | 'number' | 'password' | 'email' | 'file' | 'date';
@@ -52,15 +52,8 @@ interface IGeneratedInputOptional {
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-export interface IGeneratedInput extends Partial<IGeneratedInputOptional> {
+export interface IGeneratedFieldProps extends Partial<IGeneratedFieldOptionalProps> {
     name: string;
 }
 
-export interface IFieldConfig extends Pick<IGeneratedInput, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete'> {}
-
-//>: Extends multiple.
-// export interface IGeneratedInput<T = any> extends Partial<IGeneratedInputOptional>, IFieldConfig<T> {}
-
-// export interface IGeneratedInput<T = any> extends Partial<IGeneratedInputOptional> {
-//     config: IFieldConfig<T>
-// }
+export interface IFieldConfig extends Pick<IGeneratedFieldProps, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete'> {}

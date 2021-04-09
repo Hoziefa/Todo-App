@@ -3,15 +3,14 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import { AppContext } from '../../contexts/AppContext';
-import { fieldsFactory } from '../../utils/misc';
 import { userServices } from '../../services/UserServices';
-import { IGeneratedInput, ILoginRegister } from 'types';
-import { objectUtils } from '../../utils/ObjectUtils';
+import { fieldsFactory, objectUtils } from '../../utils';
+import { IGeneratedFieldProps, ILoginRegister } from 'types';
 
 interface IRegisterProps extends RouteComponentProps {}
 
 interface IRegisterState {
-    data: { username: IGeneratedInput; email: IGeneratedInput; password: IGeneratedInput; 'password confirmation': IGeneratedInput; };
+    data: { username: IGeneratedFieldProps; email: IGeneratedFieldProps; password: IGeneratedFieldProps; 'password confirmation': IGeneratedFieldProps; };
     errors: { username: string; email: string; password: string; 'password confirmation': string; };
     loading: boolean;
 }
@@ -76,13 +75,13 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(data.username, errors.username) }
+                                { this.renderField(data.username, errors.username) }
 
-                                { this.renderInput(data.email, errors.email) }
+                                { this.renderField(data.email, errors.email) }
 
-                                { this.renderInput(data.password, errors.password) }
+                                { this.renderField(data.password, errors.password) }
 
-                                { this.renderInput(data['password confirmation'], errors['password confirmation']) }
+                                { this.renderField(data['password confirmation'], errors['password confirmation']) }
 
                                 <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'register' }</button>
                             </form>

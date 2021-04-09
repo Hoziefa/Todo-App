@@ -1,13 +1,12 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Swal from 'sweetalert2';
 import Cropper from 'react-easy-crop';
-import { fieldsFactory } from '../../utils/misc';
-import { getCroppedImg } from '../../utils/cropImage';
+import { fieldsFactory, getCroppedImg } from '../../utils';
 import { userServices } from '../../services/UserServices';
 import { AppContext } from '../../contexts/AppContext';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
-import { IGeneratedInput } from 'types';
+import { IGeneratedFieldProps } from 'types';
 import { Area } from 'react-easy-crop/types';
 import uploadingImage from '../../assets/uploading.gif';
 
@@ -17,7 +16,7 @@ interface IUpdateUserProfileFormProps {
 }
 
 interface IUpdateUserProfileFormState {
-    data: { username: IGeneratedInput; avatar: IGeneratedInput };
+    data: { username: IGeneratedFieldProps; avatar: IGeneratedFieldProps };
     errors: { username: string; avatar: string };
     uploading: boolean;
     image: string;
@@ -30,6 +29,7 @@ interface IUpdateUserProfileFormState {
     uploadSuccess: boolean;
 }
 
+// ToDo: Figure why we using initialvalue, and can we remove it.
 class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUserProfileFormState> {
     public static contextType = AppContext;
 
@@ -84,7 +84,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                             { uploading
                                 ? <div className="dimmer-loader"><img src={ uploadingImage } alt="uploading" width="434" height="326" /></div>
                                 : <>
-                                    { this.renderInput(data.avatar, errors.avatar) }
+                                    { this.renderField(data.avatar, errors.avatar) }
 
                                     { data.avatar.value && image && (
                                         <div className="cropper">
@@ -102,7 +102,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                                 </>
                             }
 
-                            { this.renderInput(data.username, errors.username) }
+                            { this.renderField(data.username, errors.username) }
 
                             <div className="actions">
                                 <button type="submit" className="submit-btn" disabled={ this.shouldSubmitBtnBeDisabled() }>

@@ -1,19 +1,15 @@
-import { Link, RouteComponentProps } from 'react-router-dom';
-
-import Swal from 'sweetalert2';
-
-import { fieldsFactory } from '../../utils/misc';
-
-import { userServices } from '../../services/UserServices';
-
-import Form from '../reusableComponents/Form';
-import { IGeneratedInput, ILoginRegister } from 'types';
 import { ReactNode } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import Form from '../reusableComponents/Form';
+import { userServices } from '../../services/UserServices';
+import { fieldsFactory } from '../../utils';
+import { IGeneratedFieldProps, ILoginRegister } from 'types';
 
 interface ILoginProps extends RouteComponentProps {}
 
 interface ILoginState {
-    data: { email: IGeneratedInput; password: IGeneratedInput };
+    data: { email: IGeneratedFieldProps; password: IGeneratedFieldProps };
     errors: { email: string; password: string };
     loading: boolean;
 }
@@ -58,9 +54,9 @@ class Login extends Form<ILoginProps, ILoginState> {
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(data.email, errors.email) }
+                                { this.renderField(data.email, errors.email) }
 
-                                { this.renderInput(data.password, errors.password) }
+                                { this.renderField(data.password, errors.password) }
 
                                 <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'log in' }</button>
                             </form>

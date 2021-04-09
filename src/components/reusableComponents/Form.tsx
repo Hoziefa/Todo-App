@@ -1,28 +1,29 @@
 import React, { ChangeEvent, ChangeEventHandler, Component } from 'react';
-import { validate } from '../../utils/misc';
-import { IFieldConfig, IGeneratedInput, IObjectHasComputedProps } from 'types';
 import DatePicker from 'react-datepicker';
 import { Field } from './Field';
-import { objectUtils } from '../../utils/ObjectUtils';
+import { objectUtils, validate } from '../../utils';
+import { IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
 
 interface IFormProps {}
 
 interface IFormState {
-    data: IObjectHasComputedProps<IGeneratedInput>;
+    data: IObjectHasComputedProps<IGeneratedFieldProps>;
     errors: IObjectHasComputedProps<string>;
 }
 
 abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, IFormState & S> {
     public readonly state = { data: {}, errors: {} } as Readonly<IFormState & S>;
 
-    protected renderInput = (props: IGeneratedInput, error: string): JSX.Element | null => {
+    protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
+
+    protected renderField = (props: IGeneratedFieldProps, error: string): JSX.Element | null => {
         const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle } = props;
 
         const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
 
         const errorElement = this.displayError(touched, error, validationErrorStyle);
 
-        const fieldComponentProps = { ...objectUtils.pick<IGeneratedInput, 'label' | 'icon' | 'noValidate'>(props, 'label', 'icon', 'noValidate'), errorElement };
+        const fieldComponentProps = { ...objectUtils.pick<IGeneratedFieldProps, 'label' | 'icon' | 'noValidate'>(props, 'label', 'icon', 'noValidate'), errorElement };
 
         switch (props.element) {
             case 'input':
@@ -74,21 +75,27 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
     protected onsubmit = (e: ChangeEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
+        const { data } = this.state;
+
         const errors = this.validate();
 
-        this.setState({ data: Object.entries(this.state.data).reduce((acc, [key, value]): IObjectHasComputedProps => ({ ...acc, [key]: { ...value, touched: true } }), {}), errors });
+        this.setState({ data: Object.entries(data).reduce((acc, [key, value]): IObjectHasComputedProps => ({ ...acc, [key]: { ...value, touched: true } }), {}), errors });
 
         if (Object.keys(errors).length) return;
 
-        this.onFormSubmit(Object.values(this.state.data).reduce((acc, { name, value }): IObjectHasComputedProps => ({ ...acc, [name]: value }), {}));
+        this.onFormSubmit(objectUtils.mapFormValuesToKeyValuePairs(data));
     };
 
-    protected onFormChange(_values: IObjectHasComputedProps): void {}
+    protected onFormChange?(_values: IObjectHasComputedProps): void {}
 
-    protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
-
-    protected resetField(fieldName: keyof S['data'], fieldValue: string | null = ''): IGeneratedInput {
+    protected resetField(fieldName: keyof S['data'], fieldValue: string | null = ''): IGeneratedFieldProps {
         return { ...this.state.data[fieldName], value: fieldValue, active: false, touched: false };
+    }
+
+    protected clearErrors(): S['errors'] {
+        const { errors } = this.state;
+
+        return { ...errors, ...objectUtils.mapRecordValues(errors, '') };
     }
 
     private displayError = (touched?: boolean, error?: string, validationErrorStyle = 'validation-error--tooltip'): false | JSX.Element => {

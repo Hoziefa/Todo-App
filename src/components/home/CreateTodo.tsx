@@ -4,11 +4,11 @@ import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
 import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
-import { fieldsFactory } from '../../utils/misc';
-import { IGeneratedInput } from 'types';
+import { fieldsFactory } from '../../utils';
+import { IGeneratedFieldProps } from 'types';
 
 interface ITodoFormState {
-    data: { task: IGeneratedInput, date: IGeneratedInput; };
+    data: { task: IGeneratedFieldProps, date: IGeneratedFieldProps; };
     errors: { task: string, date: string };
 }
 
@@ -44,8 +44,8 @@ class CreateTodo extends Form<{}, ITodoFormState> {
 
                             <form onSubmit={ this.onsubmit } className="form">
                                 <div className="inputs-container">
-                                    { this.renderInput(data.task, errors.task) }
-                                    { this.renderInput(data.date, errors.date) }
+                                    { this.renderField(data.task, errors.task) }
+                                    { this.renderField(data.date, errors.date) }
                                 </div>
 
                                 <div className="actions">
@@ -95,11 +95,11 @@ class CreateTodo extends Form<{}, ITodoFormState> {
     };
 
     private closeModal = (): void => {
-        const { errors, data } = this.state;
+        const { data } = this.state;
 
         this.context.updateAppContext({ modal: false });
 
-        this.setState({ data: { ...data, task: this.resetField('task'), date: this.resetField('date', null) }, errors: { ...errors, task: '', date: '' } });
+        this.setState({ data: { ...data, task: this.resetField('task'), date: this.resetField('date', null) }, errors: this.clearErrors() });
     };
 
     private createNewTask = async (task: string, date: Date): Promise<void> => {

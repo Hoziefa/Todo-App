@@ -1,6 +1,5 @@
 import React, { ChangeEvent, Component, ReactNode } from 'react';
 import DatePicker from 'react-datepicker';
-
 import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
 import { dateService } from 'services/DateService';
@@ -16,6 +15,7 @@ interface ITodoState {
     editing: boolean;
 }
 
+// ToDo: Try to update this component to work with Form abstract component cause it's so similar to the CreateTodo component.
 class Todo extends Component<ITodoProps, ITodoState> {
     public static contextType = AppContext;
 
@@ -35,53 +35,57 @@ class Todo extends Component<ITodoProps, ITodoState> {
             <li className={ `todo-item ${ todo.completed ? 'completed' : '' }` }>
                 <span className="todo-created-date">{ dateService.diffFromNow(todo.timestamp) }</span>
 
-                { !todo.completed && editing ? (
-                    <>
-                        <div className="inputs-container">
-                            <div className="field"><input type="text" name={ todo.id } value={ activeTask } onChange={ this.onEditTodoChange } /></div>
-
-                            <DatePicker selected={ activeDate } showTimeSelect onChange={ (date: Date): void => this.setState({ activeDate: date }) } />
-                        </div>
-
-                        <div className="actions">
-                            <button className="confirm-todo--btn" aria-label="confirm" onClick={ (): void => this.onConfirmEditTodo(todo) }>
-                                <i className="fas fa-check" />
-                            </button>
-
-                            <button className="cancel-todo--btn" aria-label="cancel" onClick={ this.onCancelEditTodo }>
-                                <i className="fas fa-times" />
-                            </button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className="custom-radio">
-                            <input
-                                type="checkbox"
-                                name={ todo.id }
-                                id={ todo.id }
-                                value={ `${ todo.completed }` }
-                                checked={ todo.completed }
-                                onChange={ (e): void => this.onCompleteTodoChange(e, todo) }
-                            />
-                            <label htmlFor={ todo.id }><span><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg" alt="Checked Icon" /></span></label>
-                        </div>
-
-                        <div className="todo-task">
-                            <p>{ todo.task }</p>
-
-                            <span className="todo-estimate--date">{ dateService.format(todo.date) } - { dateService.diffFromNow(todo.date) }</span>
-                        </div>
-
-                        <div className="actions">
-                            { !todo.completed && <button className="edit-todo--btn" aria-label="edit" onClick={ this.onEditTodoMode }><i className="fas fa-pen" /></button> }
-
-                            <button className="delete-todo--btn" aria-label="delete" onClick={ (): void => this.onDeleteTodo(todo.id!) }><i className="fas fa-trash" /></button>
-                        </div>
-                    </>
-                ) }
+                { !todo.completed && editing ? this.renderTodoEditMode(todo, activeTask, activeDate) : this.renderTodoReadMode(todo) }
             </li>
         );
+    }
+
+    private renderTodoEditMode(todo: ITodo, activeTask: string, activeDate: Date): JSX.Element {
+        return <>
+            <div className="inputs-container">
+                <div className="field"><input type="text" name={ todo.id } value={ activeTask } onChange={ this.onEditTodoChange } /></div>
+
+                <DatePicker selected={ activeDate } showTimeSelect onChange={ (date: Date): void => this.setState({ activeDate: date }) } />
+            </div>
+
+            <div className="actions">
+                <button className="confirm-todo--btn" aria-label="confirm" onClick={ (): void => this.onConfirmEditTodo(todo) }>
+                    <i className="fas fa-check" />
+                </button>
+
+                <button className="cancel-todo--btn" aria-label="cancel" onClick={ this.onCancelEditTodo }>
+                    <i className="fas fa-times" />
+                </button>
+            </div>
+        </>;
+    }
+
+    private renderTodoReadMode(todo: ITodo): JSX.Element {
+        return <>
+            <div className="custom-radio">
+                <input
+                    type="checkbox"
+                    name={ todo.id }
+                    id={ todo.id }
+                    value={ `${ todo.completed }` }
+                    checked={ todo.completed }
+                    onChange={ (e): void => this.onCompleteTodoChange(e, todo) }
+                />
+                <label htmlFor={ todo.id }><span><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg" alt="Checked Icon" /></span></label>
+            </div>
+
+            <div className="todo-task">
+                <p>{ todo.task }</p>
+
+                <span className="todo-estimate--date">{ dateService.format(todo.date) } - { dateService.diffFromNow(todo.date) }</span>
+            </div>
+
+            <div className="actions">
+                { !todo.completed && <button className="edit-todo--btn" aria-label="edit" onClick={ this.onEditTodoMode }><i className="fas fa-pen" /></button> }
+
+                <button className="delete-todo--btn" aria-label="delete" onClick={ (): void => this.onDeleteTodo(todo.id!) }><i className="fas fa-trash" /></button>
+            </div>
+        </>;
     }
 
     //#region Handle changes on task/date fields.

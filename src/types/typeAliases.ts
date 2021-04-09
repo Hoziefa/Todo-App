@@ -1,5 +1,5 @@
 import { CurrentUserFromService } from '../services/FirebaseService';
-import { IGeneratedInput } from './interfaces';
+import { IGeneratedFieldProps } from './interfaces';
 
 export type PartialRequired<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U];
 
@@ -7,5 +7,5 @@ export type HTMLElementEvent<T extends Element, C = T> = Event & { target: T; cu
 
 export type CurrentUser = CurrentUserFromService | null;
 
-export type FieldsFactory = (inputProps: IGeneratedInput) => IGeneratedInput;
-// export type FieldsFactory = <T = string>(inputProps: IGeneratedInput<T>) => IGeneratedInput<T>;
+export type FieldsFactory = (inputProps: IGeneratedFieldProps) => IGeneratedFieldProps;
+// export type FieldsFactory = <T = string>(inputProps: IGeneratedFieldProps<T>) => IGeneratedFieldProps<T>;
