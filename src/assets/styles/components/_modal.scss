@@ -103,7 +103,7 @@
                             flex-wrap: wrap;
                             gap: 1rem;
 
-                            .field {
+                            .field:not(.date--picker) {
                                 position: relative;
                                 flex: 1;
                                 height: fit-content;
@@ -167,16 +167,6 @@
                             }
 
                             .date--picker {
-                                .react-datepicker-wrapper {
-                                    width: 100%;
-
-                                    input {
-                                        padding-right: 16px;
-                                        color: #0000008A;
-                                        border-bottom: 2px solid #B2B2B2;
-                                    }
-                                }
-
                                 .fa-calendar-alt {
                                     font-size: 1.75rem;
                                     position: absolute;
@@ -185,6 +175,16 @@
                                     pointer-events: none;
                                     color: #00000033;
                                     transform: translateY(-60%);
+                                }
+
+                                .react-datepicker-wrapper {
+                                    width: 100%;
+
+                                    input {
+                                        padding-right: 16px;
+                                        color: #0000008A;
+                                        border-bottom: 2px solid #B2B2B2;
+                                    }
                                 }
                             }
                         }

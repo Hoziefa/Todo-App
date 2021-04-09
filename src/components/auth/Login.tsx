@@ -2,7 +2,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 
 import Swal from 'sweetalert2';
 
-import { inputGenerator } from '../../utils/misc';
+import { fieldsFactory } from '../../utils/misc';
 
 import { userServices } from '../../services/UserServices';
 
@@ -13,7 +13,7 @@ import { ReactNode } from 'react';
 interface ILoginProps extends RouteComponentProps {}
 
 interface ILoginState {
-    data: { email: IGeneratedInput<string>; password: IGeneratedInput<string> };
+    data: { email: IGeneratedInput; password: IGeneratedInput };
     errors: { email: string; password: string };
     loading: boolean;
 }
@@ -21,7 +21,7 @@ interface ILoginState {
 class Login extends Form<ILoginProps, ILoginState> {
     public readonly state: Readonly<ILoginState> = {
         data: {
-            email: inputGenerator({
+            email: fieldsFactory({
                 name: 'email',
                 type: 'email',
                 autoComplete: 'on',
@@ -29,7 +29,7 @@ class Login extends Form<ILoginProps, ILoginState> {
                 icon: 'fas fa-envelope',
             }),
 
-            password: inputGenerator({
+            password: fieldsFactory({
                 name: 'password',
                 type: 'password',
                 min: 6,

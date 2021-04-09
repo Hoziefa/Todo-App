@@ -3,14 +3,15 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import { AppContext } from '../../contexts/AppContext';
-import { inputGenerator } from '../../utils/misc';
+import { fieldsFactory } from '../../utils/misc';
 import { userServices } from '../../services/UserServices';
 import { IGeneratedInput, ILoginRegister } from 'types';
+import { objectUtils } from '../../utils/ObjectUtils';
 
 interface IRegisterProps extends RouteComponentProps {}
 
 interface IRegisterState {
-    data: { username: IGeneratedInput<string>; email: IGeneratedInput<string>; password: IGeneratedInput<string>; 'password confirmation': IGeneratedInput<string>; };
+    data: { username: IGeneratedInput; email: IGeneratedInput; password: IGeneratedInput; 'password confirmation': IGeneratedInput; };
     errors: { username: string; email: string; password: string; 'password confirmation': string; };
     loading: boolean;
 }
@@ -22,7 +23,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
 
     public readonly state: Readonly<IRegisterState> = {
         data: {
-            username: inputGenerator({
+            username: fieldsFactory({
                 name: 'username',
                 min: 3,
                 max: 30,
@@ -31,7 +32,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-user',
             }),
 
-            email: inputGenerator({
+            email: fieldsFactory({
                 name: 'email',
                 type: 'email',
                 autoComplete: 'on',
@@ -39,7 +40,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-envelope',
             }),
 
-            password: inputGenerator({
+            password: fieldsFactory({
                 name: 'password',
                 type: 'password',
                 placeholder: 'password',
@@ -48,7 +49,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-lock',
             }),
 
-            'password confirmation': inputGenerator({
+            'password confirmation': fieldsFactory({
                 name: 'password confirmation',
                 type: 'password',
                 placeholder: 'password confirmation',
@@ -97,9 +98,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
     protected onFormSubmit = async (formValues: ILoginRegister): Promise<void> => {
         this.setState({ loading: true });
 
-        const data = Object.entries(formValues).reduce(
-            (acc: ILoginRegister, [key, value]): ILoginRegister => key !== 'password confirmation' ? { ...acc, [key]: value } : acc, {} as ILoginRegister,
-        );
+        const data = objectUtils.pick(formValues, 'username', 'email', 'password');
 
         const currentUser = await userServices.auth.registerUser(data);
 

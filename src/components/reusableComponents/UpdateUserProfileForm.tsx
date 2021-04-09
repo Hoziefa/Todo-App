@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Swal from 'sweetalert2';
 import Cropper from 'react-easy-crop';
-import { inputGenerator } from '../../utils/misc';
+import { fieldsFactory } from '../../utils/misc';
 import { getCroppedImg } from '../../utils/cropImage';
 import { userServices } from '../../services/UserServices';
 import { AppContext } from '../../contexts/AppContext';
@@ -17,7 +17,7 @@ interface IUpdateUserProfileFormProps {
 }
 
 interface IUpdateUserProfileFormState {
-    data: { username: IGeneratedInput<string>; avatar: IGeneratedInput<string> };
+    data: { username: IGeneratedInput; avatar: IGeneratedInput };
     errors: { username: string; avatar: string };
     uploading: boolean;
     image: string;
@@ -37,7 +37,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
 
     public readonly state: Readonly<IUpdateUserProfileFormState> = {
         data: {
-            username: inputGenerator({
+            username: fieldsFactory({
                 name: 'username',
                 min: 3,
                 max: 30,
@@ -48,13 +48,12 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                 initialvalue: this.context?.currentUserProfile?.username,
             }),
 
-            avatar: inputGenerator({
+            avatar: fieldsFactory({
                 name: 'avatar',
                 type: 'file',
                 element: 'file',
                 validationErrorStyle: 'validation-error--underline',
                 noValidate: true,
-                displayErrorMsg: false,
                 avatar: this.context?.currentUserProfile?.avatar,
                 onFileUploadChange: (e): void => this.onFileUploadChange(e),
             }),
@@ -171,8 +170,8 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
         this.setState({
             data: {
                 ...this.state.data,
-                username: { ...this.state.data.username, value: this.context.currentUserProfile?.username, touched: false },
-                avatar: { ...this.state.data.avatar, value: '', avatar: this.context.currentUserProfile?.avatar },
+                username: this.resetField('username', this.context.currentUserProfile?.username),
+                avatar: this.resetField('avatar'),
             },
             errors: { ...this.state.errors, username: '', avatar: '' },
             uploading: false,
