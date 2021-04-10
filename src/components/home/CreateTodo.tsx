@@ -35,6 +35,7 @@ class CreateTodo extends Form<{}, ITodoFormState> {
                 icon: 'far fa-calendar-alt',
                 validationlabel: 'date, time',
                 validationErrorStyle: 'validation-error--underline',
+                dateFormat: 'Pp',
             }),
         },
         errors: { task: '', date: '' },

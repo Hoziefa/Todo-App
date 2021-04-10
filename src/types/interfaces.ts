@@ -50,6 +50,7 @@ interface IGeneratedFieldOptionalProps {
     avatar: string;
     options: any[];
     displayError: boolean;
+    dateFormat: 'P' | 'p' | 'Pp';
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
 }
 

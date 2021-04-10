@@ -363,8 +363,10 @@
                                 }
 
                                 .date--picker {
+                                    flex: 0.5;
+
                                     .react-datepicker-wrapper {
-                                        flex: 0.5;
+                                        width: 100%;
 
                                         input {
                                             text-align: right;

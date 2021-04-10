@@ -17,7 +17,7 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
     protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 
     protected renderField = (props: IGeneratedFieldProps, error: string): JSX.Element | null => {
-        const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle } = props;
+        const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = 'P' } = props;
 
         const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
 
@@ -63,7 +63,7 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
             case 'date':
                 return (
                     <Field classAttr={ { error: !!error, active: !!value || active, defaultList: ['date--picker'] } } { ...fieldComponentProps }>
-                        <DatePicker selected={ value } dateFormat="Pp" showTimeSelect onChange={ (date: Date): void => this.handleFieldChange(name, date) } />
+                        <DatePicker selected={ value } dateFormat={ dateFormat } showTimeSelect onChange={ (date: Date): void => this.handleFieldChange(name, date) } />
                     </Field>
                 );
 
