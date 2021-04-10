@@ -1,8 +1,10 @@
-import { IGeneratedInput, IObjectHasComputedProps } from 'types';
+import { FieldsFactory, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
 
 export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedProps =>
     Object.values(fields).reduce(
         (acc: IObjectHasComputedProps, { name, type, label, min, max, value, validationlabel, noValidate }): IObjectHasComputedProps => {
+            acc[name] = '';
+
             if (noValidate) return acc;
 
             const fieldName = validationlabel ?? label ?? name;
@@ -29,6 +31,4 @@ export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedPro
         {},
     );
 
-export const inputGenerator: <T = any>(inputProps: IGeneratedInput<T>) => IGeneratedInput<T | string> = ({
-    element = 'input', name, value = '', type = 'text', label = '', ...rest
-}): IGeneratedInput => ({ element, name, value, type, label, ...rest });
+export const fieldsFactory: FieldsFactory = ({ element = 'input', value = '', type = 'text', ...rest }): IGeneratedFieldProps<any> => ({ element, value, type, ...rest });

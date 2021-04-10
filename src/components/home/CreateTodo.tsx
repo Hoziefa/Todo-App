@@ -1,42 +1,48 @@
 import React, { ReactNode } from 'react';
 import Swal from 'sweetalert2';
-import DatePicker from 'react-datepicker';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
 import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
-import { inputGenerator } from '../../utils/misc';
-import { IGeneratedInput } from 'types';
+import { fieldsFactory } from '../../utils';
+import { IGeneratedFieldProps } from 'types';
 
 interface ITodoFormState {
-    data: { task: IGeneratedInput<string> };
-    errors: { task: string };
-    date: Date | null;
+    data: { task: IGeneratedFieldProps<string>, date: IGeneratedFieldProps<Date | null>; };
+    errors: { task: string, date: string };
 }
 
-class TodoForm extends Form<{}, ITodoFormState> {
+class CreateTodo extends Form<{}, ITodoFormState> {
     public static contextType = AppContext;
 
     context!: React.ContextType<typeof AppContext>;
 
     public readonly state: Readonly<ITodoFormState> = {
         data: {
-            task: inputGenerator({
+            task: fieldsFactory({
                 name: 'task',
                 min: 3,
+                autoComplete: 'off',
                 label: 'what do you want to do?',
                 validationlabel: 'new to-do',
                 validationErrorStyle: 'validation-error--underline',
-                autoComplete: 'off',
+            }),
+            date: fieldsFactory({
+                name: 'date',
+                type: 'date',
+                value: null,
+                element: 'date',
+                icon: 'far fa-calendar-alt',
+                validationlabel: 'date, time',
+                validationErrorStyle: 'validation-error--underline',
+                dateFormat: 'Pp',
             }),
         },
-        errors: { task: '' },
-
-        date: null,
+        errors: { task: '', date: '' },
     };
 
     public render(): ReactNode {
-        const { data, errors, date } = this.state;
+        const { data, errors } = this.state;
 
         return (
             <div className="add-todo--form">
@@ -47,13 +53,8 @@ class TodoForm extends Form<{}, ITodoFormState> {
 
                             <form onSubmit={ this.onsubmit } className="form">
                                 <div className="inputs-container">
-                                    { this.renderInput(data.task, errors.task) }
-
-                                    <div className="date--picker">
-                                        <DatePicker selected={ date } dateFormat="Pp" showTimeSelect onChange={ (date: Date): void => this.setState({ date }) } />
-
-                                        <i className="far fa-calendar-alt" />
-                                    </div>
+                                    { this.renderField(data.task, errors.task) }
+                                    { this.renderField(data.date, errors.date) }
                                 </div>
 
                                 <div className="actions">
@@ -73,14 +74,41 @@ class TodoForm extends Form<{}, ITodoFormState> {
         );
     }
 
+    protected onFormSubmit = ({ task, date }: { task: string; date: Date }): void => {
+        const { data } = this.state;
+        const isTodoPresent = this.context.todos.some(({ task: todoTask }): boolean => todoTask === task);
+
+        if (!isTodoPresent) {
+            this.createNewTask(task, date).then();
+            return;
+        }
+
+        Swal.fire({
+            title: 'You already have to-do with this value. Do you want to save it anyway?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: `Save`,
+            denyButtonText: `Don't save`,
+        }).then((result): void => {
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success').then();
+
+                this.createNewTask(task, date).then();
+            }
+            else if (result.isDenied) {
+                Swal.fire('To-do not saved', '', 'info').then();
+
+                this.setState({ data: { ...data, task: this.resetField('task'), date: this.resetField('date', null) } });
+            }
+        });
+    };
+
     private closeModal = (): void => {
+        const { data } = this.state;
+
         this.context.updateAppContext({ modal: false });
 
-        this.setState({
-            data: { ...this.state.data, task: { ...this.state.data.task, value: '', active: false, touched: false } },
-            errors: { ...this.state.errors, task: '' },
-            date: null,
-        });
+        this.setState({ data: { ...data, task: this.resetField('task'), date: this.resetField('date', null) }, errors: this.clearErrors() });
     };
 
     private createNewTask = async (task: string, date: Date): Promise<void> => {
@@ -90,45 +118,14 @@ class TodoForm extends Form<{}, ITodoFormState> {
 
         this.context.updateAppContext({ todos: [...this.context.todos, newTodo], modal: false });
 
-        this.setState({
-            data: { ...this.state.data, task: { ...this.state.data.task, value: '', active: false, touched: false } },
-            date: null,
-        });
-    };
-
-    protected onFormSubmit = ({ task }: { task: string }): void => {
-        const { date, data } = this.state;
-
-        if (!date) return;
-
-        if (this.context.todos.some(({ task: todoTask }): boolean => todoTask === task)) {
-            Swal.fire({
-                title: 'You already have to-do with this value. Do you want to save it anyway?',
-                showDenyButton: true,
-                showCancelButton: false,
-                confirmButtonText: `Save`,
-                denyButtonText: `Don't save`,
-            }).then((result): void => {
-                if (result.isConfirmed) {
-                    Swal.fire('Saved!', '', 'success').then();
-
-                    this.createNewTask(task, date!).then();
-                }
-                else if (result.isDenied) {
-                    Swal.fire('To-do not saved', '', 'info').then();
-
-                    this.setState({ data: { ...data, task: { ...data.task, value: '', active: false } }, date: null });
-                }
-            });
-        }
-        else this.createNewTask(task, date).then();
+        this.setState({ data: { ...this.state.data, task: this.resetField('task'), date: this.resetField('date', null) } });
     };
 
     private shouldSubmitBtnBeDisabled(): boolean {
-        const { data, errors, date } = this.state;
+        const { errors, data } = this.state;
 
-        return !!errors.task || !data.task.value || !date;
+        return !!errors.task || !!errors.date || !data.task.value || !data.date.value;
     }
 }
 
-export default TodoForm;
+export default CreateTodo;

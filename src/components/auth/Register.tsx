@@ -3,14 +3,14 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import { AppContext } from '../../contexts/AppContext';
-import { inputGenerator } from '../../utils/misc';
 import { userServices } from '../../services/UserServices';
-import { IGeneratedInput, ILoginRegister } from 'types';
+import { fieldsFactory, objectUtils } from '../../utils';
+import { IGeneratedFieldProps, ILoginRegister } from 'types';
 
 interface IRegisterProps extends RouteComponentProps {}
 
 interface IRegisterState {
-    data: { username: IGeneratedInput<string>; email: IGeneratedInput<string>; password: IGeneratedInput<string>; 'password confirmation': IGeneratedInput<string>; };
+    data: { username: IGeneratedFieldProps<string>; email: IGeneratedFieldProps<string>; password: IGeneratedFieldProps<string>; 'password confirmation': IGeneratedFieldProps<string>; };
     errors: { username: string; email: string; password: string; 'password confirmation': string; };
     loading: boolean;
 }
@@ -22,7 +22,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
 
     public readonly state: Readonly<IRegisterState> = {
         data: {
-            username: inputGenerator({
+            username: fieldsFactory({
                 name: 'username',
                 min: 3,
                 max: 30,
@@ -31,7 +31,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-user',
             }),
 
-            email: inputGenerator({
+            email: fieldsFactory({
                 name: 'email',
                 type: 'email',
                 autoComplete: 'on',
@@ -39,7 +39,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-envelope',
             }),
 
-            password: inputGenerator({
+            password: fieldsFactory({
                 name: 'password',
                 type: 'password',
                 placeholder: 'password',
@@ -48,7 +48,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 icon: 'fas fa-lock',
             }),
 
-            'password confirmation': inputGenerator({
+            'password confirmation': fieldsFactory({
                 name: 'password confirmation',
                 type: 'password',
                 placeholder: 'password confirmation',
@@ -75,13 +75,13 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(data.username, errors.username) }
+                                { this.renderField(data.username, errors.username) }
 
-                                { this.renderInput(data.email, errors.email) }
+                                { this.renderField(data.email, errors.email) }
 
-                                { this.renderInput(data.password, errors.password) }
+                                { this.renderField(data.password, errors.password) }
 
-                                { this.renderInput(data['password confirmation'], errors['password confirmation']) }
+                                { this.renderField(data['password confirmation'], errors['password confirmation']) }
 
                                 <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'register' }</button>
                             </form>
@@ -97,9 +97,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
     protected onFormSubmit = async (formValues: ILoginRegister): Promise<void> => {
         this.setState({ loading: true });
 
-        const data = Object.entries(formValues).reduce(
-            (acc: ILoginRegister, [key, value]): ILoginRegister => key !== 'password confirmation' ? { ...acc, [key]: value } : acc, {} as ILoginRegister,
-        );
+        const data = objectUtils.pick(formValues, 'username', 'email', 'password');
 
         const currentUser = await userServices.auth.registerUser(data);
 

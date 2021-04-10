@@ -321,48 +321,59 @@
                             left: 10px;
                         }
 
-                        .inputs-container {
+                        form {
                             display: flex;
                             align-items: center;
-                            flex: 1;
-                            justify-content: space-between;
-                            flex-wrap: wrap;
                             gap: 1rem;
+                            flex: 1;
 
-                            .field {
-                                position: relative;
+                            .inputs-container {
+                                display: flex;
+                                align-items: center;
                                 flex: 1;
-                                height: fit-content;
+                                justify-content: space-between;
+                                flex-wrap: wrap;
+                                gap: 1rem;
 
-                                input {
-                                    border-bottom: 2px solid #B2B2B2;
-                                }
+                                .field:not(.date--picker) {
+                                    position: relative;
+                                    flex: 1;
+                                    height: fit-content;
 
-                                &::after {
-                                    position: absolute;
-                                    bottom: 0;
-                                    left: 0;
-                                    width: 100%;
-                                    content: "";
-                                    border-bottom: 2px solid $secondary-color;
-                                    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-                                    transform: scaleX(0);
-                                }
+                                    input {
+                                        border-bottom: 2px solid #B2B2B2;
+                                    }
 
-                                &:focus-within {
                                     &::after {
-                                        transform: scaleX(1);
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        content: "";
+                                        border-bottom: 2px solid $secondary-color;
+                                        transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+                                        transform: scaleX(0);
+                                    }
+
+                                    &:focus-within {
+                                        &::after {
+                                            transform: scaleX(1);
+                                        }
                                     }
                                 }
-                            }
 
-                            .react-datepicker-wrapper {
-                                flex: 0.5;
+                                .date--picker {
+                                    flex: 0.5;
 
-                                input {
-                                    text-align: right;
-                                    color: #0000008A;
-                                    border-bottom: 2px solid #B2B2B2;
+                                    .react-datepicker-wrapper {
+                                        width: 100%;
+
+                                        input {
+                                            text-align: right;
+                                            color: #0000008A;
+                                            border-bottom: 2px solid #B2B2B2;
+                                        }
+                                    }
                                 }
                             }
                         }

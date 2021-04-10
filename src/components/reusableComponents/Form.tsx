@@ -1,77 +1,68 @@
-import { ChangeEvent, ChangeEventHandler, Component } from 'react';
-import { validate } from '../../utils/misc';
-import { IGeneratedInput, IObjectHasComputedProps } from 'types';
-
-interface IFormProps {}
+import React, { ChangeEvent, ChangeEventHandler, Component } from 'react';
+import DatePicker from 'react-datepicker';
+import { Field } from './Field';
+import { objectUtils, validate } from '../../utils';
+import { IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
 
 interface IFormState {
-    data: IObjectHasComputedProps;
-    errors: IObjectHasComputedProps;
+    data: IObjectHasComputedProps<IGeneratedFieldProps<any>>;
+    errors: IObjectHasComputedProps<string>;
 }
 
-abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, IFormState & S> {
-    public readonly state = { data: {}, errors: {} } as Readonly<IFormState & S>;
+abstract class Form<P, S extends IFormState> extends Component<P, S> {
+    public readonly abstract state = { data: {}, errors: {} } as Readonly<S>;
 
-    private static displayError(touched?: boolean, error?: string, validationErrorStyle = 'validation-error--tooltip'): false | JSX.Element {
-        const markup = <small className={ validationErrorStyle }>{ error }</small>;
+    protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 
-        return !!touched && !!error && markup;
-    }
+    protected renderField = (props: IGeneratedFieldProps<any>, error: string): JSX.Element | null => {
+        const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = 'P' } = props;
 
-    protected renderInput = (
-        { element, label, icon, avatar, validationErrorStyle, noValidate, touched, active, displayErrorMsg = true, options = [], onFileUploadChange, ...rest }: IGeneratedInput,
-        error: string): JSX.Element | null => {
-        switch (element) {
+        const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
+
+        const errorElement = this.displayError(touched, error, validationErrorStyle);
+
+        const fieldComponentProps = { ...objectUtils.pick(props, 'label', 'icon', 'noValidate', 'displayError'), errorElement };
+
+        switch (props.element) {
             case 'input':
                 return (
-                    <div className={ `field ${ error ? 'error' : '' } ${ rest.value || active ? 'active' : '' }` }>
-                        { label && <label>{ label }</label> }
-
-                        { icon && <i className={ `${ icon }` } /> }
-
-                        <input { ...rest } onChange={ this.onChange } onBlur={ this.onBlur } onFocus={ this.onFocus } />
-
-                        { !noValidate && Form.displayError(touched, error, validationErrorStyle) }
-                    </div>
+                    <Field classAttr={ { error: !!error, active: !!value || active } } { ...fieldComponentProps }>
+                        <input { ...fieldConfig } onChange={ this.onChange } onBlur={ this.onBlur } onFocus={ this.onFocus } />
+                    </Field>
                 );
 
             case 'select':
                 return (
-                    <div className={ `field ${ error ? 'error' : '' }` }>
-                        { label && <label>{ label }</label> }
-
-                        <select { ...rest } onChange={ this.onChange }>
+                    <Field classAttr={ { error: !!error } } { ...fieldComponentProps }>
+                        <select { ...fieldConfig } onChange={ this.onChange }>
                             <option value="">Select One</option>
 
                             { options.map(({ id, name, key, value }, idx): JSX.Element => <option key={ id ?? key ?? idx } value={ id ?? key }>{ name ?? value }</option>) }
                         </select>
-
-                        { !noValidate && Form.displayError(touched, error, validationErrorStyle) }
-                    </div>
+                    </Field>
                 );
 
             case 'file':
                 return (
-                    <div className={ `field ${ !noValidate && error ? 'error' : '' }` }>
-                        { label && <label>{ label }</label> }
-
-                        { icon && <i className={ `${ icon }` } /> }
-
+                    <Field classAttr={ { error: !noValidate && !!error, active: !!value || active } } { ...fieldComponentProps }>
                         <div className="file-upload-container">
-                            <div
-                                className={ `file-upload ${ avatar ? 'src-pr' : '' }` }
-                                style={ { background: avatar && `#eee url(${ avatar })` } }>
+                            <div className={ `file-upload ${ avatar ? 'src-pr' : '' }` } style={ { background: avatar && `#eee url(${ avatar })` } }>
                                 <input
-                                    { ...rest }
+                                    { ...fieldConfig }
                                     onChange={ (e): void => this.onInputFileChange(e, onFileUploadChange!) }
                                     onBlur={ this.onBlur }
                                     onFocus={ this.onFocus }
                                 />
                             </div>
                         </div>
+                    </Field>
+                );
 
-                        { !noValidate && displayErrorMsg && Form.displayError(touched, error, validationErrorStyle) }
-                    </div>
+            case 'date':
+                return (
+                    <Field classAttr={ { error: !!error, active: !!value || active, defaultList: ['date--picker'] } } { ...fieldComponentProps }>
+                        <DatePicker selected={ value } dateFormat={ dateFormat } showTimeSelect onChange={ (date: Date): void => this.handleFieldChange(name, date) } />
+                    </Field>
                 );
 
             default:
@@ -80,15 +71,35 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
     };
 
     protected onsubmit = (e: ChangeEvent<HTMLFormElement>): void => {
+        const { data } = this.state;
+
         e.preventDefault();
 
         const errors = this.validate();
 
-        this.setState({ data: Object.entries(this.state.data).reduce((acc, [key, value]): IObjectHasComputedProps => ({ ...acc, [key]: { ...value, touched: true } }), {}), errors });
+        this.setState({ data: Object.entries(data).reduce((acc, [key, value]): IObjectHasComputedProps => ({ ...acc, [key]: { ...value, touched: true } }), {}), errors });
 
-        if (Object.keys(errors).length) return;
+        if (objectUtils.hasAValidProp(errors)) return;
 
-        this.onFormSubmit(Object.values(this.state.data).reduce((acc, { name, value }): IObjectHasComputedProps => ({ ...acc, [name]: value }), {}));
+        this.onFormSubmit(objectUtils.mapFormValuesToKeyValuePairs(data));
+    };
+
+    protected onFormChange?(_values: IObjectHasComputedProps): void {}
+
+    protected resetField<T>(fieldName: keyof S['data'], fieldValue: T | string = ''): IGeneratedFieldProps<T> {
+        return { ...this.state.data[fieldName], value: fieldValue, active: false, touched: false };
+    }
+
+    protected clearErrors(): S['errors'] {
+        const { errors } = this.state;
+
+        return { ...errors, ...objectUtils.mapRecordValues(errors, '') };
+    }
+
+    private displayError = (touched?: boolean, error?: string, validationErrorStyle = 'validation-error--tooltip'): false | JSX.Element => {
+        const markup = <small className={ validationErrorStyle }>{ error }</small>;
+
+        return !!touched && !!error && markup;
     };
 
     private validate(): IObjectHasComputedProps {
@@ -122,20 +133,19 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
         this.setState({ data: { ...this.state.data, [name]: { ...this.state.data[name], active: true } } });
     };
 
-    private handleFieldChange(name: string, value: string): void {
+    private handleFieldChange(name: string, value: string | Date): void {
         this.setState(
             { data: { ...this.state.data, [name]: { ...this.state.data[name], value } } },
             (): void => {
-                const errors = this.validate();
+                const { data, errors } = this.state;
+                const newErrors = this.validate();
 
-                this.setState({ errors: this.state.data[name].touched ? { ...this.state.errors, [name]: errors[name] } : this.state.errors });
+                if (!data[name].touched) return;
+
+                this.setState({ errors: { ...errors, [name]: newErrors[name] } });
             },
         );
     }
-
-    protected onFormChange(_values: IObjectHasComputedProps): void {}
-
-    protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 }
 
 export default Form;

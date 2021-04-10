@@ -1,19 +1,15 @@
-import { Link, RouteComponentProps } from 'react-router-dom';
-
-import Swal from 'sweetalert2';
-
-import { inputGenerator } from '../../utils/misc';
-
-import { userServices } from '../../services/UserServices';
-
-import Form from '../reusableComponents/Form';
-import { IGeneratedInput, ILoginRegister } from 'types';
 import { ReactNode } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import Form from '../reusableComponents/Form';
+import { userServices } from '../../services/UserServices';
+import { fieldsFactory } from '../../utils';
+import { IGeneratedFieldProps, ILoginRegister } from 'types';
 
 interface ILoginProps extends RouteComponentProps {}
 
 interface ILoginState {
-    data: { email: IGeneratedInput<string>; password: IGeneratedInput<string> };
+    data: { email: IGeneratedFieldProps<string>; password: IGeneratedFieldProps<string> };
     errors: { email: string; password: string };
     loading: boolean;
 }
@@ -21,7 +17,7 @@ interface ILoginState {
 class Login extends Form<ILoginProps, ILoginState> {
     public readonly state: Readonly<ILoginState> = {
         data: {
-            email: inputGenerator({
+            email: fieldsFactory({
                 name: 'email',
                 type: 'email',
                 autoComplete: 'on',
@@ -29,7 +25,7 @@ class Login extends Form<ILoginProps, ILoginState> {
                 icon: 'fas fa-envelope',
             }),
 
-            password: inputGenerator({
+            password: fieldsFactory({
                 name: 'password',
                 type: 'password',
                 min: 6,
@@ -58,9 +54,9 @@ class Login extends Form<ILoginProps, ILoginState> {
                     <div className="form-wrapper">
                         <div className="form">
                             <form onSubmit={ this.onsubmit }>
-                                { this.renderInput(data.email, errors.email) }
+                                { this.renderField(data.email, errors.email) }
 
-                                { this.renderInput(data.password, errors.password) }
+                                { this.renderField(data.password, errors.password) }
 
                                 <button className="submit-btn" type="submit">{ loading ? <i className="fas fa-spinner fa-pulse fa-lg" /> : 'log in' }</button>
                             </form>

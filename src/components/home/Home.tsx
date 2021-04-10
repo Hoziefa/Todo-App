@@ -1,12 +1,10 @@
 import React, { ChangeEvent, Component, ReactNode } from 'react';
-
-import { todosService } from '../../services/TodosService';
-import { AppContext } from '../../contexts/AppContext';
-
-import TodoForm from './TodoForm';
+import CreateTodo from './CreateTodo';
 import TodosList from '../reusableComponents/TodosList';
 import { SectionHeading } from '../reusableComponents/SectionHeading';
 import UserProfile from '../reusableComponents/UserProfile';
+import { AppContext } from '../../contexts/AppContext';
+import { todosService } from '../../services/TodosService';
 import { dataPersister } from 'services/DataPersister';
 import { EDataPersistKeys } from 'types';
 
@@ -30,7 +28,7 @@ class Home extends Component<{}, IHomeState> {
             <section className="todos-app container">
                 <UserProfile />
 
-                <TodoForm />
+                <CreateTodo />
 
                 <div className="todos section">
                     <SectionHeading title="to-do list">
