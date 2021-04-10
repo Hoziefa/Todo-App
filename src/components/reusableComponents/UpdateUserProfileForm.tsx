@@ -16,7 +16,7 @@ interface IUpdateUserProfileFormProps {
 }
 
 interface IUpdateUserProfileFormState {
-    data: { username: IGeneratedFieldProps; avatar: IGeneratedFieldProps };
+    data: { username: IGeneratedFieldProps<string>; avatar: IGeneratedFieldProps<string> };
     errors: { username: string; avatar: string };
     uploading: boolean;
     image: string;
@@ -165,7 +165,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
         this.setState({
             data: {
                 ...this.state.data,
-                username: this.resetField('username', this.context.currentUserProfile?.username),
+                username: this.resetField('username', this.context.currentUserProfile?.username!),
                 avatar: { ...this.resetField('avatar'), avatar: this.context.currentUserProfile?.avatar },
             },
             errors: this.clearErrors(),

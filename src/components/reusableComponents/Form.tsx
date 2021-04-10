@@ -5,7 +5,7 @@ import { objectUtils, validate } from '../../utils';
 import { IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
 
 interface IFormState {
-    data: IObjectHasComputedProps<IGeneratedFieldProps>;
+    data: IObjectHasComputedProps<IGeneratedFieldProps<any>>;
     errors: IObjectHasComputedProps<string>;
 }
 
@@ -14,7 +14,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
 
     protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 
-    protected renderField = (props: IGeneratedFieldProps, error: string): JSX.Element | null => {
+    protected renderField = (props: IGeneratedFieldProps<any>, error: string): JSX.Element | null => {
         const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = 'P' } = props;
 
         const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
@@ -86,7 +86,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
 
     protected onFormChange?(_values: IObjectHasComputedProps): void {}
 
-    protected resetField(fieldName: keyof S['data'], fieldValue: string | Date | null = ''): IGeneratedFieldProps {
+    protected resetField<T>(fieldName: keyof S['data'], fieldValue: T | string = ''): IGeneratedFieldProps<T> {
         return { ...this.state.data[fieldName], value: fieldValue, active: false, touched: false };
     }
 

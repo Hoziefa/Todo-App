@@ -10,7 +10,7 @@ import { IGeneratedFieldProps, ILoginRegister } from 'types';
 interface IRegisterProps extends RouteComponentProps {}
 
 interface IRegisterState {
-    data: { username: IGeneratedFieldProps; email: IGeneratedFieldProps; password: IGeneratedFieldProps; 'password confirmation': IGeneratedFieldProps; };
+    data: { username: IGeneratedFieldProps<string>; email: IGeneratedFieldProps<string>; password: IGeneratedFieldProps<string>; 'password confirmation': IGeneratedFieldProps<string>; };
     errors: { username: string; email: string; password: string; 'password confirmation': string; };
     loading: boolean;
 }

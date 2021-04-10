@@ -31,9 +31,9 @@ export interface ICurrentUserProfile {
     email?: string;
 }
 
-interface IGeneratedFieldOptionalProps {
+interface IGeneratedFieldOptionalProps<T> {
     element: 'input' | 'select' | 'file' | 'date';
-    value: any;
+    value: T;
     type: 'text' | 'number' | 'password' | 'email' | 'file' | 'date';
     placeholder: string;
     label: string;
@@ -43,7 +43,6 @@ interface IGeneratedFieldOptionalProps {
     noValidate: boolean;
     validationErrorStyle: 'validation-error--underline' | 'validation-error--tooltip';
     autoComplete: 'off' | 'on' | 'new-password';
-    initialvalue: any;
     icon: string;
     touched: boolean;
     active: boolean;
@@ -54,8 +53,8 @@ interface IGeneratedFieldOptionalProps {
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-export interface IGeneratedFieldProps extends Partial<IGeneratedFieldOptionalProps> {
+export interface IGeneratedFieldProps<T> extends Partial<IGeneratedFieldOptionalProps<T>> {
     name: string;
 }
 
-export interface IFieldConfig extends Pick<IGeneratedFieldProps, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete'> {}
+export interface IFieldConfig extends Pick<IGeneratedFieldProps<string>, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete'> {}

@@ -31,10 +31,4 @@ export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedPro
         {},
     );
 
-export const fieldsFactory: FieldsFactory = ({ element = 'input', value = '', type = 'text', ...rest }): IGeneratedFieldProps => ({ element, value, type, ...rest });
-
-// export const fieldsFactory: <T = any>(inputProps: IGeneratedFieldProps<T>) => IGeneratedFieldProps<T | string> = ({
-//     element = 'input',
-//     config: { value = '', type = 'text', ...configRest },
-//     ...rest
-// }): IGeneratedFieldProps => ({ config: { value, type, ...configRest }, element, ...rest });
+export const fieldsFactory: FieldsFactory = ({ element = 'input', value = '', type = 'text', ...rest }): IGeneratedFieldProps<any> => ({ element, value, type, ...rest });

@@ -8,7 +8,7 @@ import { fieldsFactory } from '../../utils';
 import { IGeneratedFieldProps } from 'types';
 
 interface ITodoFormState {
-    data: { task: IGeneratedFieldProps, date: IGeneratedFieldProps; };
+    data: { task: IGeneratedFieldProps<string>, date: IGeneratedFieldProps<Date | null>; };
     errors: { task: string, date: string };
 }
 

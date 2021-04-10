@@ -11,7 +11,7 @@ interface ITodoProps {
 }
 
 interface ITodoState {
-    data: { activeTask: IGeneratedFieldProps; activeDate: IGeneratedFieldProps };
+    data: { activeTask: IGeneratedFieldProps<string>; activeDate: IGeneratedFieldProps<Date | null> };
     errors: { activeTask: string; activeDate: string };
     editing: boolean;
 }
