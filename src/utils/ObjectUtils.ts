@@ -15,14 +15,8 @@ class ObjectUtils {
         return checkin.hasOwnProperty(identifier);
     }
 
-    //ToDo: Correct type on accumulator.
-    public pick<T extends object, R extends keyof T>(pickFrom: T, ...keys: Array<keyof T>): Pick<T, R> {
-        return keys.reduce((acc: any, key): any => {
-
-            if (this.isValidIdentifier(pickFrom, key as string)) acc[key] = pickFrom[key];
-
-            return acc;
-        }, {});
+    public pick<T extends object, K extends keyof T>(pickFrom: T, ...keys: Array<K>): Pick<T, K> {
+        return keys.reduce((acc: any, key): any => this.isValidIdentifier(pickFrom, key as string) ? { ...acc, [key]: pickFrom[key] } : acc, {});
     }
 
     public extractClassesAttrs(classAttr: object): string {
@@ -35,6 +29,10 @@ class ObjectUtils {
 
     public mapFormValuesToKeyValuePairs<T>(formValues: object): IObjectHasComputedProps<T> {
         return Object.values(formValues).reduce((acc, { name, value }): IObjectHasComputedProps<T> => ({ ...acc, [name]: value }), {});
+    }
+
+    public hasAValidProp(validateOn: object): boolean {
+        return Object.values(validateOn).some(Boolean);
     }
 }
 

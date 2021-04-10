@@ -45,12 +45,13 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin-top: 2rem;
+                        margin-top: 3rem;
                         column-gap: 1rem;
 
                         button {
                             font-family: $respective-font;
                             position: relative;
+                            flex-basis: 25%;
                             padding: 0.625rem 3rem 0.625rem 2rem;
                             text-transform: capitalize;
                             color: white;
@@ -92,7 +93,7 @@
         .modal-content {
             .form-container {
                 .form-wrapper {
-                    padding: 3rem 2rem 4rem;
+                    padding: 3rem 2rem 2rem;
 
                     form {
                         .inputs-container {
@@ -186,6 +187,21 @@
                                         border-bottom: 2px solid #B2B2B2;
                                     }
                                 }
+
+                                &.error {
+                                    color: $errorDark-color;
+
+                                    .fa-calendar-alt {
+                                        color: $errorLightest-color;
+                                    }
+
+                                    .react-datepicker-wrapper {
+                                        input {
+                                            margin-bottom: 1px;
+                                            border-bottom-color: $errorLightest-color;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -221,7 +237,7 @@
                                 .date--picker {
                                     .fa-calendar-alt {
                                         top: auto;
-                                        bottom: 0;
+                                        bottom: 21px;
                                     }
                                 }
                             }

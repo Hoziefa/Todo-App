@@ -3,6 +3,8 @@ import { FieldsFactory, IGeneratedFieldProps, IObjectHasComputedProps } from 'ty
 export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedProps =>
     Object.values(fields).reduce(
         (acc: IObjectHasComputedProps, { name, type, label, min, max, value, validationlabel, noValidate }): IObjectHasComputedProps => {
+            acc[name] = '';
+
             if (noValidate) return acc;
 
             const fieldName = validationlabel ?? label ?? name;

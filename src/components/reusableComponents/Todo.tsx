@@ -15,7 +15,6 @@ interface ITodoState {
     editing: boolean;
 }
 
-// ToDo: Try to update this component to work with Form abstract component cause it's so similar to the CreateTodo component.
 class Todo extends Component<ITodoProps, ITodoState> {
     public static contextType = AppContext;
 

@@ -23,7 +23,7 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
 
         const errorElement = this.displayError(touched, error, validationErrorStyle);
 
-        const fieldComponentProps = { ...objectUtils.pick<IGeneratedFieldProps, 'label' | 'icon' | 'noValidate'>(props, 'label', 'icon', 'noValidate'), errorElement };
+        const fieldComponentProps = { ...objectUtils.pick(props, 'label', 'icon', 'noValidate'), errorElement };
 
         switch (props.element) {
             case 'input':
@@ -73,15 +73,15 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
     };
 
     protected onsubmit = (e: ChangeEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-
         const { data } = this.state;
+
+        e.preventDefault();
 
         const errors = this.validate();
 
         this.setState({ data: Object.entries(data).reduce((acc, [key, value]): IObjectHasComputedProps => ({ ...acc, [key]: { ...value, touched: true } }), {}), errors });
 
-        if (Object.keys(errors).length) return;
+        if (objectUtils.hasAValidProp(errors)) return;
 
         this.onFormSubmit(objectUtils.mapFormValuesToKeyValuePairs(data));
     };

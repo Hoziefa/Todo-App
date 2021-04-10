@@ -29,7 +29,6 @@ interface IUpdateUserProfileFormState {
     uploadSuccess: boolean;
 }
 
-// ToDo: Figure why we using initialvalue, and can we remove it.
 class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUserProfileFormState> {
     public static contextType = AppContext;
 
@@ -171,9 +170,9 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
             data: {
                 ...this.state.data,
                 username: this.resetField('username', this.context.currentUserProfile?.username),
-                avatar: this.resetField('avatar'),
+                avatar: { ...this.resetField('avatar'), avatar: this.context.currentUserProfile?.avatar },
             },
-            errors: { ...this.state.errors, username: '', avatar: '' },
+            errors: this.clearErrors(),
             uploading: false,
             image: '',
             crop: { x: 0, y: 0 },

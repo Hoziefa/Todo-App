@@ -27,7 +27,15 @@ class CreateTodo extends Form<{}, ITodoFormState> {
                 validationlabel: 'new to-do',
                 validationErrorStyle: 'validation-error--underline',
             }),
-            date: fieldsFactory({ name: 'date', type: 'date', value: null, element: 'date', icon: 'far fa-calendar-alt', noValidate: true }),
+            date: fieldsFactory({
+                name: 'date',
+                type: 'date',
+                value: null,
+                element: 'date',
+                icon: 'far fa-calendar-alt',
+                validationlabel: 'date, time',
+                validationErrorStyle: 'validation-error--underline',
+            }),
         },
         errors: { task: '', date: '' },
     };
