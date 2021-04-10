@@ -4,15 +4,13 @@ import { Field } from './Field';
 import { objectUtils, validate } from '../../utils';
 import { IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
 
-interface IFormProps {}
-
 interface IFormState {
     data: IObjectHasComputedProps<IGeneratedFieldProps>;
     errors: IObjectHasComputedProps<string>;
 }
 
-abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, IFormState & S> {
-    public readonly state = { data: {}, errors: {} } as Readonly<IFormState & S>;
+abstract class Form<P, S extends IFormState> extends Component<P, S> {
+    public readonly abstract state = { data: {}, errors: {} } as Readonly<S>;
 
     protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 
