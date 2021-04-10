@@ -8,4 +8,3 @@ export type HTMLElementEvent<T extends Element, C = T> = Event & { target: T; cu
 export type CurrentUser = CurrentUserFromService | null;
 
 export type FieldsFactory = (inputProps: IGeneratedFieldProps) => IGeneratedFieldProps;
-// export type FieldsFactory = <T = string>(inputProps: IGeneratedFieldProps<T>) => IGeneratedFieldProps<T>;

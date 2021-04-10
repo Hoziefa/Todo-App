@@ -44,7 +44,6 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                 validationErrorStyle: 'validation-error--underline',
                 icon: 'fas fa-user',
                 value: this.context?.currentUserProfile?.username,
-                initialvalue: this.context?.currentUserProfile?.username,
             }),
 
             avatar: fieldsFactory({
@@ -120,14 +119,11 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
     }
 
     public componentDidUpdate(prevProps: IUpdateUserProfileFormProps, prevState: IUpdateUserProfileFormState): void {
-        if (!prevState.data.username.initialvalue && !this.state.data.username.initialvalue && this.context.currentUserProfile?.username) {
-            this.setState({
-                data: {
-                    ...this.state.data,
-                    username: { ...this.state.data.username, value: this.context.currentUserProfile?.username, initialvalue: this.context.currentUserProfile?.username },
-                    avatar: { ...this.state.data.avatar, avatar: this.context.currentUserProfile?.avatar },
-                },
-            });
+        const { currentUserProfile } = this.context;
+        const { data } = this.state;
+
+        if (!data.username.value && currentUserProfile?.username) {
+            this.setState({ data: { ...data, username: { ...data.username, value: currentUserProfile?.username }, avatar: { ...data.avatar, avatar: currentUserProfile?.avatar } } });
         }
     }
 
