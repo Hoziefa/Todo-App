@@ -23,7 +23,7 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
 
         const errorElement = this.displayError(touched, error, validationErrorStyle);
 
-        const fieldComponentProps = { ...objectUtils.pick(props, 'label', 'icon', 'noValidate'), errorElement };
+        const fieldComponentProps = { ...objectUtils.pick(props, 'label', 'icon', 'noValidate', 'displayError'), errorElement };
 
         switch (props.element) {
             case 'input':
@@ -88,7 +88,7 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
 
     protected onFormChange?(_values: IObjectHasComputedProps): void {}
 
-    protected resetField(fieldName: keyof S['data'], fieldValue: string | null = ''): IGeneratedFieldProps {
+    protected resetField(fieldName: keyof S['data'], fieldValue: string | Date | null = ''): IGeneratedFieldProps {
         return { ...this.state.data[fieldName], value: fieldValue, active: false, touched: false };
     }
 
@@ -139,9 +139,12 @@ abstract class Form<P, S extends IFormState> extends Component<IFormProps & P, I
         this.setState(
             { data: { ...this.state.data, [name]: { ...this.state.data[name], value } } },
             (): void => {
-                const errors = this.validate();
+                const { data, errors } = this.state;
+                const newErrors = this.validate();
 
-                this.setState({ errors: this.state.data[name].touched ? { ...this.state.errors, [name]: errors[name] } : this.state.errors });
+                if (!data[name].touched) return;
+
+                this.setState({ errors: { ...errors, [name]: newErrors[name] } });
             },
         );
     }

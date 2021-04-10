@@ -49,6 +49,7 @@ interface IGeneratedFieldOptionalProps {
     active: boolean;
     avatar: string;
     options: any[];
+    displayError: boolean;
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
 }
 
