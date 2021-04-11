@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { unitOfTime } from 'moment';
 
 class DateService {
     private static instance: DateService;
@@ -11,16 +11,16 @@ class DateService {
         return DateService.instance;
     }
 
-    public isSame(compareWith: Date, compareOn: Date | number): boolean {
-        return moment(compareWith.getTime()).isSame(moment(compareOn), 'day');
+    public isSame(compareWith: Date, compareOn: Date | number, compareBy: unitOfTime.StartOf = 'day'): boolean {
+        return moment(compareWith.getTime()).isSame(moment(compareOn), compareBy);
     }
 
     public diffFromNow(timestamp: Date | number | object): string {
         return moment(timestamp).fromNow();
     }
 
-    public format(date: Date | number): string {
-        return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+    public format(date: Date | number, format = 'MMMM Do YYYY, h:mm:ss a'): string {
+        return moment(date).format(format);
     }
 
     public toDate(data: number | string = Date.now()): Date {

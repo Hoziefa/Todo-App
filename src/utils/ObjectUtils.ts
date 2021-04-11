@@ -19,7 +19,7 @@ class ObjectUtils {
         return keys.reduce((acc: any, key): any => this.isValidIdentifier(pickFrom, key as string) ? { ...acc, [key]: pickFrom[key] } : acc, {});
     }
 
-    public extractClassesAttrs(classAttr: object): string {
+    public getEvaluatedClassAttr(classAttr: object): string {
         return Object.entries(classAttr ?? {}).reduce((acc: Array<string>, [className, show]): Array<string> => show ? [...acc, className] : acc, []).join(' ');
     }
 
