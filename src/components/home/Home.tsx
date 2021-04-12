@@ -6,7 +6,7 @@ import UserProfile from '../reusableComponents/UserProfile';
 import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
 import { dataPersister } from 'services/DataPersister';
-import { EDataPersistKeys } from 'types';
+import { DataPersistKeys } from 'types';
 
 interface IHomeState {
     loading: boolean;
@@ -64,13 +64,13 @@ class Home extends Component<{}, IHomeState> {
     private onFilterByDescriptionInputChange = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>): void => {
         this.context.updateAppContext({ filterDescription: value });
 
-        dataPersister.persistData(EDataPersistKeys.DescriptionFilterKey, value);
+        dataPersister.persistData(DataPersistKeys.DescriptionFilterKey, value);
     };
 
     private onDisplayAddTodoModal = (): void => {
         this.context.updateAppContext({ modal: true, filterDescription: '' });
 
-        dataPersister.deleteData(EDataPersistKeys.DescriptionFilterKey);
+        dataPersister.deleteData(DataPersistKeys.DescriptionFilterKey);
     };
 }
 

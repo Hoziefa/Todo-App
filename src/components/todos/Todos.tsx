@@ -7,7 +7,7 @@ import { SectionHeading } from '../reusableComponents/SectionHeading';
 import UserProfile from '../reusableComponents/UserProfile';
 import { dataPersister } from 'services/DataPersister';
 import { dateService } from 'services/DateService';
-import { EDataPersistKeys } from 'types';
+import { DataPersistKeys } from 'types';
 
 class Todos extends Home {
     public render(): ReactNode {
@@ -42,7 +42,7 @@ class Todos extends Home {
     private onResetDate = (): void => {
         this.context.updateAppContext({ filterDate: dateService.toDate() });
 
-        dataPersister.deleteData(EDataPersistKeys.DateFilterKey);
+        dataPersister.deleteData(DataPersistKeys.DateFilterKey);
     };
 
     private onDateChange: OnChangeDateCallback = (date): void => {
@@ -50,7 +50,7 @@ class Todos extends Home {
 
         this.context.updateAppContext({ filterDate: date });
 
-        dataPersister.persistData(EDataPersistKeys.DateFilterKey, date);
+        dataPersister.persistData(DataPersistKeys.DateFilterKey, date);
     };
 }
 

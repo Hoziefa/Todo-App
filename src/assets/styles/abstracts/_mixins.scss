@@ -76,7 +76,7 @@
     color: ghostwhite;
     border-radius: 0.5rem;
 
-    @media (max-width: 400px) {
+    @include respond(phone) {
         width: 100% !important;
     }
 }
@@ -314,7 +314,7 @@
                             border-top: 1px solid #0000001F;
                         }
 
-                        .todo-created-date {
+                        .todo__created-date {
                             font: 500 70% $decorated3rd-font;
                             position: absolute;
                             top: 7px;
@@ -327,7 +327,7 @@
                             gap: 1rem;
                             flex: 1;
 
-                            .inputs-container {
+                            .todo__form__inputs-container {
                                 display: flex;
                                 align-items: center;
                                 flex: 1;
@@ -378,7 +378,7 @@
                             }
                         }
 
-                        .custom-radio {
+                        .todo__complete-task {
                             input[type="checkbox"] {
                                 display: none;
 
@@ -417,16 +417,16 @@
                             }
                         }
 
-                        .todo-task {
+                        .todo__task {
                             flex: 1;
 
-                            .todo-estimate--date {
+                            .todo__task__estimate-date {
                                 font-size: 80%;
                                 color: #616161;
                             }
                         }
 
-                        .actions {
+                        .todo__actions {
                             display: flex;
                             align-items: center;
 
@@ -444,19 +444,19 @@
                                     background-color: #00000014;
                                 }
 
-                                &.edit-todo--btn {
+                                &.todo__actions__edit-btn {
                                     color: #6ABE6D;
                                 }
 
-                                &.delete-todo--btn {
+                                &.todo__actions__delete-btn {
                                     color: #F44336;
                                 }
 
-                                &.confirm-todo--btn {
+                                &.todo__actions__confirm-btn {
                                     color: #6ABE6D;
                                 }
 
-                                &.cancel-todo--btn {
+                                &.todo__actions__cancel-btn {
                                     color: #F44336;
                                 }
                             }
@@ -466,7 +466,7 @@
                             background-color: #EEE;
                             border-radius: 0.5rem;
 
-                            .todo-task {
+                            .todo__task {
                                 p {
                                     text-decoration: line-through;
                                 }
@@ -474,24 +474,28 @@
                         }
 
                         @include respond(phone) {
-                            .inputs-container {
-                                .field,
-                                .react-datepicker-wrapper {
-                                    flex-basis: 100%;
-                                }
+                            form {
+                                .todo__form__inputs-container {
+                                    .field,
+                                    .date--picker {
+                                        flex-basis: 100%;
+                                    }
 
-                                .react-datepicker-wrapper {
-                                    input {
-                                        text-align: left;
+                                    .date--picker {
+                                        .react-datepicker-wrapper {
+                                            input {
+                                                text-align: left;
+                                            }
+                                        }
                                     }
                                 }
                             }
 
-                            .actions {
+                            .todo__actions {
                                 align-self: flex-end;
 
-                                .confirm-todo--btn,
-                                .cancel-todo--btn {
+                                .todo__actions__confirm-btn,
+                                .todo__actions__cancel-btn {
                                     font-size: 1.15rem;
                                 }
                             }
