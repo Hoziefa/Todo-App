@@ -47,7 +47,7 @@ class FirebaseService implements IAuthService {
 
     public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
 
-    public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data || []).map(([id, value]): T => ({ id, ...value }));
+    public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data ?? []).map(([id, value]): T => ({ id, ...value }));
 
     public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
         return this.firebase.auth().createUserWithEmailAndPassword(email, password);
