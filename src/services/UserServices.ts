@@ -21,6 +21,25 @@ class Auth {
         return this.authService.currentUser;
     }
 
+    public async registerUser({ email, password, username }: ILoginRegister): Promise<AuthResponse> {
+        try {
+            const user = await this.authService.createUserWithEmailAndPassword(email, password).then(async ({ user }): Promise<CurrentUser> => {
+                if (!user) throw new Error('Invalid user');
+
+                await user.updateProfile({ displayName: username, photoURL: `https://www.gravatar.com/avatar/${ md5(email) }?d=mp` });
+
+                await usersRef.child(user.uid).set({ username: user.displayName, avatar: user.photoURL, email });
+
+                return user;
+            });
+
+            return { success: true, message: 'registered successfully', user };
+        }
+        catch ({ message }) {
+            return { success: false, message, user: null };
+        }
+    }
+
     public async loginUser({ email, password }: ILoginRegister): Promise<AuthResponse> {
         try {
             return await this.authService.signInWithEmailAndPassword(email, password).then(({ user }): AuthResponse => ({ success: true, message: 'registered successfully', user }));
@@ -38,23 +57,6 @@ class Auth {
             console.error(message);
         }
     }
-
-    public async registerUser({ email, password, username }: ILoginRegister): Promise<AuthResponse> {
-        try {
-            const user = await this.authService.createUserWithEmailAndPassword(email, password).then(async ({ user }): Promise<CurrentUser> => {
-                await user!.updateProfile({ displayName: username, photoURL: `https://www.gravatar.com/avatar/${ md5(email) }?d=mp` });
-
-                await usersRef.child(user!.uid).set({ username: user!.displayName, avatar: user!.photoURL, email });
-
-                return user;
-            });
-
-            return { success: true, message: 'registered successfully', user };
-        }
-        catch ({ message }) {
-            return { success: false, message, user: null };
-        }
-    }
 }
 
 class Profile {
@@ -68,7 +70,7 @@ class Profile {
         return Profile.instance;
     }
 
-    public async getCurrentUserProfile(): Promise<null | ICurrentUserProfile> {
+    public async getCurrentUserProfile(): Promise<ICurrentUserProfile | null> {
         if (!this.authService.currentUser.uid) return null;
 
         return await usersRef.child(this.authService.currentUser.uid).once('value').then((snap): ICurrentUserProfile => ({ id: snap.key, ...snap.val() }));

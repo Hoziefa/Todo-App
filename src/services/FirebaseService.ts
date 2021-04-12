@@ -39,11 +39,15 @@ class FirebaseService implements IAuthService {
         return FirebaseService.instance;
     }
 
+    public get currentUser(): firebase.User {
+        return this.firebase.auth().currentUser ?? ({} as firebase.User);
+    }
+
     public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
 
     public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
 
-    public firebaseLooper = <T = any>(data: object): Array<T> => Object.entries(data || []).map(([id, value]): T => ({ id, ...value }));
+    public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data || []).map(([id, value]): T => ({ id, ...value }));
 
     public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
         return this.firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -55,10 +59,6 @@ class FirebaseService implements IAuthService {
 
     public signOut(): Promise<void> {
         return firebaseService.firebase.auth().signOut();
-    }
-
-    public get currentUser(): firebase.User {
-        return this.firebase.auth().currentUser ?? ({} as firebase.User);
     }
 }
 

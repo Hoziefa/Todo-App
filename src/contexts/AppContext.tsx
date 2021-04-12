@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 import { dataPersister } from 'services/DataPersister';
 import { dateService } from '../services/DateService';
-import { CurrentUser, EDataPersistKeys, ICurrentUserProfile, ITodo, PartialRequired } from 'types';
+import { CurrentUser, DataPersistKeys, ICurrentUserProfile, ITodo, PartialRequired } from 'types';
 
 interface IAppContextProviderProps {
     currentUser: CurrentUser;
@@ -27,8 +27,8 @@ export class AppContextProvider extends Component<IAppContextProviderProps, IApp
         currentUser: this.props.currentUser,
         currentUserProfile: null,
         todos: [],
-        filterDescription: dataPersister.readData<string>(EDataPersistKeys.DescriptionFilterKey) ?? '',
-        filterDate: dateService.toDate(dataPersister.readData<string>(EDataPersistKeys.DateFilterKey) ?? Date.now()),
+        filterDescription: dataPersister.readData<string>(DataPersistKeys.DescriptionFilterKey) ?? '',
+        filterDate: dateService.toDate(dataPersister.readData<string>(DataPersistKeys.DateFilterKey) ?? Date.now()),
         modal: false,
     };
 

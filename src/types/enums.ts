@@ -1,4 +1,4 @@
-export enum EDataPersistKeys {
+export enum DataPersistKeys {
     DescriptionFilterKey = 'filterDescription',
     DateFilterKey = 'filterDate',
 }

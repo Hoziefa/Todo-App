@@ -11,7 +11,7 @@ interface IFieldProps {
 }
 
 export const Field: React.FC<IFieldProps> = ({ classAttr: { defaultList = [], ...classAttr }, children, errorElement, icon, label, noValidate, displayError = true }): JSX.Element => {
-    return <div className={ `field ${ objectUtils.extractClassesAttrs(classAttr!) } ${ defaultList?.join(' ') }`.trim() }>
+    return <div className={ `field ${ objectUtils.getEvaluatedClassAttr(classAttr!) } ${ defaultList?.join(' ') }`.trim() }>
         { label && <label>{ label }</label> }
 
         { icon && <i className={ `${ icon }` } /> }
