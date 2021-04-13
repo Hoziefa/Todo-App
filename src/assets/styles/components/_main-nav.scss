@@ -46,7 +46,7 @@ nav.main-nav {
                 height: 22px;
                 cursor: pointer;
 
-                @include respond(tab-md) {
+                @include respond(custom-media, 0, 991px) {
                     transition: all 0.2s linear;
                 }
 

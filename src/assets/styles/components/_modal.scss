@@ -209,7 +209,7 @@
             }
         }
 
-        @media (min-width: 768px) {
+        @include respond(custom-media, 768px) {
             .modal-content {
                 flex-basis: 700px;
             }
@@ -306,7 +306,7 @@
             }
         }
 
-        @media (min-width: 600px) {
+        @include respond(custom-media, 600px) {
             .modal-content {
                 flex-basis: 500px;
             }

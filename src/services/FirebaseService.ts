@@ -40,7 +40,7 @@ class FirebaseService implements IAuthService {
     }
 
     public get currentUser(): firebase.User {
-        return this.firebase.auth().currentUser ?? ({} as firebase.User);
+        return this.firebase.auth().currentUser! ?? {};
     }
 
     public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
