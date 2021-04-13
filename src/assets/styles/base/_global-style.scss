@@ -3,7 +3,7 @@
 :root {
     font-size: 16px;
 
-    @include respond(phone-md) {
+    @include respond(custom-media, 0, 600px) {
         font-size: 12px;
     }
 }
@@ -159,7 +159,7 @@ button:disabled {
     margin: 0 auto;
     padding: 0 1rem;
 
-    @include respond(phone-md) {
+    @include respond(custom-media, 0, 600px) {
         width: 100% !important;
     }
 }
@@ -315,7 +315,7 @@ button:disabled {
         }
     }
 
-    @include respond(phone-md) {
+    @include respond(custom-media, 0, 600px) {
         width: 100%;
     }
 }

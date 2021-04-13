@@ -1,40 +1,20 @@
 @import "variables";
 
-//Media Query manager
-/*
-    0 - 425px | 476px  phone
-    425px - 768px Tablet portrait
-    768px - 1024px Tablet landscape
-    1024px - 1400px is where our normal styles apply
-    1800 +  ; Big desktop
-    $breakpoint argument choices:
-    - phone
-    - tab-port
-    - tab-land
-    - laptop
-    - big-desktop
-*/
-@mixin respond($breakpoint) {
+@mixin respond($breakpoint, $min: 0, $max: 100vw) {
+    @if $breakpoint==custom-media {
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    }
+
     @if $breakpoint==phone {
         @media (max-width: 425px) {
             @content;
         }
     }
 
-    @if $breakpoint==phone-md {
-        @media (max-width: 600px) {
-            @content;
-        }
-    }
-
     @if $breakpoint==tab-port {
         @media (max-width: 768px) {
-            @content;
-        }
-    }
-
-    @if $breakpoint==tab-md {
-        @media (max-width: 991px) {
             @content;
         }
     }
