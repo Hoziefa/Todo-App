@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Form from './Form';
 import { AppContext } from '../../contexts/AppContext';
-import { todosService } from '../../services/TodosService';
+import { todosService } from '../../services';
 import { dateService } from 'services/DateService';
 import { fieldsFactory } from '../../utils';
 import { FieldTypes, IGeneratedFieldProps, InputTypes, ITodo } from 'types';
@@ -36,7 +36,7 @@ class Todo extends Form<ITodoProps, ITodoState> {
 
         return (
             <li className={ `todo-item ${ todo.completed ? 'completed' : '' }` }>
-                <span className="todo__created-date">{ dateService.diffFromNow(todo.timestamp) }</span>
+                <span className="todo__created-date">{ dateService.diffFromNow(todo.createdAt) }</span>
 
                 { !todo.completed && editing ? this.renderTodoEditMode() : this.renderTodoReadMode() }
             </li>

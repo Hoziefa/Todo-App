@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
 import { AppContext } from '../../contexts/AppContext';
-import { todosService } from '../../services/TodosService';
+import { todosService } from '../../services';
 import { fieldsFactory } from '../../utils';
 import { DateFormatTypes, FieldAutoCompleteValues, FieldTypes, IGeneratedFieldProps, InputTypes, ValidationErrorStyle } from 'types';
 import { arrayUtils } from '../../utils/ArrayUtils';
@@ -113,7 +113,7 @@ class CreateTodo extends Form<{}, ITodoFormState> {
     };
 
     private createNewTask = async (task: string, date: Date): Promise<void> => {
-        const todo = { task, date: date.getTime(), timestamp: todosService.getTimestamp, completed: false };
+        const todo = { task, date: date.getTime(), createdAt: todosService.getTimestamp, completed: false };
 
         const newTodo = await todosService.createTodo(todo);
 

@@ -12,7 +12,7 @@ export interface ITodo {
     id?: string;
     task: string;
     date: number;
-    timestamp: object;
+    createdAt: object;
     completed: boolean;
 }
 

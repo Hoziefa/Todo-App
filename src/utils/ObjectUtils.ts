@@ -20,7 +20,6 @@ class ObjectUtils {
     }
 
     public getEvaluatedClassAttr(classAttr: object): string {
-        //>: The reason we didn't use @method=Array.filter(); instead of the @method=Array.reduce(); cause to get the className not the entire inner array [key, value] -> key based on the value
         return Object.entries(classAttr ?? {}).reduce((acc: Array<string>, [className, show]): Array<string> => show ? [...acc, className] : acc, []).join(' ');
     }
 
