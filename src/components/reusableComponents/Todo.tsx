@@ -4,7 +4,7 @@ import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
 import { dateService } from 'services/DateService';
 import { fieldsFactory } from '../../utils';
-import { IGeneratedFieldProps, ITodo } from 'types';
+import { FieldTypes, IGeneratedFieldProps, InputTypes, ITodo } from 'types';
 
 interface ITodoProps {
     todo: ITodo;
@@ -24,7 +24,7 @@ class Todo extends Form<ITodoProps, ITodoState> {
     public readonly state: Readonly<ITodoState> = {
         data: {
             activeTask: fieldsFactory({ name: 'activeTask', value: this.props.todo.task, displayError: false }),
-            activeDate: fieldsFactory({ name: 'activeDate', type: 'date', value: dateService.toDate(this.props.todo.date), element: 'date', displayError: false }),
+            activeDate: fieldsFactory({ name: 'activeDate', type: InputTypes.Date, value: dateService.toDate(this.props.todo.date), element: FieldTypes.Date, displayError: false }),
         },
         errors: { activeTask: '', activeDate: '' },
         editing: false,

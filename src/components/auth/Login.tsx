@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import { userServices } from '../../services/UserServices';
 import { fieldsFactory } from '../../utils';
-import { IGeneratedFieldProps, ILoginRegister } from 'types';
+import { FieldAutoCompleteValues, IGeneratedFieldProps, ILoginRegister, InputTypes } from 'types';
 
 interface ILoginProps extends RouteComponentProps {}
 
@@ -19,15 +19,15 @@ class Login extends Form<ILoginProps, ILoginState> {
         data: {
             email: fieldsFactory({
                 name: 'email',
-                type: 'email',
-                autoComplete: 'on',
+                type: InputTypes.Email,
+                autoComplete: FieldAutoCompleteValues.On,
                 placeholder: 'enter your email',
                 icon: 'fas fa-envelope',
             }),
 
             password: fieldsFactory({
                 name: 'password',
-                type: 'password',
+                type: InputTypes.Password,
                 min: 6,
                 max: 30,
                 placeholder: 'enter your password',

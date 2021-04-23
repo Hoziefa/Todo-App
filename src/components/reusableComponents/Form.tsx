@@ -2,7 +2,7 @@ import React, { ChangeEvent, ChangeEventHandler, Component } from 'react';
 import DatePicker from 'react-datepicker';
 import { Field } from './Field';
 import { objectUtils, validate } from '../../utils';
-import { IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps } from 'types';
+import { DateFormatTypes, FieldTypes, IFieldConfig, IGeneratedFieldProps, IObjectHasComputedProps, ValidationErrorStyle } from 'types';
 
 interface IFormState {
     data: IObjectHasComputedProps<IGeneratedFieldProps<any>>;
@@ -15,7 +15,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
     protected abstract onFormSubmit(values: IObjectHasComputedProps): void;
 
     protected renderField = (props: IGeneratedFieldProps<any>, error: string): JSX.Element | null => {
-        const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = 'P' } = props;
+        const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = DateFormatTypes.DateOnly } = props;
 
         const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
 
@@ -24,14 +24,14 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
         const fieldComponentProps = { ...objectUtils.pick(props, 'label', 'icon', 'noValidate', 'displayError'), errorElement };
 
         switch (props.element) {
-            case 'input':
+            case FieldTypes.Input:
                 return (
                     <Field classAttr={ { error: !!error, active: !!value || active } } { ...fieldComponentProps }>
                         <input { ...fieldConfig } onChange={ this.onChange } onBlur={ this.onBlur } onFocus={ this.onFocus } />
                     </Field>
                 );
 
-            case 'select':
+            case FieldTypes.Select:
                 return (
                     <Field classAttr={ { error: !!error } } { ...fieldComponentProps }>
                         <select { ...fieldConfig } onChange={ this.onChange }>
@@ -42,11 +42,11 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
                     </Field>
                 );
 
-            case 'file':
+            case FieldTypes.File:
                 return (
                     <Field classAttr={ { error: !noValidate && !!error, active: !!value || active } } { ...fieldComponentProps }>
                         <div className="file-upload-container">
-                            <div className={ `file-upload ${ avatar ? 'src-pr' : '' }` } style={ { background: avatar && `#eee url(${ avatar })` } }>
+                            <div className={ `file-upload ${ avatar ? 'has-image' : '' }` } style={ { background: avatar && `#eee url(${ avatar })` } }>
                                 <input
                                     { ...fieldConfig }
                                     onChange={ (e): void => this.onInputFileChange(e, onFileUploadChange!) }
@@ -58,7 +58,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
                     </Field>
                 );
 
-            case 'date':
+            case FieldTypes.Date:
                 return (
                     <Field classAttr={ { error: !!error, active: !!value || active, defaultList: ['date--picker'] } } { ...fieldComponentProps }>
                         <DatePicker selected={ value } dateFormat={ dateFormat } showTimeSelect onChange={ (date: Date): void => this.handleFieldChange(name, date) } />
@@ -96,7 +96,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
         return { ...errors, ...objectUtils.mapRecordValues(errors, '') };
     }
 
-    private displayError = (touched?: boolean, error?: string, validationErrorStyle = 'validation-error--tooltip'): false | JSX.Element => {
+    private displayError = (touched?: boolean, error?: string, validationErrorStyle = ValidationErrorStyle.ValidationErrorTooltip): JSX.Element | false => {
         const markup = <small className={ validationErrorStyle }>{ error }</small>;
 
         return !!touched && !!error && markup;

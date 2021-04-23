@@ -5,7 +5,8 @@ import Modal from '../reusableComponents/Modal';
 import { AppContext } from '../../contexts/AppContext';
 import { todosService } from '../../services/TodosService';
 import { fieldsFactory } from '../../utils';
-import { IGeneratedFieldProps } from 'types';
+import { DateFormatTypes, FieldAutoCompleteValues, FieldTypes, IGeneratedFieldProps, InputTypes, ValidationErrorStyle } from 'types';
+import { arrayUtils } from '../../utils/ArrayUtils';
 
 interface ITodoFormState {
     data: { task: IGeneratedFieldProps<string>, date: IGeneratedFieldProps<Date | null>; };
@@ -22,20 +23,20 @@ class CreateTodo extends Form<{}, ITodoFormState> {
             task: fieldsFactory({
                 name: 'task',
                 min: 3,
-                autoComplete: 'off',
+                autoComplete: FieldAutoCompleteValues.Off,
                 label: 'what do you want to do?',
                 validationlabel: 'new to-do',
-                validationErrorStyle: 'validation-error--underline',
+                validationErrorStyle: ValidationErrorStyle.ValidationErrorUnderline,
             }),
             date: fieldsFactory({
                 name: 'date',
-                type: 'date',
+                type: InputTypes.Date,
                 value: null,
-                element: 'date',
+                element: FieldTypes.Date,
                 icon: 'far fa-calendar-alt',
                 validationlabel: 'date, time',
-                validationErrorStyle: 'validation-error--underline',
-                dateFormat: 'Pp',
+                validationErrorStyle: ValidationErrorStyle.ValidationErrorUnderline,
+                dateFormat: DateFormatTypes.DateTime,
             }),
         },
         errors: { task: '', date: '' },
@@ -76,7 +77,7 @@ class CreateTodo extends Form<{}, ITodoFormState> {
 
     protected onFormSubmit = ({ task, date }: { task: string; date: Date }): void => {
         const { data } = this.state;
-        const isTodoPresent = this.context.todos.some(({ task: todoTask }): boolean => todoTask === task);
+        const isTodoPresent = arrayUtils.isItemPresent(this.context.todos, task, 'task');
 
         if (!isTodoPresent) {
             this.createNewTask(task, date).then();
@@ -84,7 +85,7 @@ class CreateTodo extends Form<{}, ITodoFormState> {
         }
 
         Swal.fire({
-            title: 'You already have to-do with this value. Do you want to save it anyway?',
+            title: `You already have a to-do with "${ task }" as a value. Do you want to save it anyway?`,
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: `Save`,
