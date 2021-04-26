@@ -6,7 +6,7 @@ import { userServices } from '../../services/UserServices';
 import { AppContext } from '../../contexts/AppContext';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
-import { IGeneratedFieldProps } from 'types';
+import { FieldTypes, IGeneratedFieldProps, InputTypes, ValidationErrorStyle } from 'types';
 import { Area } from 'react-easy-crop/types';
 import uploadingImage from '../../assets/uploading.gif';
 
@@ -41,16 +41,16 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                 min: 3,
                 max: 30,
                 placeholder: 'username',
-                validationErrorStyle: 'validation-error--underline',
+                validationErrorStyle: ValidationErrorStyle.ValidationErrorUnderline,
                 icon: 'fas fa-user',
                 value: this.context?.currentUserProfile?.username,
             }),
 
             avatar: fieldsFactory({
                 name: 'avatar',
-                type: 'file',
-                element: 'file',
-                validationErrorStyle: 'validation-error--underline',
+                type: InputTypes.File,
+                element: FieldTypes.File,
+                validationErrorStyle: ValidationErrorStyle.ValidationErrorUnderline,
                 noValidate: true,
                 avatar: this.context?.currentUserProfile?.avatar,
                 onFileUploadChange: (e): void => this.onFileUploadChange(e),

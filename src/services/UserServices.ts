@@ -9,7 +9,7 @@ const usersRef = firebaseService.databaseRef('users');
 class Auth {
     private static instance: Auth;
 
-    private constructor(private authService: IAuthService) {}
+    private constructor(private readonly authService: IAuthService) {}
 
     public static auth(authService: IAuthService): Auth {
         !Auth.instance && (Auth.instance = new Auth(authService));
@@ -62,7 +62,7 @@ class Auth {
 class Profile {
     private static instance: Profile;
 
-    private constructor(private authService: IAuthService) {}
+    private constructor(private readonly authService: IAuthService) {}
 
     public static profile(authService: IAuthService): Profile {
         !Profile.instance && (Profile.instance = new Profile(authService));

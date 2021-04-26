@@ -1,10 +1,10 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Form from './Form';
 import { AppContext } from '../../contexts/AppContext';
-import { todosService } from '../../services/TodosService';
+import { todosService } from '../../services';
 import { dateService } from 'services/DateService';
 import { fieldsFactory } from '../../utils';
-import { IGeneratedFieldProps, ITodo } from 'types';
+import { FieldTypes, IGeneratedFieldProps, InputTypes, ITodo } from 'types';
 
 interface ITodoProps {
     todo: ITodo;
@@ -24,7 +24,7 @@ class Todo extends Form<ITodoProps, ITodoState> {
     public readonly state: Readonly<ITodoState> = {
         data: {
             activeTask: fieldsFactory({ name: 'activeTask', value: this.props.todo.task, displayError: false }),
-            activeDate: fieldsFactory({ name: 'activeDate', type: 'date', value: dateService.toDate(this.props.todo.date), element: 'date', displayError: false }),
+            activeDate: fieldsFactory({ name: 'activeDate', type: InputTypes.Date, value: dateService.toDate(this.props.todo.date), element: FieldTypes.Date, displayError: false }),
         },
         errors: { activeTask: '', activeDate: '' },
         editing: false,
@@ -36,7 +36,7 @@ class Todo extends Form<ITodoProps, ITodoState> {
 
         return (
             <li className={ `todo-item ${ todo.completed ? 'completed' : '' }` }>
-                <span className="todo__created-date">{ dateService.diffFromNow(todo.timestamp) }</span>
+                <span className="todo__created-date">{ dateService.diffFromNow(todo.createdAt) }</span>
 
                 { !todo.completed && editing ? this.renderTodoEditMode() : this.renderTodoReadMode() }
             </li>

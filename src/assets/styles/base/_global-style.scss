@@ -186,9 +186,9 @@ button:disabled {
 .validation-error--tooltip {
     font: bold 80% $sub-text-font;
     position: absolute;
-    z-index: 90;
     top: 0;
     bottom: auto;
+    z-index: 90;
     display: block;
     padding: 10px;
     text-transform: capitalize;
@@ -200,13 +200,13 @@ button:disabled {
     transform: translateY(-100%);
 
     &::after {
+        content: "";
         position: absolute;
-        z-index: 91;
         bottom: -6px;
         left: 10px;
+        z-index: 91;
         width: 10px;
         height: 10px;
-        content: "";
         background-color: inherit;
         border-color: inherit;
         border-bottom: 1px solid;
@@ -257,17 +257,18 @@ button:disabled {
         border-radius: 50%;
 
         &::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            content: "";
             background-color: $primary-color;
             filter: opacity(0.5);
         }
 
         &::after {
+            content: "+";
             font-size: 2.5rem;
             position: absolute;
             top: 50%;
@@ -277,7 +278,6 @@ button:disabled {
             justify-content: center;
             width: 70px;
             height: 70px;
-            content: "+";
             color: $primary-color;
             background-color: $secondary-color;
             border-radius: 50%;
@@ -299,7 +299,7 @@ button:disabled {
             opacity: 0;
         }
 
-        &.src-pr {
+        &.has-image {
             &::before,
             &::after {
                 opacity: 0;

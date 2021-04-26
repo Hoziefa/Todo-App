@@ -5,7 +5,7 @@ import Form from '../reusableComponents/Form';
 import { AppContext } from '../../contexts/AppContext';
 import { userServices } from '../../services/UserServices';
 import { fieldsFactory, objectUtils } from '../../utils';
-import { IGeneratedFieldProps, ILoginRegister } from 'types';
+import { FieldAutoCompleteValues, IGeneratedFieldProps, ILoginRegister, InputTypes } from 'types';
 
 interface IRegisterProps extends RouteComponentProps {}
 
@@ -26,22 +26,22 @@ class Register extends Form<IRegisterProps, IRegisterState> {
                 name: 'username',
                 min: 3,
                 max: 30,
-                autoComplete: 'on',
+                autoComplete: FieldAutoCompleteValues.On,
                 placeholder: 'username',
                 icon: 'fas fa-user',
             }),
 
             email: fieldsFactory({
                 name: 'email',
-                type: 'email',
-                autoComplete: 'on',
+                type: InputTypes.Email,
+                autoComplete: FieldAutoCompleteValues.On,
                 placeholder: 'email address',
                 icon: 'fas fa-envelope',
             }),
 
             password: fieldsFactory({
                 name: 'password',
-                type: 'password',
+                type: InputTypes.Password,
                 placeholder: 'password',
                 min: 6,
                 max: 30,
@@ -50,7 +50,7 @@ class Register extends Form<IRegisterProps, IRegisterState> {
 
             'password confirmation': fieldsFactory({
                 name: 'password confirmation',
-                type: 'password',
+                type: InputTypes.Password,
                 placeholder: 'password confirmation',
                 icon: 'fas fa-redo-alt',
             }),

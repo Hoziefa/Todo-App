@@ -32,9 +32,7 @@
 //-*----------  START COLORS BASE  ----------*/
 
 $intel-blue: #0F7DC2;
-
 $fancyPureBlue-color: #03A9F4;
-
 $errorDarkest-color: darkred;
 $errorDark-color: #9F3A38;
 $errorLight-color: #F44336E8;
@@ -72,14 +70,12 @@ $sub-text-font: $ubuntu-font;
 
 $primary-color: $intel-blue;
 $secondary-color: $fancyPureBlue-color;
-
 $primary-text-color: #2D2D2D;
 $primary-background-color: #FAFAFA;
+$blacker-color: #000000DE;
 
 $default-font-size: 1rem;
 
 //%-*=====  PROJECT VARIABLES AND THEMES AND DEPENDENCIES  ======*-//
-
-$blacker-color: #000000DE;
 
 $nav-height: calc(60px + 2rem);

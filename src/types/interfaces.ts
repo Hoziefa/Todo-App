@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from 'react';
+import { DateFormatTypes, FieldAutoCompleteValues, FieldTypes, InputTypes, ValidationErrorStyle } from './enums';
 
 export interface IDataPersister {
     persistData<T>(key: string, data: T): void;
@@ -11,7 +12,7 @@ export interface ITodo {
     id?: string;
     task: string;
     date: number;
-    timestamp: object;
+    createdAt: object;
     completed: boolean;
 }
 
@@ -32,24 +33,24 @@ export interface ICurrentUserProfile {
 }
 
 interface IGeneratedFieldOptionalProps<T> {
-    element: 'input' | 'select' | 'file' | 'date';
+    element: FieldTypes;
     value: T;
-    type: 'text' | 'number' | 'password' | 'email' | 'file' | 'date';
+    type: InputTypes;
     placeholder: string;
     label: string;
     min: number;
     max: number;
     validationlabel: string;
     noValidate: boolean;
-    validationErrorStyle: 'validation-error--underline' | 'validation-error--tooltip';
-    autoComplete: 'off' | 'on' | 'new-password';
+    validationErrorStyle: ValidationErrorStyle;
+    autoComplete: FieldAutoCompleteValues;
     icon: string;
     touched: boolean;
     active: boolean;
     avatar: string;
     options: any[];
     displayError: boolean;
-    dateFormat: 'P' | 'p' | 'Pp';
+    dateFormat: DateFormatTypes;
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
 }
 
