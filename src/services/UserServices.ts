@@ -1,10 +1,10 @@
 import md5 from 'md5';
-import { CurrentUserFromService, firebaseService, IAuthService } from './FirebaseService';
+import { apiService, CurrentUserAuthService, IAuthService } from './ApiService';
 import { CurrentUser, ICurrentUserProfile, ILoginRegister } from 'types';
 
 type AuthResponse = { success: boolean; message: string; user: CurrentUser };
 
-const usersRef = firebaseService.databaseRef('users');
+const usersRef = apiService.databaseRef('users');
 
 class Auth {
     private static instance: Auth;
@@ -17,7 +17,7 @@ class Auth {
         return Auth.instance;
     }
 
-    public get currentUser(): CurrentUserFromService {
+    public get currentUser(): CurrentUserAuthService {
         return this.authService.currentUser;
     }
 
@@ -79,7 +79,7 @@ class Profile {
     public async changeCurrentUserAvatar(data: { blob: Blob; metadata: any }, storageDir: string): Promise<string | null> {
         if (!this.authService.currentUser.uid) return null;
 
-        const newAvatar: string = await firebaseService.storageRef(storageDir).put(data.blob, data.metadata).then((snap): Promise<string> => snap.ref.getDownloadURL());
+        const newAvatar: string = await apiService.storageRef(storageDir).put(data.blob, data.metadata).then((snap): Promise<string> => snap.ref.getDownloadURL());
 
         await this.authService.currentUser.updateProfile({ photoURL: newAvatar });
 
@@ -100,9 +100,9 @@ class Profile {
 class UserServices {
     private static instance: UserServices;
 
-    public readonly auth = Auth.auth(firebaseService);
+    public readonly auth = Auth.auth(apiService);
 
-    public readonly profile = Profile.profile(firebaseService);
+    public readonly profile = Profile.profile(apiService);
 
     private constructor() {}
 

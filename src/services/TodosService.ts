@@ -1,11 +1,11 @@
-import { firebaseService } from './FirebaseService';
+import { apiService } from './ApiService';
 import { userServices } from './UserServices';
 import { ITodo } from 'types';
 
 class TodosService {
     private static instance: TodosService;
 
-    private readonly todosRef = firebaseService.databaseRef('todos');
+    private readonly todosRef = apiService.databaseRef('todos');
 
     private constructor() {}
 
@@ -29,12 +29,12 @@ class TodosService {
         await this.todosRef.child(userServices.auth.currentUser.uid).child(todoId).remove();
     }
 
-    public async getTodos(): Promise<Array<ITodo>> {
-        return await this.todosRef.child(userServices.auth.currentUser.uid).once('value').then((snaps): Array<ITodo> => firebaseService.firebaseLooper(snaps.toJSON()!));
+    public get getTimestamp(): object {
+        return apiService.firebase.database.ServerValue.TIMESTAMP;
     }
 
-    public get getTimestamp(): object {
-        return firebaseService.firebase.database.ServerValue.TIMESTAMP;
+    public async getTodos(): Promise<Array<ITodo>> {
+        return await this.todosRef.child(userServices.auth.currentUser.uid).once('value').then((snaps): Array<ITodo> => apiService.firebaseLooper(snaps.toJSON()!));
     }
 }
 

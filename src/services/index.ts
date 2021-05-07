@@ -1,5 +1,5 @@
 export * from './DataPersister';
 export * from './DateService';
-export * from './FirebaseService';
+export * from './ApiService';
 export * from './TodosService';
 export * from './UserServices';
