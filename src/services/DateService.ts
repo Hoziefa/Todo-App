@@ -11,8 +11,8 @@ class DateService {
         return DateService.instance;
     }
 
-    public isSame(compareWith: Date, compareOn: Date | number, compareBy: unitOfTime.StartOf = 'day'): boolean {
-        return moment(compareWith.getTime()).isSame(moment(compareOn), compareBy);
+    public isSame(compare: Date, compareWith: Date | number, compareBy: unitOfTime.StartOf = 'day'): boolean {
+        return moment(compare.getTime()).isSame(moment(compareWith), compareBy);
     }
 
     public diffFromNow(timestamp: Date | number | object): string {

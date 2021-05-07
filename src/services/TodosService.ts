@@ -15,6 +15,10 @@ class TodosService {
         return TodosService.instance;
     }
 
+    public get getTimestamp(): object {
+        return apiService.getTimestamp;
+    }
+
     public async createTodo(todo: ITodo): Promise<ITodo> {
         const newTodo = await this.todosRef.child(userServices.auth.currentUser.uid).push(todo);
 
@@ -27,10 +31,6 @@ class TodosService {
 
     public async deleteTodo(todoId: string): Promise<void> {
         await this.todosRef.child(userServices.auth.currentUser.uid).child(todoId).remove();
-    }
-
-    public get getTimestamp(): object {
-        return apiService.firebase.database.ServerValue.TIMESTAMP;
     }
 
     public async getTodos(): Promise<Array<ITodo>> {
