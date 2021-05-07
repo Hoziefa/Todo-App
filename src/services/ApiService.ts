@@ -11,7 +11,47 @@ export interface IAuthService {
     signOut(): Promise<void>;
 }
 
-export type CurrentUserFromService = firebase.User;
+export type CurrentUserAuthService = firebase.User;
+
+class ApiService implements IAuthService {
+    private static instance: ApiService;
+
+    public readonly firebase = firebase;
+
+    private constructor() {}
+
+    public static get apiService(): ApiService {
+        !ApiService.instance && (ApiService.instance = new ApiService());
+
+        return ApiService.instance;
+    }
+
+    public get currentUser(): firebase.User {
+        return this.firebase.auth().currentUser! ?? {};
+    }
+
+    public get getTimestamp(): object {
+        return apiService.firebase.database.ServerValue.TIMESTAMP;
+    }
+
+    public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
+
+    public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
+
+    public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data ?? {}).map(([id, value]): T => ({ id, ...value }));
+
+    public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
+        return this.firebase.auth().createUserWithEmailAndPassword(email, password);
+    }
+
+    public signInWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
+        return this.firebase.auth().signInWithEmailAndPassword(email, password);
+    }
+
+    public signOut(): Promise<void> {
+        return apiService.firebase.auth().signOut();
+    }
+}
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -26,40 +66,4 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-class FirebaseService implements IAuthService {
-    private static instance: FirebaseService;
-
-    public readonly firebase = firebase;
-
-    private constructor() {}
-
-    public static get firebaseService(): FirebaseService {
-        !FirebaseService.instance && (FirebaseService.instance = new FirebaseService());
-
-        return FirebaseService.instance;
-    }
-
-    public get currentUser(): firebase.User {
-        return this.firebase.auth().currentUser! ?? {};
-    }
-
-    public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
-
-    public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
-
-    public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data ?? []).map(([id, value]): T => ({ id, ...value }));
-
-    public createUserWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
-        return this.firebase.auth().createUserWithEmailAndPassword(email, password);
-    }
-
-    public signInWithEmailAndPassword(email: string, password: string): Promise<firebase.auth.UserCredential> {
-        return this.firebase.auth().signInWithEmailAndPassword(email, password);
-    }
-
-    public signOut(): Promise<void> {
-        return firebaseService.firebase.auth().signOut();
-    }
-}
-
-export const { firebaseService } = FirebaseService;
+export const { apiService } = ApiService;
