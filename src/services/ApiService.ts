@@ -31,12 +31,12 @@ class ApiService implements IAuthService {
     }
 
     public get getTimestamp(): object {
-        return apiService.firebase.database.ServerValue.TIMESTAMP;
+        return this.firebase.database.ServerValue.TIMESTAMP;
     }
 
-    public storageRef = (path: string): firebase.storage.Reference => firebase.storage().ref(path);
+    public storageRef = (path: string): firebase.storage.Reference => this.firebase.storage().ref(path);
 
-    public databaseRef = (path: string): firebase.database.Reference => firebase.database().ref(path);
+    public databaseRef = (path: string): firebase.database.Reference => this.firebase.database().ref(path);
 
     public firebaseLooper = <T>(data: object): Array<T> => Object.entries(data ?? {}).map(([id, value]): T => ({ id, ...value }));
 
@@ -49,7 +49,7 @@ class ApiService implements IAuthService {
     }
 
     public signOut(): Promise<void> {
-        return apiService.firebase.auth().signOut();
+        return this.firebase.auth().signOut();
     }
 }
 
