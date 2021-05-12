@@ -2,12 +2,14 @@ import { FieldsFactory, FieldTypes, IGeneratedFieldProps, InputTypes, IObjectHas
 
 export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedProps =>
     Object.values(fields).reduce(
-        (acc: IObjectHasComputedProps, { name, type, label, min, max, value, validationlabel, noValidate }): IObjectHasComputedProps => {
+        (acc: IObjectHasComputedProps, { name, type, label, min, max, minLength, maxLength, value, validationlabel, noValidate }): IObjectHasComputedProps => {
             acc[name] = '';
 
             if (noValidate) return acc;
 
             const fieldName = validationlabel ?? label ?? name;
+            const minValue = min ?? minLength;
+            const maxValue = max ?? maxLength;
 
             if (typeof value === 'string') value = value.trim();
 
@@ -15,9 +17,9 @@ export const validate = (fields: IObjectHasComputedProps): IObjectHasComputedPro
 
             if (type === 'email' && !/\S+@\S+\.\S+/.test(value)) acc[name] = `must be a valid email`;
 
-            if (value && (min || max) && (+value.length < min || +value.length > max)) {
+            if (value && (minValue || maxValue) && (+value.length < minValue || +value.length > maxValue)) {
                 acc[name] = `${ fieldName } field must be ${
-                    min && max ? `between ${ min } and ${ max }` : min && !max ? `more than ${ min }` : max && !min ? `less than ${ max }` : ''
+                    minValue && maxValue ? `between ${ minValue } and ${ maxValue }` : minValue && !maxValue ? `more than ${ minValue }` : maxValue && !minValue ? `less than ${ maxValue }` : ''
                 }`;
             }
 
