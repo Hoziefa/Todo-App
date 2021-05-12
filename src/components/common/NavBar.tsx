@@ -1,12 +1,8 @@
 import React, { Component, ReactNode } from 'react';
 import { Link, NavLink, RouteComponentProps, withRouter } from 'react-router-dom';
-
 import { AppContext } from '../../contexts/AppContext';
-
-import { userServices } from '../../services/UserServices';
-
+import { userServices } from '../../services';
 import { CurrentUser } from 'types';
-
 import logo from '../../assets/logo.png';
 
 interface INavBarProps extends RouteComponentProps {

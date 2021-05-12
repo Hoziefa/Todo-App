@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
 import { AppContext } from '../../contexts/AppContext';
-import { userServices } from '../../services/UserServices';
+import { userServices } from '../../services';
 import { fieldsFactory, objectUtils } from '../../utils';
 import { FieldAutoCompleteValues, IGeneratedFieldProps, ILoginRegister, InputTypes } from 'types';
 

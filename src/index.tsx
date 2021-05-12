@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import App from './components/App';
 
-import { apiService } from './services/ApiService';
+import { apiService } from './services';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-calendar/dist/Calendar.css';

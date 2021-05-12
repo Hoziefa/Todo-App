@@ -2,11 +2,11 @@ import React, { ChangeEvent, ReactNode } from 'react';
 import Swal from 'sweetalert2';
 import Cropper from 'react-easy-crop';
 import { fieldsFactory, getCroppedImg } from '../../utils';
-import { userServices } from '../../services/UserServices';
+import { userServices } from '../../services';
 import { AppContext } from '../../contexts/AppContext';
 import Form from '../reusableComponents/Form';
 import Modal from '../reusableComponents/Modal';
-import { FieldTypes, IGeneratedFieldProps, InputTypes, ValidationErrorStyle } from 'types';
+import { AcceptedFileUploadTypes, FieldTypes, IGeneratedFieldProps, InputTypes, ValidationErrorStyle } from 'types';
 import { Area } from 'react-easy-crop/types';
 import uploadingImage from '../../assets/uploading.gif';
 
@@ -53,6 +53,7 @@ class UpdateUserProfileForm extends Form<IUpdateUserProfileFormProps, IUpdateUse
                 validationErrorStyle: ValidationErrorStyle.ValidationErrorUnderline,
                 noValidate: true,
                 avatar: this.context?.currentUserProfile?.avatar,
+                accept: AcceptedFileUploadTypes.ImageList,
                 onFileUploadChange: (e): void => this.onFileUploadChange(e),
             }),
         },

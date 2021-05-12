@@ -17,7 +17,7 @@ abstract class Form<P, S extends IFormState> extends Component<P, S> {
     protected renderField = (props: IGeneratedFieldProps<any>, error: string): JSX.Element | null => {
         const { active, value, options = [], name, noValidate, avatar, onFileUploadChange, touched, validationErrorStyle, dateFormat = DateFormatTypes.DateOnly } = props;
 
-        const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete');
+        const fieldConfig: IFieldConfig = objectUtils.pick(props, 'name', 'value', 'type', 'placeholder', 'min', 'max', 'autoComplete', 'accept');
 
         const errorElement = this.displayError(touched, error, validationErrorStyle);
 

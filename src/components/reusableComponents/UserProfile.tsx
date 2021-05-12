@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react';
 
 import { AppContext } from '../../contexts/AppContext';
-import { userServices } from '../../services/UserServices';
+import { userServices } from '../../services';
 
 import UpdateUserProfileForm from './UpdateUserProfileForm';
 

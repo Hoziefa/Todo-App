@@ -1,8 +1,7 @@
 import React, { ChangeEvent, ReactNode } from 'react';
 import Form from './Form';
 import { AppContext } from '../../contexts/AppContext';
-import { todosService } from '../../services';
-import { dateService } from 'services/DateService';
+import { dateService, todosService } from '../../services';
 import { fieldsFactory } from '../../utils';
 import { FieldTypes, IGeneratedFieldProps, InputTypes, ITodo } from 'types';
 

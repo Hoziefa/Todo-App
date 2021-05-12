@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from 'react';
-import { DateFormatTypes, FieldAutoCompleteValues, FieldTypes, InputTypes, ValidationErrorStyle } from './enums';
+import { AcceptedFileUploadTypes, DateFormatTypes, FieldAutoCompleteValues, FieldTypes, InputTypes, ValidationErrorStyle } from './enums';
 
 export interface IDataPersister {
     persistData<T>(key: string, data: T): void;
@@ -48,7 +48,8 @@ interface IGeneratedFieldOptionalProps<T> {
     touched: boolean;
     active: boolean;
     avatar: string;
-    options: any[];
+    options: Array<T>;
+    accept: AcceptedFileUploadTypes;
     displayError: boolean;
     dateFormat: DateFormatTypes;
     onFileUploadChange: ChangeEventHandler<HTMLInputElement>;
@@ -58,4 +59,4 @@ export interface IGeneratedFieldProps<T> extends Partial<IGeneratedFieldOptional
     name: string;
 }
 
-export interface IFieldConfig extends Pick<IGeneratedFieldProps<string>, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete'> {}
+export interface IFieldConfig extends Pick<IGeneratedFieldProps<string>, 'name' | 'value' | 'type' | 'placeholder' | 'min' | 'max' | 'autoComplete' | 'accept'> {}

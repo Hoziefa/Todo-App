@@ -36,6 +36,13 @@ export enum DateFormatTypes {
     DateTime = 'Pp',
 }
 
+export enum AcceptedFileUploadTypes {
+    Image = 'image/*',
+    Audio = 'audio/*',
+    Video = 'video/*',
+    ImageList = '.jpeg, .jpg, .png, .webp'
+}
+
 export enum TypeOfDataTypes {
     StringType = 'string',
     ObjectType = 'object',

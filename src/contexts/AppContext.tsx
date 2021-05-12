@@ -1,6 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { dataPersister } from 'services/DataPersister';
-import { dateService } from '../services/DateService';
+import { dataPersister, dateService } from '../services';
 import { CurrentUser, DataPersistKeys, ICurrentUserProfile, ITodo, PartialRequired } from 'types';
 
 interface IAppContextProviderProps {
