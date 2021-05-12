@@ -4,8 +4,7 @@ import TodosList from '../reusableComponents/TodosList';
 import { SectionHeading } from '../reusableComponents/SectionHeading';
 import UserProfile from '../reusableComponents/UserProfile';
 import { AppContext } from '../../contexts/AppContext';
-import { todosService } from '../../services/TodosService';
-import { dataPersister } from 'services/DataPersister';
+import { dataPersister, todosService } from '../../services';
 import { DataPersistKeys } from 'types';
 
 interface IHomeState {

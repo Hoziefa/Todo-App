@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Form from '../reusableComponents/Form';
-import { userServices } from '../../services/UserServices';
+import { userServices } from '../../services';
 import { fieldsFactory } from '../../utils';
 import { FieldAutoCompleteValues, IGeneratedFieldProps, ILoginRegister, InputTypes } from 'types';
 

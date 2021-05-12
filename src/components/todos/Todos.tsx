@@ -5,8 +5,7 @@ import TodosList from '../reusableComponents/TodosList';
 import Home from '../home/Home';
 import { SectionHeading } from '../reusableComponents/SectionHeading';
 import UserProfile from '../reusableComponents/UserProfile';
-import { dataPersister } from 'services/DataPersister';
-import { dateService } from 'services/DateService';
+import { dataPersister, dateService } from 'services';
 import { DataPersistKeys } from 'types';
 
 class Todos extends Home {
