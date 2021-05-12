@@ -37,10 +37,11 @@ export enum DateFormatTypes {
 }
 
 export enum AcceptedFileUploadTypes {
+    All = '.',
     Image = 'image/*',
     Audio = 'audio/*',
     Video = 'video/*',
-    ImageList = '.jpeg, .jpg, .png, .webp'
+    ImageList = '.jpeg, .jpg, .png, .webp',
 }
 
 export enum TypeOfDataTypes {

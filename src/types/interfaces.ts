@@ -40,6 +40,8 @@ interface IGeneratedFieldOptionalProps<T> {
     label: string;
     min: number;
     max: number;
+    minLength: number;
+    maxLength: number;
     validationlabel: string;
     noValidate: boolean;
     validationErrorStyle: ValidationErrorStyle;
