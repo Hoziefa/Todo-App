@@ -1,4 +1,4 @@
-import { IDataPersister } from 'types';
+import { DataPersistKeys, IDataPersister } from 'types';
 
 class DataPersister implements IDataPersister {
     private static instance: DataPersister;
@@ -11,15 +11,15 @@ class DataPersister implements IDataPersister {
         return DataPersister.instance;
     }
 
-    public persistData<T>(key: string, data: T): void {
+    public persistData<T>(key: DataPersistKeys, data: T): void {
         window.localStorage.setItem(key, JSON.stringify(data));
     }
 
-    public deleteData(key: string): void {
+    public deleteData(key: DataPersistKeys): void {
         window.localStorage.removeItem(key);
     }
 
-    public readData<T>(key: string): T | null {
+    public readData<T>(key: DataPersistKeys): T | null {
         return JSON.parse(window.localStorage.getItem(key) ?? 'null');
     }
 

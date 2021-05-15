@@ -1,10 +1,10 @@
 import { ChangeEventHandler } from 'react';
-import { AcceptedFileUploadTypes, DateFormatTypes, FieldAutoCompleteValues, FieldTypes, InputTypes, ValidationErrorStyle } from './enums';
+import { AcceptedFileUploadTypes, DataPersistKeys, DateFormatTypes, FieldAutoCompleteValues, FieldTypes, InputTypes, ValidationErrorStyle } from './enums';
 
 export interface IDataPersister {
-    persistData<T>(key: string, data: T): void;
-    deleteData(key: string): void;
-    readData<T>(key: string): T | null;
+    persistData<T>(key: DataPersistKeys, data: T): void;
+    deleteData(key: DataPersistKeys): void;
+    readData<T>(key: DataPersistKeys): T | null;
     clearData(): void;
 }
 
